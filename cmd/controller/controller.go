@@ -343,23 +343,11 @@ func (c *CmdOpts) startController() error {
 
 	// Set up signal handling. Use buffered channel so we dont miss
 	// signals during startup
-	ctx, cancel := context.WithCancel(context.Background())
-	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-	defer func() {
-		signal.Stop(ch)
-		cancel()
-	}()
-
-	go func() {
-		select {
-		case <-ch:
-			logrus.Info("Shutting down k0s controller")
-			cancel()
-		case <-ctx.Done():
-			logrus.Debug("Context done in go-routine")
-		}
-	}()
+	//ctx, cancel := context.WithCancel(context.Background())
+	//ch := make(chan os.Signal, 1)
+	//signal.Notify(ch, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	defer cancel()
 
 	perfTimer.Checkpoint("starting-components")
 	// Start components
@@ -367,7 +355,7 @@ func (c *CmdOpts) startController() error {
 	perfTimer.Checkpoint("finished-starting-components")
 	if err != nil {
 		logrus.Errorf("failed to start controller components: %s", err)
-		ch <- syscall.SIGTERM
+		cancel()
 	}
 
 	// in-cluster component reconcilers
@@ -408,6 +396,7 @@ func (c *CmdOpts) startController() error {
 	// Wait for k0s process termination
 	<-ctx.Done()
 	logrus.Debug("Context done in main")
+	logrus.Info("Shutting down k0s controller")
 
 	// Stop all reconcilers first
 	for _, reconciler := range reconcilers {
