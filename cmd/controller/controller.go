@@ -341,11 +341,7 @@ func (c *CmdOpts) startController() error {
 	}
 	perfTimer.Checkpoint("finished-component-init")
 
-	// Set up signal handling. Use buffered channel so we dont miss
-	// signals during startup
-	//ctx, cancel := context.WithCancel(context.Background())
-	//ch := make(chan os.Signal, 1)
-	//signal.Notify(ch, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	// Set up signal handling
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	defer cancel()
 
