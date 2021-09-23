@@ -1,6 +1,7 @@
 package telemetry
 
 import (
+	"context"
 	"time"
 
 	config "github.com/k0sproject/k0s/pkg/apis/v1beta1"
@@ -54,7 +55,7 @@ func (c *Component) retrieveKubeClient(ch chan struct{}) {
 }
 
 // Run runs work cycle
-func (c *Component) Run() error {
+func (c *Component) Run(_ context.Context) error {
 	if segmentToken == "" {
 		c.log.Info("no token, telemetry is disabled")
 		return nil

@@ -261,7 +261,7 @@ func (m *MetricServer) Init() error {
 }
 
 // Run runs the metric server reconciler
-func (m *MetricServer) Run() error {
+func (m *MetricServer) Run(ctx context.Context) error {
 	m.tickerDone = make(chan struct{})
 
 	msDir := path.Join(m.K0sVars.ManifestsDir, "metricserver")
@@ -277,7 +277,7 @@ func (m *MetricServer) Run() error {
 		for {
 			select {
 			case <-ticker.C:
-				newConfig, err := m.getConfig()
+				newConfig, err := m.getConfig(ctx)
 				if err != nil {
 					m.log.Warnf("failed to calculate metrics-server config: %s", err.Error())
 				}
@@ -322,7 +322,7 @@ func (m *MetricServer) Healthy() error { return nil }
 // - 100m core of CPU
 // - 300MiB of memory
 // So that's 10m CPU and 30MiB mem per 10 nodes
-func (m *MetricServer) getConfig() (metricsConfig, error) {
+func (m *MetricServer) getConfig(ctx context.Context) (metricsConfig, error) {
 	cfg := metricsConfig{
 		Image:      m.clusterConfig.Spec.Images.MetricsServer.URI(),
 		PullPolicy: m.clusterConfig.Spec.Images.DefaultPullPolicy,
@@ -333,7 +333,7 @@ func (m *MetricServer) getConfig() (metricsConfig, error) {
 		return cfg, err
 	}
 
-	nodeList, err := kubeClient.CoreV1().Nodes().List(context.TODO(), v1.ListOptions{})
+	nodeList, err := kubeClient.CoreV1().Nodes().List(ctx, v1.ListOptions{})
 	if err != nil {
 		return cfg, err
 	}

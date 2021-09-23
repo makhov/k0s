@@ -275,7 +275,7 @@ func (c *CoreDNS) Init() error {
 }
 
 // Run runs the CoreDNS reconciler component
-func (c *CoreDNS) Run() error {
+func (c *CoreDNS) Run(ctx context.Context) error {
 	corednsDir := path.Join(c.K0sVars.ManifestsDir, "coredns")
 	err := dir.Init(corednsDir, constant.ManifestsDirMode)
 	if err != nil {
@@ -291,7 +291,7 @@ func (c *CoreDNS) Run() error {
 		for {
 			select {
 			case <-ticker.C:
-				cfg, err := c.getConfig()
+				cfg, err := c.getConfig(ctx)
 				if err != nil {
 					c.log.Errorf("error calculating coredns configs: %s. will retry", err.Error())
 					continue
@@ -322,13 +322,13 @@ func (c *CoreDNS) Run() error {
 	return nil
 }
 
-func (c *CoreDNS) getConfig() (coreDNSConfig, error) {
+func (c *CoreDNS) getConfig(ctx context.Context) (coreDNSConfig, error) {
 	dns, err := c.clusterConfig.Spec.Network.DNSAddress()
 	if err != nil {
 		return coreDNSConfig{}, err
 	}
 
-	nodes, err := c.client.CoreV1().Nodes().List(context.TODO(), v1.ListOptions{})
+	nodes, err := c.client.CoreV1().Nodes().List(ctx, v1.ListOptions{})
 	if err != nil {
 		return coreDNSConfig{}, err
 	}

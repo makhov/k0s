@@ -17,6 +17,7 @@ package controller
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"path/filepath"
 	"strings"
@@ -82,7 +83,7 @@ func (c *Calico) Init() error {
 }
 
 // Run runs the calico reconciler
-func (c *Calico) Run() error {
+func (c *Calico) Run(_ context.Context) error {
 	c.tickerDone = make(chan struct{})
 	var emptyStruct struct{}
 

@@ -16,6 +16,7 @@ limitations under the License.
 package controller
 
 import (
+	"context"
 	"os"
 	"path"
 	"path/filepath"
@@ -55,7 +56,7 @@ func (k *KubeProxy) Init() error {
 }
 
 // Run runs the kube-proxy reconciler
-func (k *KubeProxy) Run() error {
+func (k *KubeProxy) Run(_ context.Context) error {
 	proxyDir := path.Join(k.K0sVars.ManifestsDir, "kubeproxy")
 	if k.clusterConf.Spec.Network.KubeProxy.Disabled {
 		return k.removeKubeProxy(proxyDir)

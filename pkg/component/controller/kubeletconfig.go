@@ -17,6 +17,7 @@ package controller
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"os"
 	"path"
@@ -62,7 +63,7 @@ func (k *KubeletConfig) Stop() error {
 }
 
 // Run dumps the needed manifest objects
-func (k *KubeletConfig) Run() error {
+func (k *KubeletConfig) Run(_ context.Context) error {
 	dnsAddress, err := k.clusterSpec.Network.DNSAddress()
 	if err != nil {
 		return fmt.Errorf("failed to get DNS address for kubelet config: %v", err)

@@ -16,6 +16,7 @@ limitations under the License.
 package controller
 
 import (
+	"context"
 	"fmt"
 	"path"
 	"path/filepath"
@@ -51,7 +52,7 @@ func (d *DefaultPSP) Init() error {
 }
 
 // Run reconciles the k0s default PSP rules
-func (d *DefaultPSP) Run() error {
+func (d *DefaultPSP) Run(_ context.Context) error {
 	pspDir := path.Join(d.k0sVars.ManifestsDir, "defaultpsp")
 	err := dir.Init(pspDir, constant.ManifestsDirMode)
 	if err != nil {

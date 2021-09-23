@@ -67,7 +67,7 @@ func (a *APIEndpointReconciler) Init() error {
 }
 
 // Run runs the main loop for reconciling the externalAddress
-func (a *APIEndpointReconciler) Run() error {
+func (a *APIEndpointReconciler) Run(ctx context.Context) error {
 
 	go func() {
 		ticker := time.NewTicker(10 * time.Second)
@@ -75,7 +75,7 @@ func (a *APIEndpointReconciler) Run() error {
 		for {
 			select {
 			case <-ticker.C:
-				err := a.reconcileEndpoints()
+				err := a.reconcileEndpoints(ctx)
 				if err != nil {
 					a.L.Warnf("external API address reconciliation failed: %s", err.Error())
 				}
@@ -98,7 +98,7 @@ func (a *APIEndpointReconciler) Stop() error {
 // Healthy dummy implementation
 func (a *APIEndpointReconciler) Healthy() error { return nil }
 
-func (a *APIEndpointReconciler) reconcileEndpoints() error {
+func (a *APIEndpointReconciler) reconcileEndpoints(ctx context.Context) error {
 
 	if !a.leaderElector.IsLeader() {
 		a.L.Debug("we're not the leader, not reconciling api endpoints")
@@ -124,7 +124,7 @@ func (a *APIEndpointReconciler) reconcileEndpoints() error {
 
 	epClient := c.CoreV1().Endpoints("default")
 
-	ep, err := epClient.Get(context.TODO(), "kubernetes", v1.GetOptions{})
+	ep, err := epClient.Get(ctx, "kubernetes", v1.GetOptions{})
 	if err != nil {
 		if errors.IsNotFound(err) {
 			err := a.createEndpoint(ipStrings)
@@ -148,7 +148,7 @@ func (a *APIEndpointReconciler) reconcileEndpoints() error {
 			},
 		}
 
-		_, err := epClient.Update(context.TODO(), ep, v1.UpdateOptions{})
+		_, err := epClient.Update(ctx, ep, v1.UpdateOptions{})
 		if err != nil {
 			return err
 		}

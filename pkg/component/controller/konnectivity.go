@@ -83,12 +83,12 @@ func (k *Konnectivity) Init() error {
 }
 
 // Run ..
-func (k *Konnectivity) Run() error {
+func (k *Konnectivity) Run(ctx context.Context) error {
 
 	// Buffered chan to send updates for the count of servers
 	k.serverCountChan = make(chan int, 1)
 
-	k.stopCtx, k.stopFunc = context.WithCancel(context.Background())
+	k.stopCtx, k.stopFunc = context.WithCancel(ctx)
 
 	go k.runServer()
 

@@ -16,6 +16,7 @@ limitations under the License.
 package controller
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path"
@@ -68,7 +69,7 @@ func (a *Manager) Init() error {
 }
 
 // Run runs kube Manager
-func (a *Manager) Run() error {
+func (a *Manager) Run(_ context.Context) error {
 	logrus.Info("Starting kube-controller-manager")
 	ccmAuthConf := filepath.Join(a.K0sVars.CertRootDir, "ccm.conf")
 	args := map[string]string{

@@ -16,6 +16,7 @@ limitations under the License.
 package controller
 
 import (
+	"context"
 	"fmt"
 	"path/filepath"
 
@@ -49,7 +50,7 @@ func (a *Scheduler) Init() error {
 }
 
 // Run runs kube scheduler
-func (a *Scheduler) Run() error {
+func (a *Scheduler) Run(_ context.Context) error {
 	logrus.Info("Starting kube-scheduler")
 	schedulerAuthConf := filepath.Join(a.K0sVars.CertRootDir, "scheduler.conf")
 	args := map[string]string{

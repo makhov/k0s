@@ -17,6 +17,7 @@ package controller
 
 import (
 	"bytes"
+	"context"
 
 	"github.com/k0sproject/k0s/internal/pkg/templatewriter"
 	config "github.com/k0sproject/k0s/pkg/apis/v1beta1"
@@ -62,7 +63,7 @@ func (c *KubeRouter) Healthy() error { return nil }
 func (c *KubeRouter) Stop() error { return nil }
 
 // Run runs the kube-router reconciler
-func (c *KubeRouter) Run() error {
+func (c *KubeRouter) Run(_ context.Context) error {
 	c.log.Info("starting to dump manifests")
 
 	cfg := kubeRouterConfig{

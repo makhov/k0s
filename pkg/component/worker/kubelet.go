@@ -16,6 +16,7 @@ limitations under the License.
 package worker
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"net/http"
@@ -102,7 +103,7 @@ func (k *Kubelet) Init() error {
 }
 
 // Run runs kubelet
-func (k *Kubelet) Run() error {
+func (k *Kubelet) Run(_ context.Context) error {
 	cmd := "kubelet"
 
 	kubeletConfigData := kubeletConfig{
