@@ -16,6 +16,7 @@ limitations under the License.
 package token
 
 import (
+	"context"
 	"fmt"
 	"path/filepath"
 
@@ -40,7 +41,7 @@ func tokenInvalidateCmd() *cobra.Command {
 			}
 
 			for _, id := range args {
-				err := manager.Remove(id)
+				err := manager.Remove(context.TODO(), id)
 				if err != nil {
 					return err
 				}

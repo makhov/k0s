@@ -103,7 +103,7 @@ func (k *Kubelet) Init() error {
 }
 
 // Run runs kubelet
-func (k *Kubelet) Run(_ context.Context) error {
+func (k *Kubelet) Run(ctx context.Context) error {
 	cmd := "kubelet"
 
 	kubeletConfigData := kubeletConfig{
@@ -202,7 +202,7 @@ func (k *Kubelet) Run(_ context.Context) error {
 	}
 
 	err := retry.Do(func() error {
-		kubeletconfig, err := k.KubeletConfigClient.Get(k.Profile)
+		kubeletconfig, err := k.KubeletConfigClient.Get(ctx, k.Profile)
 		if err != nil {
 			logrus.Warnf("failed to get initial kubelet config with join token: %s", err.Error())
 			return err

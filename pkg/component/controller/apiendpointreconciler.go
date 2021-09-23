@@ -127,7 +127,7 @@ func (a *APIEndpointReconciler) reconcileEndpoints(ctx context.Context) error {
 	ep, err := epClient.Get(ctx, "kubernetes", v1.GetOptions{})
 	if err != nil {
 		if errors.IsNotFound(err) {
-			err := a.createEndpoint(ipStrings)
+			err := a.createEndpoint(ctx, ipStrings)
 			return err
 		}
 
@@ -158,7 +158,7 @@ func (a *APIEndpointReconciler) reconcileEndpoints(ctx context.Context) error {
 
 }
 
-func (a *APIEndpointReconciler) createEndpoint(addresses []string) error {
+func (a *APIEndpointReconciler) createEndpoint(ctx context.Context, addresses []string) error {
 	ep := &corev1.Endpoints{
 		TypeMeta: v1.TypeMeta{
 			Kind:       "Endpoints",
@@ -186,7 +186,7 @@ func (a *APIEndpointReconciler) createEndpoint(addresses []string) error {
 		return err
 	}
 
-	_, err = c.CoreV1().Endpoints("default").Create(context.TODO(), ep, v1.CreateOptions{})
+	_, err = c.CoreV1().Endpoints("default").Create(ctx, ep, v1.CreateOptions{})
 	if err != nil {
 		return err
 	}

@@ -366,7 +366,7 @@ func (c *CmdOpts) startController() error {
 	for name, reconciler := range reconcilers {
 		logrus.Infof("running reconciler: %s", name)
 		// TODO: check shadowing
-		if err = reconciler.Run(); err != nil {
+		if err = reconciler.Run(ctx); err != nil {
 			logrus.Errorf("failed to start reconciler: %s", err.Error())
 		}
 	}
@@ -547,7 +547,7 @@ func (c *CmdOpts) existingCNIProvider() string {
 	return ""
 }
 
-func (c *CmdOpts) startControllerWorker(_ context.Context, profile string) error {
+func (c *CmdOpts) startControllerWorker(ctx context.Context, profile string) error {
 	var bootstrapConfig string
 	if !file.Exists(c.K0sVars.KubeletAuthConfigPath) {
 		// wait for controller to start up
@@ -566,7 +566,7 @@ func (c *CmdOpts) startControllerWorker(_ context.Context, profile string) error
 			// we use retry.Do with 10 attempts, back-off delay and delay duration 500 ms which gives us
 			// 225 seconds here
 			tokenAge := time.Second * 225
-			cfg, err := token.CreateKubeletBootstrapConfig(c.ClusterConfig, c.K0sVars, "worker", tokenAge)
+			cfg, err := token.CreateKubeletBootstrapConfig(ctx, c.ClusterConfig, c.K0sVars, "worker", tokenAge)
 
 			if err != nil {
 				return err
