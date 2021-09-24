@@ -137,7 +137,7 @@ func (k *Kubelet) Run(ctx context.Context) error {
 	}
 
 	if runtime.GOOS == "windows" {
-		node, err := getNodeName()
+		node, err := getNodeName(ctx)
 		if err != nil {
 			return fmt.Errorf("can't get hostname: %v", err)
 		}
@@ -239,11 +239,12 @@ func (k *Kubelet) Healthy() error { return nil }
 
 const awsMetaInformationURI = "http://169.254.169.254/latest/meta-data/local-hostname"
 
-func getNodeName() (string, error) {
+func getNodeName(ctx context.Context) (string, error) {
 	req, err := http.NewRequest("GET", awsMetaInformationURI, nil)
 	if err != nil {
 		return "", err
 	}
+	req = req.WithContext(ctx)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return os.Hostname()
