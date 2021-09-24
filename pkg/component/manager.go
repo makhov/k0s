@@ -82,7 +82,7 @@ func (m *Manager) Start(ctx context.Context) error {
 		perfTimer.Checkpoint(fmt.Sprintf("running-%s", compName))
 		logrus.Infof("starting %v", compName)
 
-		if err := comp.Run(); err != nil {
+		if err := comp.Run(ctx); err != nil {
 			return err
 		}
 		perfTimer.Checkpoint(fmt.Sprintf("running-%s-done", compName))

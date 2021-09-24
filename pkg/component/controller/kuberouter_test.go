@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -29,7 +30,7 @@ func TestKubeRouterConfig(t *testing.T) {
 	saver := inMemorySaver{}
 	kr, err := NewKubeRouter(cfg, saver)
 	require.NoError(t, err)
-	require.NoError(t, kr.Run())
+	require.NoError(t, kr.Run(context.Background()))
 	require.NoError(t, kr.Stop())
 
 	manifestData, foundRaw := saver["kube-router.yaml"]
@@ -62,7 +63,7 @@ func TestKubeRouterDefaultManifests(t *testing.T) {
 	saver := inMemorySaver{}
 	kr, err := NewKubeRouter(cfg, saver)
 	require.NoError(t, err)
-	require.NoError(t, kr.Run())
+	require.NoError(t, kr.Run(context.Background()))
 	require.NoError(t, kr.Stop())
 
 	manifestData, foundRaw := saver["kube-router.yaml"]
