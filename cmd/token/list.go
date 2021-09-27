@@ -16,7 +16,6 @@ limitations under the License.
 package token
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -42,7 +41,7 @@ func tokenListCmd() *cobra.Command {
 				return err
 			}
 
-			tokens, err := manager.List(context.TODO(), listTokenRole)
+			tokens, err := manager.List(cmd.Context(), listTokenRole)
 			if err != nil {
 				return err
 			}

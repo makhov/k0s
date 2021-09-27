@@ -16,7 +16,6 @@ limitations under the License.
 package token
 
 import (
-	"context"
 	"fmt"
 	"time"
 
@@ -62,7 +61,7 @@ k0s token create --role worker --expiry 10m  //sets expiration time to 10 minute
 			}, func(err error) bool {
 				return waitCreate
 			}, func() error {
-				bootstrapConfig, err = token.CreateKubeletBootstrapConfig(context.TODO(), clusterConfig, c.K0sVars, createTokenRole, expiry)
+				bootstrapConfig, err = token.CreateKubeletBootstrapConfig(cmd.Context(), clusterConfig, c.K0sVars, createTokenRole, expiry)
 
 				return err
 			})
