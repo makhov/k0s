@@ -259,23 +259,8 @@ func (c *CmdOpts) startController() error {
 
 	// Set up signal handling. Use buffered channel so we dont miss
 	// signals during startup
-	ctx, cancel := context.WithCancel(context.Background())
-	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-	defer func() {
-		signal.Stop(ch)
-		cancel()
-	}()
-
-	go func() {
-		select {
-		case <-ch:
-			logrus.Info("Shutting down k0s controller")
-			cancel()
-		case <-ctx.Done():
-			logrus.Debug("Context done in go-routine")
-		}
-	}()
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	defer cancel()
 
 	perfTimer.Checkpoint("starting-node-components")
 
@@ -284,14 +269,14 @@ func (c *CmdOpts) startController() error {
 	perfTimer.Checkpoint("finished-starting-node-components")
 	if err != nil {
 		logrus.Errorf("failed to start controller node components: %v", err)
-		ch <- syscall.SIGTERM
+		cancel()
 	}
 
 	// in-cluster component reconcilers
 	err = c.createClusterReconcilers(ctx, adminClientFactory)
 	if err != nil {
 		logrus.Errorf("failed to start reconcilers: %v", err)
-		ch <- syscall.SIGTERM
+		cancel()
 	}
 
 	if !c.SingleNode && !stringslice.Contains(c.DisableComponents, constant.KonnectivityServerComponentName) {
@@ -330,16 +315,16 @@ func (c *CmdOpts) startController() error {
 	perfTimer.Checkpoint("finished cluster-component-init")
 
 	// start Bootstrapping Reconcilers
-	err = c.startBootstrapReconcilers(adminClientFactory, leaderElector)
+	err = c.startBootstrapReconcilers(ctx, adminClientFactory, leaderElector)
 	if err != nil {
 		logrus.Errorf("failed to start bootstrapping reconcilers: %v", err)
-		ch <- syscall.SIGTERM
+		cancel()
 	}
 
 	err = c.startClusterComponents(ctx)
 	if err != nil {
 		logrus.Errorf("failed to start cluster components: %s", err)
-		ch <- syscall.SIGTERM
+		cancel()
 	}
 	perfTimer.Checkpoint("finished-starting-cluster-components")
 
@@ -365,6 +350,7 @@ func (c *CmdOpts) startController() error {
 	// Wait for k0s process termination
 	<-ctx.Done()
 	logrus.Debug("Context done in main")
+	logrus.Info("Shutting down k0s controller")
 
 	perfTimer.Output()
 
@@ -387,7 +373,7 @@ func (c *CmdOpts) startClusterComponents(ctx context.Context) error {
 	return c.ClusterComponents.Start(ctx)
 }
 
-func (c *CmdOpts) startBootstrapReconcilers(cf kubernetes.ClientFactoryInterface, leaderElector controller.LeaderElector) error {
+func (c *CmdOpts) startBootstrapReconcilers(ctx context.Context, cf kubernetes.ClientFactoryInterface, leaderElector controller.LeaderElector) error {
 	reconcilers := make(map[string]component.Component)
 
 	if !stringslice.Contains(c.DisableComponents, constant.APIConfigComponentName) {
@@ -428,7 +414,7 @@ func (c *CmdOpts) startBootstrapReconcilers(cf kubernetes.ClientFactoryInterface
 	}
 	for name, reconciler := range reconcilers {
 		logrus.Infof("running bootstrap reconciler: %s", name)
-		err := reconciler.Run()
+		err := reconciler.Run(ctx)
 		if err != nil {
 			return fmt.Errorf("failed to start reconciler: %s", err.Error())
 		}
@@ -555,7 +541,7 @@ func (c *CmdOpts) initKubeRouter(reconcilers map[string]component.Component) err
 	return nil
 }
 
-func (c *CmdOpts) startControllerWorker(_ context.Context, profile string) error {
+func (c *CmdOpts) startControllerWorker(ctx context.Context, profile string) error {
 	var bootstrapConfig string
 	if !file.Exists(c.K0sVars.KubeletAuthConfigPath) {
 		// wait for controller to start up
@@ -574,7 +560,7 @@ func (c *CmdOpts) startControllerWorker(_ context.Context, profile string) error
 			// we use retry.Do with 10 attempts, back-off delay and delay duration 500 ms which gives us
 			// 225 seconds here
 			tokenAge := time.Second * 225
-			cfg, err := token.CreateKubeletBootstrapConfig(c.NodeConfig, c.K0sVars, "worker", tokenAge)
+			cfg, err := token.CreateKubeletBootstrapConfig(ctx, c.NodeConfig, c.K0sVars, "worker", tokenAge)
 			if err != nil {
 				return err
 			}
