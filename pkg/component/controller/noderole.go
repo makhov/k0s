@@ -21,13 +21,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/k0sproject/k0s/pkg/constant"
-	k8sutil "github.com/k0sproject/k0s/pkg/kubernetes"
+	"github.com/go-openapi/jsonpointer"
 	"github.com/sirupsen/logrus"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
+
+	"github.com/k0sproject/k0s/pkg/constant"
+	k8sutil "github.com/k0sproject/k0s/pkg/kubernetes"
 )
 
 // NodeRole implements the component interface to manage node role labels for worker nodes
@@ -53,7 +55,7 @@ func (n *NodeRole) Init() error {
 	return nil
 }
 
-// Run adds labels
+// Run checks and adds labels
 func (n *NodeRole) Run(ctx context.Context) error {
 	client, err := n.kubeClientFactory.GetClient()
 	if err != nil {
@@ -72,23 +74,11 @@ func (n *NodeRole) Run(ctx context.Context) error {
 					n.log.Errorf("failed to get node list: %v", err)
 					continue
 				}
-			NODES:
+
 				for _, node := range nodes.Items {
-					var labelToAdd string
-					for label, value := range node.Labels {
-						if strings.HasPrefix(label, constant.NodeRoleLabelNamespace) {
-							continue NODES
-						}
-
-						if label == constant.K0SNodeRoleLabel {
-							labelToAdd = fmt.Sprintf("%s/%s=true", constant.NodeRoleLabelNamespace, value)
-						}
-					}
-
-					_, err = n.addNodeLabel(ctx, client, node.Name, labelToAdd)
+					err = n.ensureNodeLabel(ctx, client, node)
 					if err != nil {
-						n.log.Errorf("failed to set label '%s' to node %s: %v", labelToAdd, node.Name, err)
-						continue
+						n.log.Error(err)
 					}
 				}
 			}
@@ -98,8 +88,28 @@ func (n *NodeRole) Run(ctx context.Context) error {
 	return nil
 }
 
-func (n *NodeRole) addNodeLabel(ctx context.Context, client kubernetes.Interface, node, label string) (*corev1.Node, error) {
-	patch := fmt.Sprintf(`[{"op":"add", "path":"/metadata/labels", "value":"%s" }]`, label)
+func (n *NodeRole) ensureNodeLabel(ctx context.Context, client kubernetes.Interface, node corev1.Node) error {
+	var labelToAdd string
+	for label, value := range node.Labels {
+		if strings.HasPrefix(label, constant.NodeRoleLabelNamespace) {
+			return nil
+		}
+
+		if label == constant.K0SNodeRoleLabel {
+			labelToAdd = fmt.Sprintf("%s/%s", constant.NodeRoleLabelNamespace, value)
+		}
+	}
+
+	_, err := n.addNodeLabel(ctx, client, node.Name, labelToAdd, "true")
+	if err != nil {
+		return fmt.Errorf("failed to set label '%s' to node %s: %w", labelToAdd, node.Name, err)
+	}
+	return nil
+}
+
+func (n *NodeRole) addNodeLabel(ctx context.Context, client kubernetes.Interface, node, key, value string) (*corev1.Node, error) {
+	keyPath := fmt.Sprintf("/metadata/labels/%s", jsonpointer.Escape(key))
+	patch := fmt.Sprintf(`[{"op":"add", "path":"%s", "value":"%s" }]`, keyPath, value)
 	return client.CoreV1().Nodes().Patch(ctx, node, types.JSONPatchType, []byte(patch), metav1.PatchOptions{})
 }
 

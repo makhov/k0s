@@ -61,6 +61,8 @@ func NewWorkerCmd() *cobra.Command {
 				return fmt.Errorf("you can only pass one token argument either as a CLI argument 'k0s worker [token]' or as a flag 'k0s worker --token-file [path]'")
 			}
 
+			c.Labels = append(c.Labels, fmt.Sprintf("%s=worker", constant.K0SNodeRoleLabel))
+
 			if len(c.TokenFile) > 0 {
 				bytes, err := os.ReadFile(c.TokenFile)
 				if err != nil {
@@ -114,8 +116,6 @@ func (c *CmdOpts) StartWorker(ctx context.Context) error {
 	if c.WorkerProfile == "default" && runtime.GOOS == "windows" {
 		c.WorkerProfile = "default-windows"
 	}
-
-	c.Labels = append(c.Labels, fmt.Sprintf("%s=worker", constant.K0SNodeRoleLabel))
 
 	componentManager.Add(ctx, &worker.Kubelet{
 		CRISocket:           c.CriSocket,
