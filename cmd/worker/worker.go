@@ -33,6 +33,7 @@ import (
 	"github.com/k0sproject/k0s/pkg/component/status"
 	"github.com/k0sproject/k0s/pkg/component/worker"
 	"github.com/k0sproject/k0s/pkg/config"
+	"github.com/k0sproject/k0s/pkg/constant"
 	"github.com/k0sproject/k0s/pkg/install"
 )
 
@@ -114,6 +115,8 @@ func (c *CmdOpts) StartWorker(ctx context.Context) error {
 		c.WorkerProfile = "default-windows"
 	}
 
+	c.Labels = append(c.Labels, fmt.Sprintf("%s=worker", constant.K0SNodeRoleLabel))
+
 	componentManager.Add(ctx, &worker.Kubelet{
 		CRISocket:           c.CriSocket,
 		EnableCloudProvider: c.CloudProvider,
@@ -122,6 +125,7 @@ func (c *CmdOpts) StartWorker(ctx context.Context) error {
 		LogLevel:            c.Logging["kubelet"],
 		Profile:             c.WorkerProfile,
 		Labels:              c.Labels,
+		Taints:              c.Taints,
 		ExtraArgs:           c.KubeletExtraArgs,
 	})
 
