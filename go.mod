@@ -19,6 +19,7 @@ require (
 	github.com/gogo/googleapis v1.4.1 // indirect
 	github.com/gorilla/mux v1.8.0
 	github.com/imdario/mergo v0.3.12
+	github.com/instrumenta/kubeval v0.16.1 // indirect
 	github.com/ishidawataru/sctp v0.0.0-20191218070446-00ab2ac2db07 // indirect
 	github.com/k0sproject/dig v0.1.0
 	github.com/kardianos/service v1.2.1-0.20210728001519-a323c3813bc7

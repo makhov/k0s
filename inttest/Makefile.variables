@@ -19,5 +19,6 @@ smoketests := \
 	check-disabledcomponents \
 	check-extraargs \
 	check-configchange \
+	check-manifests \
 	check-upgrade
 
