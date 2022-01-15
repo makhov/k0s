@@ -4,7 +4,7 @@ FROM ${ARCH}alpine:3.13
 ARG K0S_VERSION
 
 RUN apk add --no-cache --no-scripts ca-certificates
-RUN update-ca-certificates
+RUN update-ca-certificates || true
 RUN apk add bash coreutils findutils iptables curl tini
 
 RUN curl -sSLf https://get.k0s.sh | K0S_VERSION=${K0S_VERSION} sh
