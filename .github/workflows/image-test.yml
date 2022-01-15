@@ -19,7 +19,7 @@ jobs:
       - name: Branch name
         id: branch_name
         run: |
-          echo ::set-output name=TAG_NAME::v1.22.5+k0s.0
+          echo ::set-output name=TAG_NAME::"v1.22.5+k0s.0"
       - name: Prepare image tags
         id: image_tag
         # Basically just replace the '+' with '-' as '+' is not allowed in tags
