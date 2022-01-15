@@ -1,0 +1,69 @@
+name: Build Image
+
+on:
+  pull_request:
+env:
+  GO_VERSION: ^1.17
+  GO_VERSION_WIN: ^1.13
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    outputs:
+      tag_name: ${{ steps.branch_name.outputs.TAG_NAME }}
+      image_tag: ${{ steps.image_tag.outputs.IMAGE_TAGS }}
+    steps:
+      # Ugly hack to get the tag name
+      # github.ref gives the full reference like refs.tags.v0.0.1-beta1
+      - name: Branch name
+        id: branch_name
+        run: |
+          echo ::set-output name=TAG_NAME::v1.22.5+k0s.0
+      - name: Prepare image tags
+        id: image_tag
+        # Basically just replace the '+' with '-' as '+' is not allowed in tags
+        run: |
+          TAGS=${{ steps.branch_name.outputs.TAG_NAME }}
+          TAGS=${TAGS//+/-}
+          echo ::set-output name=IMAGE_TAGS::${TAGS}
+
+  build-image:
+    needs:
+      - release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build image and push to Docker hub
+        uses: docker/build-push-action@v2
+        with:
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          build-args: K0S_VERSION=${{ needs.release.outputs.tag_name }}
+          tags: |
+            docker.pkg.github.com/k0sproject/k0s/k0s:${{ needs.release.outputs.image_tags }}
+            docker.io/k0sproject/k0s:${{ needs.release.outputs.image_tag }}
+          push: true
+
+      # Need to remove this from maintenance branches
+      # Done as separate step for better control when we push latest
+      - name: Build image and push to Docker hub
+        if: "!contains(github.ref, '-')"
+        uses: docker/build-push-action@v2
+        with:
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          build-args: K0S_VERSION=${{ needs.release.outputs.tag_name }}
+          tags: makhov/k0s:latest
+          push: true
+
