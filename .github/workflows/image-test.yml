@@ -55,7 +55,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: K0S_VERSION=${{ needs.release.outputs.tag_name }}
           tags: |
-            ghcr.io/makhov/k0s/k0s:${{ needs.release.outputs.image_tag }}
+            ghcr.io/makhov/k0s:${{ needs.release.outputs.image_tag }}
             docker.io/makhov/k0s:${{ needs.release.outputs.image_tag }}
           push: true
 
@@ -65,7 +65,7 @@ jobs:
         if: "!contains(github.ref, '-')"
         uses: docker/build-push-action@v2
         with:
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64
           build-args: K0S_VERSION=${{ needs.release.outputs.tag_name }}
           tags: makhov/k0s:latest
           push: true
