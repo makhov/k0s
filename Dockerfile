@@ -1,9 +1,11 @@
 ARG ARCH
-FROM ${ARCH}alpine:3.15
+FROM ${ARCH}alpine:3.13
 
 ARG K0S_VERSION
 
-RUN apk add --no-cache bash coreutils findutils iptables curl tini
+RUN apk add --no-cache --no-scripts ca-certificates && \
+    update-ca-certificates && \
+    apk add bash coreutils findutils iptables curl tini
 
 RUN curl -sSLf https://get.k0s.sh | K0S_VERSION=${K0S_VERSION} sh
 
