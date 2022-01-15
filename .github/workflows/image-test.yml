@@ -19,7 +19,8 @@ jobs:
       - name: Branch name
         id: branch_name
         run: |
-          echo ::set-output name=TAG_NAME::"v1.22.5+k0s.0"
+          ASD="v1.22.5+k0s.0"
+          echo ::set-output name=TAG_NAME::$ASD
       - name: Prepare image tags
         id: image_tag
         # Basically just replace the '+' with '-' as '+' is not allowed in tags
@@ -52,7 +53,7 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           build-args: K0S_VERSION=${{ needs.release.outputs.tag_name }}
           tags: |
-            docker.pkg.github.com/k0sproject/k0s/k0s:${{ needs.release.outputs.image_tags }}
+            docker.pkg.github.com/k0sproject/k0s/k0s:${{ needs.release.outputs.image_tag }}
             docker.io/k0sproject/k0s:${{ needs.release.outputs.image_tag }}
           push: true
 
