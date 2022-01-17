@@ -123,7 +123,7 @@ jobs:
   build-image:
     needs:
       - release
-      - x86
+      - x64
       - arm64
       - armv7
     runs-on: [self-hosted,linux,x64]
