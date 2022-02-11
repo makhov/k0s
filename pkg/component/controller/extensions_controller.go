@@ -19,17 +19,12 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/avast/retry-go"
 	"github.com/bombsimon/logrusr/v2"
-	"github.com/k0sproject/k0s/internal/pkg/templatewriter"
-	"github.com/k0sproject/k0s/pkg/apis/helm.k0sproject.io/v1beta1"
-	k0sAPI "github.com/k0sproject/k0s/pkg/apis/k0s.k0sproject.io/v1beta1"
-	"github.com/k0sproject/k0s/pkg/component"
-	"github.com/k0sproject/k0s/pkg/constant"
-	"github.com/k0sproject/k0s/pkg/helm"
-	kubeutil "github.com/k0sproject/k0s/pkg/kubernetes"
 	"github.com/sirupsen/logrus"
 	"helm.sh/helm/v3/pkg/release"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -41,6 +36,14 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
+
+	"github.com/k0sproject/k0s/internal/pkg/templatewriter"
+	"github.com/k0sproject/k0s/pkg/apis/helm.k0sproject.io/v1beta1"
+	k0sAPI "github.com/k0sproject/k0s/pkg/apis/k0s.k0sproject.io/v1beta1"
+	"github.com/k0sproject/k0s/pkg/component"
+	"github.com/k0sproject/k0s/pkg/constant"
+	"github.com/k0sproject/k0s/pkg/helm"
+	kubeutil "github.com/k0sproject/k0s/pkg/kubernetes"
 )
 
 // Helm watch for Chart crd
@@ -123,7 +126,14 @@ func (ec *ExtensionsController) reconcileHelmExtensions(helmSpec *k0sAPI.HelmExt
 		}
 	}
 
+	crdManifests, err := filepath.Glob(fmt.Sprintf("%s/addon_crd_manifest_*.yaml", ec.saver.Path()))
+	if err != nil {
+		return fmt.Errorf("error reading helm manifest files: %w", err)
+	}
+	fmt.Println("stack ls", crdManifests)
+	configCharts := make(map[string]struct{})
 	for _, chart := range helmSpec.Charts {
+
 		tw := templatewriter.TemplateWriter{
 			Name:     "addon_crd_manifest",
 			Template: chartCrdTemplate,
@@ -140,10 +150,20 @@ func (ec *ExtensionsController) reconcileHelmExtensions(helmSpec *k0sAPI.HelmExt
 			ec.L.WithError(err).Errorf("can't create chart CR instance `%s`: %v", chart.ChartName, err)
 			return fmt.Errorf("can't create chart CR instance `%s`: %v", chart.ChartName, err)
 		}
-		if err := ec.saver.Save("addon_crd_manifest_"+chart.Name+".yaml", buf.Bytes()); err != nil {
+		fileName := "addon_crd_manifest_" + chart.Name + ".yaml"
+		if err := ec.saver.Save(fileName, buf.Bytes()); err != nil {
 			return fmt.Errorf("can't save addon CRD manifest: %v", err)
 		}
+		configCharts[filepath.Join(ec.saver.Path(), fileName)] = struct{}{}
 	}
+
+	fmt.Println("stack configs", configCharts)
+	for _, m := range crdManifests {
+		if _, ok := configCharts[m]; !ok {
+			os.Remove(m)
+		}
+	}
+
 	return nil
 }
 

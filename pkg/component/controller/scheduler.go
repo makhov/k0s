@@ -77,10 +77,10 @@ func (a *Scheduler) Reconcile(_ context.Context, clusterConfig *v1beta1.ClusterC
 		"authentication-kubeconfig": schedulerAuthConf,
 		"authorization-kubeconfig":  schedulerAuthConf,
 		"kubeconfig":                schedulerAuthConf,
-		"bind-address":              "127.0.0.1",
-		"leader-elect":              "true",
-		"profiling":                 "false",
-		"v":                         a.LogLevel,
+		// "bind-address":              "127.0.0.1",
+		"leader-elect": "true",
+		"profiling":    "false",
+		"v":            a.LogLevel,
 	}
 	for name, value := range clusterConfig.Spec.Scheduler.ExtraArgs {
 		if args[name] != "" {

@@ -44,8 +44,8 @@ type Manager struct {
 }
 
 var cmDefaultArgs = stringmap.StringMap{
-	"allocate-node-cidrs":             "true",
-	"bind-address":                    "127.0.0.1",
+	"allocate-node-cidrs": "true",
+	// "bind-address":                    "127.0.0.1",
 	"cluster-name":                    "k0s",
 	"controllers":                     "*,bootstrapsigner,tokencleaner",
 	"enable-hostpath-provisioner":     "true",

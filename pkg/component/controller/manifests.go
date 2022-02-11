@@ -43,6 +43,10 @@ func (f FsManifestsSaver) Save(dst string, content []byte) error {
 	return nil
 }
 
+func (f FsManifestsSaver) Path() string {
+	return f.dir
+}
+
 func hash(data []byte) string {
 	return fmt.Sprintf("%x", md5.Sum(data))
 }

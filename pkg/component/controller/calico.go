@@ -52,6 +52,7 @@ type Calico struct {
 
 type manifestsSaver interface {
 	Save(dst string, content []byte) error
+	Path() string
 }
 
 type calicoConfig struct {
