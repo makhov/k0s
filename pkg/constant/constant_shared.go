@@ -117,8 +117,10 @@ const (
 	ClusterConfigNamespace  = "kube-system"
 	ClusterConfigObjectName = "k0s"
 
-	NodeRoleLabelNamespace = "node-role.kubernetes.io"
-	K0SNodeRoleLabel       = "node.k0sproject.io/role"
+	NodeRoleLabelNamespace     = "node-role.kubernetes.io"
+	K0SNodeRoleLabel           = "node.k0sproject.io/role"
+	AutopilotAnnotationVersion = "k0sproject.io/autopilot-signal-version"
+	AutopilotAnnotationData    = "k0sproject.io/autopilot-signal-data"
 )
 
 // CfgVars is a struct that holds all the config variables required for K0s

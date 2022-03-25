@@ -51,3 +51,9 @@ konnectivity_build_go_ldflags_extra = "-extldflags=-static"
 
 iptables_version = 1.8.7
 iptables_buildimage = alpine:3.14
+
+autopilot_version = 0.0.1-alpha.1
+autopilot_buildimage = golang:$(go_version)-alpine
+autopilot_build_go_tags = "apparmor,selinux"
+autopilot_build_shim_go_cgo_enabled = 0
+autopilot_build_go_ldflags_extra = "-w -s -extldflags=-static"

@@ -570,6 +570,18 @@ func (c *CmdOpts) createClusterReconcilers(ctx context.Context, cf kubernetes.Cl
 		reconcilers["roleLabeler"] = nodeRole
 	}
 
+	autopilotSaver, err := controller.NewManifestsSaver("autopilot", c.K0sVars.DataDir)
+	if err != nil {
+		logrus.Warnf("failed to initialize autopilot manifests saver: %s", err.Error())
+		return err
+	}
+	autopilot, err := controller.NewAutopilot(autopilotSaver, c.K0sVars, cf)
+	if err != nil {
+		logrus.Warnf("failed to initialize autopilot: %s", err.Error())
+		return err
+	}
+	reconcilers["autopilot"] = autopilot
+
 	// Init and add all components to clusterComponents manager
 	for name, comp := range reconcilers {
 		err := comp.Init(ctx)

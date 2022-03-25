@@ -7,7 +7,7 @@ TARGET_OS ?= linux
 export TARGET_OS
 
 bindir = staging/${TARGET_OS}/bin
-posix_bins = runc kubelet containerd containerd-shim containerd-shim-runc-v1 containerd-shim-runc-v2 kube-apiserver kube-scheduler kube-controller-manager etcd kine konnectivity-server xtables-legacy-multi
+posix_bins = runc kubelet containerd containerd-shim containerd-shim-runc-v1 containerd-shim-runc-v2 kube-apiserver kube-scheduler kube-controller-manager etcd kine konnectivity-server xtables-legacy-multi autopilot
 windows_bins = kubelet.exe kube-proxy.exe
 buildmode = docker
 
@@ -52,6 +52,7 @@ $(bindir)/kine: .container.kine
 $(bindir)/konnectivity-server: .container.konnectivity
 $(bindir)/kubelet $(bindir)/kube-apiserver $(bindir)/kube-scheduler $(bindir)/kube-controller-manager: .container.kubernetes
 $(bindir)/xtables-legacy-multi: .container.iptables
+$(bindir)/autopilot: .container.autopilot
 
 $(bindir)/kubelet.exe $(bindir)/kube-proxy.exe: .container.kubernetes.windows
 
@@ -76,6 +77,7 @@ $(addprefix $(bindir)/, $(bins)): | $(bindir)
 		--build-arg BUILD_GO_FLAGS=$($(patsubst %/Dockerfile,%,$<)_build_go_flags) \
 		--build-arg BUILD_GO_LDFLAGS=$($(patsubst %/Dockerfile,%,$<)_build_go_ldflags) \
 		--build-arg BUILD_GO_LDFLAGS_EXTRA=$($(patsubst %/Dockerfile,%,$<)_build_go_ldflags_extra) \
+		--progress=plain \
 		-f $< .
 	touch $@
 
