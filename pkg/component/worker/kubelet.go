@@ -52,7 +52,6 @@ type Kubelet struct {
 	supervisor          supervisor.Supervisor
 	ClusterDNS          string
 	Labels              []string
-	Taints              []string
 	ExtraArgs           string
 }
 
@@ -137,10 +136,6 @@ func (k *Kubelet) Run(ctx context.Context) error {
 		args["--node-labels"] = strings.Join(k.Labels, ",")
 	}
 
-	if len(k.Taints) > 0 {
-		args["--register-with-taints"] = strings.Join(k.Taints, ",")
-	}
-
 	if runtime.GOOS == "windows" {
 		node, err := getNodeName(ctx)
 		if err != nil {
@@ -182,7 +177,7 @@ func (k *Kubelet) Run(ctx context.Context) error {
 		sockPath := path.Join(k.K0sVars.RunDir, "containerd.sock")
 		args["--container-runtime"] = "remote"
 		args["--container-runtime-endpoint"] = fmt.Sprintf("unix://%s", sockPath)
-		args["--containerd"] = sockPath
+		//args["--containerd"] = sockPath
 	}
 
 	// We only support external providers
