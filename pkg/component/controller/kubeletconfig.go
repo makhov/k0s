@@ -20,27 +20,22 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
-	"os"
-	"path"
-	"path/filepath"
-	"reflect"
-	"strings"
-
 	"github.com/imdario/mergo"
-	"github.com/sirupsen/logrus"
-	"gopkg.in/yaml.v2"
-	corev1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/api/errors"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/util/validation"
-
 	"github.com/k0sproject/k0s/internal/pkg/dir"
 	"github.com/k0sproject/k0s/internal/pkg/templatewriter"
 	"github.com/k0sproject/k0s/pkg/apis/k0s.k0sproject.io/v1beta1"
 	"github.com/k0sproject/k0s/pkg/component"
 	"github.com/k0sproject/k0s/pkg/constant"
 	k8sutil "github.com/k0sproject/k0s/pkg/kubernetes"
+	"github.com/sirupsen/logrus"
+	"gopkg.in/yaml.v2"
+	"io"
+	"k8s.io/apimachinery/pkg/api/errors"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"os"
+	"path"
+	"path/filepath"
+	"reflect"
 )
 
 // Dummy checks so we catch easily if we miss some interface implementation
@@ -54,17 +49,15 @@ type KubeletConfig struct {
 	log              *logrus.Entry
 	k0sVars          constant.CfgVars
 	previousProfiles v1beta1.WorkerProfiles
-	Taints           []string
 }
 
 // NewKubeletConfig creates new KubeletConfig reconciler
-func NewKubeletConfig(k0sVars constant.CfgVars, clientFactory k8sutil.ClientFactoryInterface, taints []string) (*KubeletConfig, error) {
+func NewKubeletConfig(k0sVars constant.CfgVars, clientFactory k8sutil.ClientFactoryInterface) (*KubeletConfig, error) {
 	log := logrus.WithFields(logrus.Fields{"component": "kubeletconfig"})
 	return &KubeletConfig{
 		kubeClientFactory: clientFactory,
 		log:               log,
 		k0sVars:           k0sVars,
-		Taints:            taints,
 	}, nil
 }
 
@@ -134,17 +127,6 @@ func (k *KubeletConfig) createProfiles(clusterSpec *v1beta1.ClusterConfig) (*byt
 	defaultProfile := getDefaultProfile(dnsAddress, clusterSpec.Spec.Network.DualStack.Enabled, clusterSpec.Spec.Network.ClusterDomain)
 	defaultProfile["cgroupsPerQOS"] = true
 	defaultProfile["resolvConf"] = "{{.ResolvConf}}"
-	if len(k.Taints) > 0 {
-		var taints []corev1.Taint
-		for _, taint := range k.Taints {
-			parsedTaint, err := parseTaint(taint)
-			if err != nil {
-				return nil, fmt.Errorf("can't parse taints for profile config map: %v", err)
-			}
-			taints = append(taints, parsedTaint)
-		}
-		defaultProfile["registerWithTaints"] = taints
-	}
 
 	winDefaultProfile := getDefaultProfile(dnsAddress, clusterSpec.Spec.Network.DualStack.Enabled, clusterSpec.Spec.Network.ClusterDomain)
 	winDefaultProfile["cgroupsPerQOS"] = false
@@ -349,54 +331,3 @@ func mergeProfiles(a *unstructuredYamlObject, b unstructuredYamlObject) (unstruc
 
 // Health-check interface
 func (k *KubeletConfig) Healthy() error { return nil }
-
-func parseTaint(st string) (corev1.Taint, error) {
-	var taint corev1.Taint
-
-	var key string
-	var value string
-	var effect corev1.TaintEffect
-
-	parts := strings.Split(st, ":")
-	switch len(parts) {
-	case 1:
-		key = parts[0]
-	case 2:
-		effect = corev1.TaintEffect(parts[1])
-		if err := validateTaintEffect(effect); err != nil {
-			return taint, err
-		}
-
-		partsKV := strings.Split(parts[0], "=")
-		if len(partsKV) > 2 {
-			return taint, fmt.Errorf("invalid taint spec: %v", st)
-		}
-		key = partsKV[0]
-		if len(partsKV) == 2 {
-			value = partsKV[1]
-			if errs := validation.IsValidLabelValue(value); len(errs) > 0 {
-				return taint, fmt.Errorf("invalid taint spec: %v, %s", st, strings.Join(errs, "; "))
-			}
-		}
-	default:
-		return taint, fmt.Errorf("invalid taint spec: %v", st)
-	}
-
-	if errs := validation.IsQualifiedName(key); len(errs) > 0 {
-		return taint, fmt.Errorf("invalid taint spec: %v, %s", st, strings.Join(errs, "; "))
-	}
-
-	taint.Key = key
-	taint.Value = value
-	taint.Effect = effect
-
-	return taint, nil
-}
-
-func validateTaintEffect(effect corev1.TaintEffect) error {
-	if effect != corev1.TaintEffectNoSchedule && effect != corev1.TaintEffectPreferNoSchedule && effect != corev1.TaintEffectNoExecute {
-		return fmt.Errorf("invalid taint effect: %v, unsupported taint effect", effect)
-	}
-
-	return nil
-}

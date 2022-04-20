@@ -541,10 +541,8 @@ func (c *CmdOpts) createClusterReconcilers(ctx context.Context, cf kubernetes.Cl
 	}
 
 	if !stringslice.Contains(c.DisableComponents, constant.KubeletConfigComponentName) {
-		if c.EnableWorker && !c.SingleNode && !c.NoTaints {
-			c.Taints = append(c.Taints, fmt.Sprintf("%s/master=:NoSchedule", constant.NodeRoleLabelNamespace))
-		}
-		kubeletConfig, err := controller.NewKubeletConfig(c.K0sVars, cf, c.Taints)
+
+		kubeletConfig, err := controller.NewKubeletConfig(c.K0sVars, cf)
 		if err != nil {
 			logrus.Warnf("failed to initialize kubelet config reconciler: %s", err.Error())
 			return err
@@ -659,6 +657,9 @@ func (c *CmdOpts) startControllerWorker(ctx context.Context, profile string) err
 	workerCmdOpts.TokenArg = bootstrapConfig
 	workerCmdOpts.WorkerProfile = profile
 	workerCmdOpts.Labels = append(workerCmdOpts.Labels, fmt.Sprintf("%s=control-plane", constant.K0SNodeRoleLabel))
+	if !c.SingleNode && !c.NoTaints {
+		workerCmdOpts.Taints = append(workerCmdOpts.Taints, fmt.Sprintf("%s/master=:NoSchedule", constant.NodeRoleLabelNamespace))
+	}
 	return workerCmdOpts.StartWorker(ctx)
 }
 

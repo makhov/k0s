@@ -34,7 +34,7 @@ var k0sVars = constant.GetConfig("")
 func Test_KubeletConfig(t *testing.T) {
 	dnsAddr, _ := cfg.Spec.Network.DNSAddress()
 	t.Run("default_profile_only", func(t *testing.T) {
-		k, err := NewKubeletConfig(k0sVars, testutil.NewFakeClientFactory(), nil)
+		k, err := NewKubeletConfig(k0sVars, testutil.NewFakeClientFactory())
 		require.NoError(t, err)
 
 		t.Log("starting to run...")
@@ -116,7 +116,7 @@ func Test_KubeletConfig(t *testing.T) {
 }
 
 func defaultConfigWithUserProvidedProfiles(t *testing.T) *KubeletConfig {
-	k, err := NewKubeletConfig(k0sVars, testutil.NewFakeClientFactory(), nil)
+	k, err := NewKubeletConfig(k0sVars, testutil.NewFakeClientFactory())
 	require.NoError(t, err)
 
 	cfgProfileX := map[string]interface{}{
