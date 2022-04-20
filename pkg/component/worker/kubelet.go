@@ -30,6 +30,9 @@ import (
 	"github.com/avast/retry-go"
 	"github.com/docker/libnetwork/resolvconf"
 	"github.com/sirupsen/logrus"
+	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/util/validation"
+	"sigs.k8s.io/kustomize/kyaml/yaml"
 
 	"github.com/k0sproject/k0s/internal/pkg/dir"
 	"github.com/k0sproject/k0s/internal/pkg/flags"
@@ -52,6 +55,7 @@ type Kubelet struct {
 	supervisor          supervisor.Supervisor
 	ClusterDNS          string
 	Labels              []string
+	Taints              []string
 	ExtraArgs           string
 }
 
@@ -63,6 +67,8 @@ type kubeletConfig struct {
 	CgroupsPerQOS      bool
 	ResolvConf         string
 }
+
+type unstructuredYamlObject map[string]interface{}
 
 // Init extracts the needed binaries
 func (k *Kubelet) Init(_ context.Context) error {
@@ -136,6 +142,10 @@ func (k *Kubelet) Run(ctx context.Context) error {
 		args["--node-labels"] = strings.Join(k.Labels, ",")
 	}
 
+	if len(k.Taints) > 0 {
+		args["--register-with-taints"] = strings.Join(k.Taints, ",")
+	}
+
 	if runtime.GOOS == "windows" {
 		node, err := getNodeName(ctx)
 		if err != nil {
@@ -205,6 +215,11 @@ func (k *Kubelet) Run(ctx context.Context) error {
 			logrus.Warnf("failed to get initial kubelet config with join token: %s", err.Error())
 			return err
 		}
+		kubeletconfig, err = k.prepareLocalKubeletConfig(kubeletconfig)
+		if err != nil {
+			logrus.Warnf("failed to prepare local kubelet config: %s", err.Error())
+			return err
+		}
 		tw := templatewriter.TemplateWriter{
 			Name:     "kubelet-config",
 			Template: kubeletconfig,
@@ -242,6 +257,31 @@ func (k *Kubelet) Reconcile() error {
 // Health-check interface
 func (k *Kubelet) Healthy() error { return nil }
 
+func (k *Kubelet) prepareLocalKubeletConfig(kubeletconfig string) (string, error) {
+	var kubeletProfile unstructuredYamlObject
+	err := yaml.Unmarshal([]byte(kubeletconfig), &kubeletProfile)
+	if err != nil {
+		return "", fmt.Errorf("can't unmarshal kubelet config: %v", err)
+	}
+	if len(k.Taints) > 0 {
+		var taints []corev1.Taint
+		for _, taint := range k.Taints {
+			parsedTaint, err := parseTaint(taint)
+			if err != nil {
+				return "", fmt.Errorf("can't parse taints for profile config map: %v", err)
+			}
+			taints = append(taints, parsedTaint)
+		}
+		kubeletProfile["registerWithTaints"] = taints
+	}
+
+	localKubeletConfig, err := yaml.Marshal(kubeletProfile)
+	if err != nil {
+		return "", fmt.Errorf("can't marshal kubelet config: %v", err)
+	}
+	return string(localKubeletConfig), nil
+}
+
 const awsMetaInformationURI = "http://169.254.169.254/latest/meta-data/local-hostname"
 
 func getNodeName(ctx context.Context) (string, error) {
@@ -260,4 +300,55 @@ func getNodeName(ctx context.Context) (string, error) {
 		return "", fmt.Errorf("can't read aws hostname: %v", err)
 	}
 	return string(h), nil
+}
+
+func parseTaint(st string) (corev1.Taint, error) {
+	var taint corev1.Taint
+
+	var key string
+	var value string
+	var effect corev1.TaintEffect
+
+	parts := strings.Split(st, ":")
+	switch len(parts) {
+	case 1:
+		key = parts[0]
+	case 2:
+		effect = corev1.TaintEffect(parts[1])
+		if err := validateTaintEffect(effect); err != nil {
+			return taint, err
+		}
+
+		partsKV := strings.Split(parts[0], "=")
+		if len(partsKV) > 2 {
+			return taint, fmt.Errorf("invalid taint spec: %v", st)
+		}
+		key = partsKV[0]
+		if len(partsKV) == 2 {
+			value = partsKV[1]
+			if errs := validation.IsValidLabelValue(value); len(errs) > 0 {
+				return taint, fmt.Errorf("invalid taint spec: %v, %s", st, strings.Join(errs, "; "))
+			}
+		}
+	default:
+		return taint, fmt.Errorf("invalid taint spec: %v", st)
+	}
+
+	if errs := validation.IsQualifiedName(key); len(errs) > 0 {
+		return taint, fmt.Errorf("invalid taint spec: %v, %s", st, strings.Join(errs, "; "))
+	}
+
+	taint.Key = key
+	taint.Value = value
+	taint.Effect = effect
+
+	return taint, nil
+}
+
+func validateTaintEffect(effect corev1.TaintEffect) error {
+	if effect != corev1.TaintEffectNoSchedule && effect != corev1.TaintEffectPreferNoSchedule && effect != corev1.TaintEffectNoExecute {
+		return fmt.Errorf("invalid taint effect: %v, unsupported taint effect", effect)
+	}
+
+	return nil
 }
