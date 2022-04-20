@@ -142,10 +142,6 @@ func (k *Kubelet) Run(ctx context.Context) error {
 		args["--node-labels"] = strings.Join(k.Labels, ",")
 	}
 
-	if len(k.Taints) > 0 {
-		args["--register-with-taints"] = strings.Join(k.Taints, ",")
-	}
-
 	if runtime.GOOS == "windows" {
 		node, err := getNodeName(ctx)
 		if err != nil {
