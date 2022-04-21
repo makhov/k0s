@@ -237,9 +237,6 @@ func getDefaultProfile(dnsAddress string, dualStack bool, clusterDomain string) 
 				"cacheTTL": "0s",
 				"enabled":  true,
 			},
-			"x509": map[string]interface{}{
-				"clientCAFile": "{{.ClientCAFile}}", // see line 174 explanation
-			},
 		},
 		"authorization": map[string]interface{}{
 			"mode": "Webhook",
@@ -261,13 +258,10 @@ func getDefaultProfile(dnsAddress string, dualStack bool, clusterDomain string) 
 			"TLS_RSA_WITH_AES_128_GCM_SHA256",
 		},
 		"volumeStatsAggPeriod": "0s",
-		"volumePluginDir":      "{{.VolumePluginDir}}", // see line 174 explanation
 		"failSwapOn":           false,
 		"rotateCertificates":   true,
 		"serverTLSBootstrap":   true,
 		"eventRecordQPS":       0,
-		"kubeReservedCgroup":   "{{.KubeReservedCgroup}}",
-		"kubeletCgroups":       "{{.KubeletCgroups}}",
 	}
 	if dualStack {
 		profile["featureGates"] = map[string]bool{
