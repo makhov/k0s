@@ -32,6 +32,7 @@ import (
 	"github.com/sirupsen/logrus"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/validation"
+	kubeletv1beta1 "k8s.io/kubelet/config/v1beta1"
 	"sigs.k8s.io/yaml"
 
 	"github.com/k0sproject/k0s/internal/pkg/dir"
@@ -254,11 +255,17 @@ func (k *Kubelet) Reconcile() error {
 func (k *Kubelet) Healthy() error { return nil }
 
 func (k *Kubelet) prepareLocalKubeletConfig(kubeletconfig string) (string, error) {
-	var kubeletProfile unstructuredYamlObject
-	err := yaml.Unmarshal([]byte(kubeletconfig), &kubeletProfile)
+	var kubeletConfiguration kubeletv1beta1.KubeletConfiguration
+	err := yaml.Unmarshal([]byte(kubeletconfig), &kubeletConfiguration)
 	if err != nil {
 		return "", fmt.Errorf("can't unmarshal kubelet config: %v", err)
 	}
+
+	kubeletConfiguration.Authentication.X509.ClientCAFile = filepath.Join(k.K0sVars.CertRootDir, "ca.crt")
+	kubeletConfiguration.VolumePluginDir = k.K0sVars.KubeletVolumePluginDir
+	kubeletConfiguration.KubeReservedCgroup = "system.slice"
+	kubeletConfiguration.KubeletCgroups = "/system.slice/containerd.service"
+
 	if len(k.Taints) > 0 {
 		var taints []corev1.Taint
 		for _, taint := range k.Taints {
@@ -268,10 +275,10 @@ func (k *Kubelet) prepareLocalKubeletConfig(kubeletconfig string) (string, error
 			}
 			taints = append(taints, parsedTaint)
 		}
-		kubeletProfile["registerWithTaints"] = taints
+		kubeletConfiguration.RegisterWithTaints = taints
 	}
 
-	localKubeletConfig, err := yaml.Marshal(kubeletProfile)
+	localKubeletConfig, err := kubeletConfiguration.Marshal()
 	if err != nil {
 		return "", fmt.Errorf("can't marshal kubelet config: %v", err)
 	}
