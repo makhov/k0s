@@ -278,7 +278,7 @@ func (k *Kubelet) prepareLocalKubeletConfig(kubeletconfig string) (string, error
 		kubeletConfiguration.RegisterWithTaints = taints
 	}
 
-	localKubeletConfig, err := kubeletConfiguration.Marshal()
+	localKubeletConfig, err := yaml.Marshal(kubeletConfiguration)
 	if err != nil {
 		return "", fmt.Errorf("can't marshal kubelet config: %v", err)
 	}
