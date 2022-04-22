@@ -69,8 +69,6 @@ type kubeletConfig struct {
 	ResolvConf         string
 }
 
-type unstructuredYamlObject map[string]interface{}
-
 // Init extracts the needed binaries
 func (k *Kubelet) Init(_ context.Context) error {
 	cmds := []string{"kubelet", "xtables-legacy-multi"}
