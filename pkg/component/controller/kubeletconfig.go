@@ -128,7 +128,6 @@ func (k *KubeletConfig) createProfiles(clusterSpec *v1beta1.ClusterConfig) (*byt
 	manifest := bytes.NewBuffer([]byte{})
 	defaultProfile := getDefaultProfile(dnsAddress, clusterSpec.Spec.Network.DualStack.Enabled, clusterSpec.Spec.Network.ClusterDomain)
 	defaultProfile["cgroupsPerQOS"] = true
-	defaultProfile["resolvConf"] = "{{.ResolvConf}}"
 
 	winDefaultProfile := getDefaultProfile(dnsAddress, clusterSpec.Spec.Network.DualStack.Enabled, clusterSpec.Spec.Network.ClusterDomain)
 	winDefaultProfile["cgroupsPerQOS"] = false
