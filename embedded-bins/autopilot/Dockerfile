@@ -1,4 +1,4 @@
-ARG BUILDIMAGE=golang:1.17-alpine
+ARG BUILDIMAGE=golang:1.18-alpine
 FROM $BUILDIMAGE AS build
 
 ARG VERSION
@@ -16,8 +16,7 @@ RUN apk upgrade -U -a && apk add \
 COPY key /root/.ssh/id_rsa
 RUN echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
 RUN mkdir -p $GOPATH/src/github.com/k0sproject/autopilot
-# RUN git clone -b v$VERSION --depth=1 git@github.com:k0sproject/autopilot.git $GOPATH/src/github.com/k0sproject/autopilot
-RUN git clone -b 13-update --depth=1 git@github.com:k0sproject/autopilot.git $GOPATH/src/github.com/k0sproject/autopilot
+RUN git clone -b v$VERSION --depth=1 git@github.com:k0sproject/autopilot.git $GOPATH/src/github.com/k0sproject/autopilot
 WORKDIR /go/src/github.com/k0sproject/autopilot
 RUN go build -o autopilot ./cmd/autopilot
 RUN ls -la
