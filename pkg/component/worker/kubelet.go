@@ -34,6 +34,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/validation"
 	kubeletv1beta1 "k8s.io/kubelet/config/v1beta1"
+	"k8s.io/utils/pointer"
 	"sigs.k8s.io/yaml"
 
 	"github.com/k0sproject/k0s/internal/pkg/dir"
@@ -210,7 +211,7 @@ func (k *Kubelet) Run(ctx context.Context) error {
 			logrus.Warnf("failed to get initial kubelet config with join token: %s", err.Error())
 			return err
 		}
-		kubeletconfig, err = k.prepareLocalKubeletConfig(kubeletconfig)
+		kubeletconfig, err = k.prepareLocalKubeletConfig(kubeletconfig, kubeletConfigData)
 		if err != nil {
 			logrus.Warnf("failed to prepare local kubelet config: %s", err.Error())
 			return err
@@ -246,17 +247,19 @@ func (k *Kubelet) Reconcile() error {
 // Health-check interface
 func (k *Kubelet) Healthy() error { return nil }
 
-func (k *Kubelet) prepareLocalKubeletConfig(kubeletconfig string) (string, error) {
+func (k *Kubelet) prepareLocalKubeletConfig(kubeletconfig string, kubeletConfigData kubeletConfig) (string, error) {
 	var kubeletConfiguration kubeletv1beta1.KubeletConfiguration
 	err := yaml.Unmarshal([]byte(kubeletconfig), &kubeletConfiguration)
 	if err != nil {
 		return "", fmt.Errorf("can't unmarshal kubelet config: %v", err)
 	}
 
-	kubeletConfiguration.Authentication.X509.ClientCAFile = filepath.Join(k.K0sVars.CertRootDir, "ca.crt")
-	kubeletConfiguration.VolumePluginDir = k.K0sVars.KubeletVolumePluginDir
-	kubeletConfiguration.KubeReservedCgroup = "system.slice"
-	kubeletConfiguration.KubeletCgroups = "/system.slice/containerd.service"
+	kubeletConfiguration.Authentication.X509.ClientCAFile = kubeletConfigData.ClientCAFile // filepath.Join(k.K0sVars.CertRootDir, "ca.crt")
+	kubeletConfiguration.VolumePluginDir = kubeletConfigData.VolumePluginDir               // k.K0sVars.KubeletVolumePluginDir
+	kubeletConfiguration.KubeReservedCgroup = kubeletConfigData.KubeReservedCgroup
+	kubeletConfiguration.KubeletCgroups = kubeletConfigData.KubeletCgroups
+	kubeletConfiguration.ResolverConfig = pointer.String(kubeletConfigData.ResolvConf)
+	kubeletConfiguration.CgroupsPerQOS = pointer.Bool(kubeletConfigData.CgroupsPerQOS)
 
 	if len(k.Taints) > 0 {
 		var taints []corev1.Taint
