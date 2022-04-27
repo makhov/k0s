@@ -19,6 +19,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"path"
@@ -38,7 +39,6 @@ import (
 	"github.com/k0sproject/k0s/internal/pkg/dir"
 	"github.com/k0sproject/k0s/internal/pkg/flags"
 	"github.com/k0sproject/k0s/internal/pkg/stringmap"
-	"github.com/k0sproject/k0s/internal/pkg/templatewriter"
 	"github.com/k0sproject/k0s/pkg/assets"
 	"github.com/k0sproject/k0s/pkg/constant"
 	"github.com/k0sproject/k0s/pkg/supervisor"
@@ -215,13 +215,7 @@ func (k *Kubelet) Run(ctx context.Context) error {
 			logrus.Warnf("failed to prepare local kubelet config: %s", err.Error())
 			return err
 		}
-		tw := templatewriter.TemplateWriter{
-			Name:     "kubelet-config",
-			Template: kubeletconfig,
-			Data:     kubeletConfigData,
-			Path:     kubeletConfigPath,
-		}
-		err = tw.Write()
+		err = ioutil.WriteFile(kubeletConfigPath, []byte(kubeletconfig), 0644)
 		if err != nil {
 			return fmt.Errorf("failed to write kubelet config: %w", err)
 		}
