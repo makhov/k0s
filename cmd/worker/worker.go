@@ -199,7 +199,7 @@ func (c *Command) Start(ctx context.Context) error {
 		CertManager: certManager,
 	})
 
-	componentManager.Add(ctx, worker.NewNodeLocalLoadBalancer(staticPods))
+	componentManager.Add(ctx, worker.NewNodeLocalLoadBalancer(&c.K0sVars, staticPods))
 
 	// extract needed components
 	if err := componentManager.Init(ctx); err != nil {
