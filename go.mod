@@ -274,7 +274,7 @@ require (
 // Kubernetes deps, split into own section for easier maintenance
 require (
 	k8s.io/api v0.24.0-beta.0
-	k8s.io/apimachinery v0.24.0-beta.0
+	k8s.io/apimachinery v0.25.0-alpha.0
 	k8s.io/cli-runtime v0.24.0-beta.0
 	k8s.io/client-go v0.24.0-beta.0
 	k8s.io/cloud-provider v0.24.0-beta.0
