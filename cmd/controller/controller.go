@@ -338,13 +338,21 @@ func (c *CmdOpts) startController(ctx context.Context) error {
 			return fmt.Errorf("failed to initialize helm manifests saver: %w", err)
 		}
 
-		c.ClusterComponents.Add(ctx, controller.NewCRD(helmSaver))
+		c.ClusterComponents.Add(ctx, controller.NewCRD(helmSaver, []string{"helm"}))
 		c.ClusterComponents.Add(ctx, controller.NewExtensionsController(
 			helmSaver,
 			c.K0sVars,
 			adminClientFactory,
 			leaderElector,
 		))
+	}
+
+	if !stringslice.Contains(c.DisableComponents, constant.AutopilotComponentName) {
+		autopilotSaver, err := controller.NewManifestsSaver("autopilot", c.K0sVars.DataDir)
+		if err != nil {
+			return fmt.Errorf("failed to initialize reconcilers manifests saver: %s", err.Error())
+		}
+		c.ClusterComponents.Add(ctx, controller.NewCRD(autopilotSaver, []string{"autopilot"}))
 	}
 
 	if c.NodeConfig.Spec.API.TunneledNetworkingMode {
@@ -527,7 +535,7 @@ func (c *CmdOpts) startController(ctx context.Context) error {
 	return os.Remove(c.CfgFile)
 }
 
-func (c *CmdOpts) startControllerWorker(ctx context.Context, profile string) error {
+func (c *CmdOpts) startControllerWorker(ctx context.Context, profile string, autopilotRoot aproot.Root) error {
 	var bootstrapConfig string
 	if !file.Exists(c.K0sVars.KubeletAuthConfigPath) {
 		// wait for controller to start up

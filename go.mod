@@ -4,7 +4,6 @@ go 1.18
 
 // k0s
 require (
-	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/Masterminds/sprig v2.22.0+incompatible
 	github.com/Microsoft/hcsshim v0.9.3
 	github.com/asaskevich/govalidator v0.0.0-20200428143746-21a406dcc535
@@ -52,11 +51,9 @@ require (
 	golang.org/x/sys v0.0.0-20220422013727-9388b58f7150
 	google.golang.org/grpc v1.47.0
 	gopkg.in/fsnotify.v1 v1.4.7
-	gopkg.in/yaml.v2 v2.4.0
-	k8s.io/apiextensions-apiserver v0.24.0
-	k8s.io/kubernetes v1.24.0
-	sigs.k8s.io/controller-runtime v0.12.0
 	helm.sh/helm/v3 v3.9.0
+	k8s.io/apiextensions-apiserver v0.24.1
+	k8s.io/kubernetes v1.24.1
 	sigs.k8s.io/controller-runtime v0.12.1
 	sigs.k8s.io/yaml v1.3.0
 )
@@ -75,6 +72,11 @@ require (
 	k8s.io/kubelet v0.24.1
 	k8s.io/mount-utils v0.24.1
 	k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9
+)
+
+require (
+	github.com/Masterminds/semver/v3 v3.1.1
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (
@@ -281,16 +283,10 @@ require (
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0 // indirect
-	k8s.io/apiextensions-apiserver v0.24.1 // indirect
 	k8s.io/apiserver v0.24.1 // indirect
 	k8s.io/component-helpers v0.24.1 // indirect
 	k8s.io/controller-manager v0.24.1 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
-	k8s.io/apiserver v0.24.0 // indirect
-	k8s.io/component-helpers v0.24.0 // indirect
-	k8s.io/controller-manager v0.24.0 // indirect
 	k8s.io/klog/v2 v2.60.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20220328201542-3ee0da9b0b42 // indirect
 	k8s.io/metrics v0.24.1 // indirect
