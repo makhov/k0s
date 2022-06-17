@@ -118,7 +118,7 @@ func (n *nodeLocalLoadBalancer) Stop() error {
 	case *nllbStopped:
 		return nil
 	default:
-		return fmt.Errorf("node_local_load_balancer component is not yet started (%s)", state)
+		return fmt.Errorf("cannot stop (%s)", state)
 	}
 }
 
@@ -252,13 +252,26 @@ func (n *nodeLocalLoadBalancer) init(state *nllbCreated) error {
 		return fmt.Errorf("node_local_load_balancer: failed to claim static pod: %w", err)
 	}
 
-	n.store(&nllbInitialized{
+	initialized := &nllbInitialized{
 		&nllbConfig{
 			configDir:       configDir,
 			loadBalancerPod: loadBalancerPod,
 		},
 		nil,
-	})
+	}
+
+	// FIXME pretend reconciliation
+	if err := n.reconcile(initialized.nllbConfig, &initialized.nllbPodSpec, &v1beta1.ClusterSpec{
+		API: &v1beta1.APISpec{
+			Address: "127.0.0.1:6443",
+		},
+		Images: v1beta1.DefaultClusterImages(),
+	}); err != nil {
+		loadBalancerPod.Drop()
+		return err
+	}
+
+	n.store(initialized)
 	return nil
 }
 
@@ -315,12 +328,13 @@ func (n *nodeLocalLoadBalancer) reconcile(c *nllbConfig, podSpec **nllbPodSpec, 
 func (n *nodeLocalLoadBalancer) start(state *nllbInitialized) error {
 	started := &nllbStarted{state}
 
-	if err := n.provision(started); err != nil {
-		return fmt.Errorf("node_local_load_balancer: cannot start: %w", err)
+	if started.nllbPodSpec != nil {
+		if err := n.provision(started); err != nil {
+			return fmt.Errorf("node_local_load_balancer: cannot start: %w", err)
+		}
 	}
 
 	n.store(started)
-	n.log.Info("Provisioned load balancer Pod")
 	return nil
 }
 
@@ -437,7 +451,12 @@ func (n *nodeLocalLoadBalancer) provision(state *nllbStarted) error {
 		},
 	}
 
-	return state.loadBalancerPod.SetManifest(manifest)
+	if err := state.loadBalancerPod.SetManifest(manifest); err != nil {
+		return err
+	}
+
+	n.log.Info("Provisioned static load balancer Pod")
+	return nil
 }
 
 func (n *nodeLocalLoadBalancer) createNewEnvoyConfigFile(dir string, reconciled *nllbPodSpec) (string, error) {
