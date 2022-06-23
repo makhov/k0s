@@ -32,6 +32,7 @@ import (
 
 	"github.com/k0sproject/k0s/internal/pkg/dir"
 	"github.com/k0sproject/k0s/pkg/apis/k0s.k0sproject.io/v1beta1"
+	"github.com/k0sproject/k0s/pkg/applier"
 	"github.com/k0sproject/k0s/pkg/component"
 	"github.com/k0sproject/k0s/pkg/constant"
 	"go.uber.org/multierr"
@@ -389,6 +390,7 @@ func (n *NodeLocalLoadBalancer) provision(c *nllbConfig, state *nllbRecoState) e
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "nllb",
 			Namespace: "kube-system",
+			Labels:    applier.CommonLabels("nllb"),
 		},
 		Spec: corev1.PodSpec{
 			HostNetwork: true,

@@ -38,6 +38,8 @@ import (
 	"github.com/k0sproject/k0s/pkg/component"
 	"github.com/k0sproject/k0s/pkg/component/controller"
 	"github.com/k0sproject/k0s/pkg/component/controller/clusterconfig"
+	"github.com/k0sproject/k0s/pkg/component/controller/leaderelector"
+	"github.com/k0sproject/k0s/pkg/component/controller/workerconfig"
 	"github.com/k0sproject/k0s/pkg/component/status"
 	"github.com/k0sproject/k0s/pkg/component/worker"
 	"github.com/k0sproject/k0s/pkg/config"
@@ -211,15 +213,15 @@ func (c *command) start(ctx context.Context) error {
 	}
 
 	var leaderElector interface {
-		controller.LeaderElector
+		leaderelector.Interface
 		component.Component
 	}
 
 	// One leader elector per controller
 	if !c.SingleNode {
-		leaderElector = controller.NewLeasePoolLeaderElector(adminClientFactory)
+		leaderElector = leaderelector.NewLeasePoolLeaderElector(adminClientFactory)
 	} else {
-		leaderElector = &controller.DummyLeaderElector{Leader: true}
+		leaderElector = &leaderelector.Dummy{Leader: true}
 	}
 	c.NodeComponents.Add(ctx, leaderElector)
 
@@ -425,8 +427,14 @@ func (c *command) start(ctx context.Context) error {
 		c.ClusterComponents.Add(ctx, metrics)
 	}
 
-	if !slices.Contains(c.DisableComponents, constant.KubeletConfigComponentName) {
-		c.ClusterComponents.Add(ctx, controller.NewKubeletConfig(c.K0sVars, adminClientFactory))
+	if !slices.Contains(c.DisableComponents, constant.WorkerConfigComponentName) {
+		if !slices.Contains(c.DisableComponents, constant.KubeletConfigComponentName) {
+			c.ClusterComponents.Add(ctx, workerconfig.NewReconciler(c.K0sVars, adminClientFactory))
+		} else {
+			logrus.Warnf("Usage of deprecated component name %q, please switch to %q",
+				constant.KubeletConfigComponentName, constant.WorkerConfigComponentName,
+			)
+		}
 	}
 
 	if !slices.Contains(c.DisableComponents, constant.SystemRbacComponentName) {
