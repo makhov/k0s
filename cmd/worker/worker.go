@@ -148,6 +148,7 @@ func (c *Command) Start(ctx context.Context) error {
 
 		reconciler := nllb.NewReconciler(&c.K0sVars, sp, envoyProxyImage, pullPolicy)
 		kubeletKubeconfig = reconciler.GetKubeletKubeconfig()
+		staticPods = sp
 
 		componentManager.Add(ctx, sp)
 		componentManager.Add(ctx, reconciler)
