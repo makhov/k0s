@@ -54,7 +54,7 @@ require (
 	golang.org/x/tools v0.1.12
 	google.golang.org/grpc v1.49.0
 	gopkg.in/yaml.v2 v2.4.0
-	helm.sh/helm/v3 v3.9.2
+	helm.sh/helm/v3 v3.9.4
 )
 
 // Kubernetes
@@ -129,6 +129,7 @@ require (
 	github.com/docker/go-units v0.4.0 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/emicklei/go-restful v2.9.5+incompatible // indirect
+	github.com/emicklei/go-restful/v3 v3.8.0 // indirect
 	github.com/envoyproxy/go-control-plane v0.10.2-0.20220325020618-49ff273808a1 // indirect
 	github.com/envoyproxy/protoc-gen-validate v0.6.2 // indirect
 	github.com/exponent-io/jsonpath v0.0.0-20151013193312-d6023ce2651d // indirect
@@ -276,7 +277,7 @@ require (
 	k8s.io/component-helpers v0.24.4 // indirect
 	k8s.io/controller-manager v0.24.4 // indirect
 	k8s.io/klog/v2 v2.60.1 // indirect
-	k8s.io/kube-openapi v0.0.0-20220328201542-3ee0da9b0b42 // indirect
+	k8s.io/kube-openapi v0.0.0-20220627174259-011e075b9cb8 // indirect
 	k8s.io/metrics v0.24.4 // indirect
 	oras.land/oras-go v1.2.0 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.30 // indirect
