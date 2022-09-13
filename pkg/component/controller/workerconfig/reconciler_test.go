@@ -52,7 +52,7 @@ type arr = []any
 func TestReconciler_ResourceGeneration(t *testing.T) {
 	cleaner := new(mockCleaner)
 	clients := testutil.NewFakeClientFactory()
-	underTest := NewReconciler(constant.GetConfig(t.TempDir()), clients)
+	underTest := NewReconciler(constant.GetConfig(t.TempDir()), clients, "99.99.99.99", true)
 	underTest.cleaner = cleaner
 
 	client, err := clients.GetClient()
@@ -228,7 +228,7 @@ func TestReconciler_ReconcilesOnChangesOnly(t *testing.T) {
 	cluster := v1beta1.DefaultClusterConfig(nil)
 	cleaner := new(mockCleaner)
 	clients := testutil.NewFakeClientFactory()
-	underTest := NewReconciler(constant.GetConfig(t.TempDir()), clients)
+	underTest := NewReconciler(constant.GetConfig(t.TempDir()), clients, "99.99.99.99", true)
 	underTest.cleaner = cleaner
 
 	log := logrus.New()
@@ -310,7 +310,7 @@ func TestReconciler_Cleaner_CleansUpManifestsOnInit(t *testing.T) {
 	require.NoError(t, os.WriteFile(file, []byte("foo"), 0644))
 	require.NoError(t, os.WriteFile(unrelatedFile, []byte("foo"), 0644))
 
-	underTest := NewReconciler(k0sVars, testutil.NewFakeClientFactory())
+	underTest := NewReconciler(k0sVars, testutil.NewFakeClientFactory(), "99.99.99.99", true)
 
 	t.Run("leaves_unrelated_files_alone", func(t *testing.T) {
 		assert.NoError(t, underTest.Init(context.TODO()))
@@ -372,7 +372,7 @@ func makeKubeletConfig(t *testing.T, mods ...func(obj)) string {
 				},
 			},
 			"clusterDNS": arr{
-				"10.254.254.10",
+				"99.99.99.99",
 			},
 			"clusterDomain":                    "test.local",
 			"cpuManagerReconcilePeriod":        "0s",

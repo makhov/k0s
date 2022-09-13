@@ -21,6 +21,7 @@ import (
 	"context"
 	"errors"
 	"io/fs"
+	"net"
 	"os"
 	"path/filepath"
 	"testing"
@@ -30,8 +31,8 @@ import (
 	"github.com/k0sproject/k0s/pkg/constant"
 
 	corev1 "k8s.io/api/core/v1"
-	"k8s.io/client-go/tools/clientcmd"
 
+	"github.com/avast/retry-go"
 	"github.com/sirupsen/logrus"
 	"github.com/sirupsen/logrus/hooks/test"
 	"github.com/stretchr/testify/assert"
@@ -40,54 +41,25 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-const foo = `
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURBRENDQWVpZ0F3SUJBZ0lVSjZiUG5GQVROd2xRaGp4THJ6R2FiSElaRHFNd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0dERVdNQlFHQTFVRUF4TU5hM1ZpWlhKdVpYUmxjeTFqWVRBZUZ3MHlNakE0TXpFd05qTTBNREJhRncwegpNakE0TWpnd05qTTBNREJhTUJneEZqQVVCZ05WQkFNVERXdDFZbVZ5Ym1WMFpYTXRZMkV3Z2dFaU1BMEdDU3FHClNJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUNqZGdNcENaQjRzalAxNlNIYk5RUGxKY3JnYk9tcmNvRzAKcTVTQ1J3aDQ0a3c1dStrKzREUUg2S2FRcVlTTnUxdmtNTTRjQlNPRWJKVTFWSWczZlRqRnFGL3ZkYUwwSkpXWAplazc3bzlld01pZzl2VGpOelN0aXd1U3BEckR2Zld5RGVrc3hSaGIvSmxiMTV2clRZbFlmUkJVaXVUTE9LL3NJCkZFWTlVTzZXU2duR2dhR3dGRjIyRnFVMFc0MWozVi93Rjd5SWhJSnF3dlo3THE4NnAzdzNSTmZ5RzhZODI1REQKZlNrTThYNDV2QXREb25haDI0Y1VkUWdkSWJGNE9LSDU4bHJMUE92R1VwMDh4d3B0OXJQUmJiVG00d010TkVSawptb1dDbklBR2I0alREQjhaVElJenhjZTFsS0wwUmV2UU40SlJ1WkI3RWJzNjRBZnFlMFdqQWdNQkFBR2pRakJBCk1BNEdBMVVkRHdFQi93UUVBd0lCQmpBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJUa0hUZS8KM0FRNEk2MXNlMmRKUWZ3NHJDdHEwREFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBTXVsMTJjRVp6U1c5L2RsKwpEWkxETi8zcURuMFE1T1EyaHBPNXIrUFFCaThIeWdzb3ducFhlWlNOZ3YxS0ZzVjl6MjNybzBsSVY2Q3k5U0s5CkRQU0huTWlEMVpSemgwbE5yMjB0RE1jeTR3Z2V5TmFjUFdJcnNVL25ZWlkyK0xKMTZpOE9pQTNMV0xPaGlvUkwKd2xKOWltMldpVW0vNFdVRG5VZnNZQmdxQ0htMjNadlRSb3NnVWNxaWdJR2g5SEVLZnNhcHBTU2R1SzBNMjhHZApqY2lmaEVmQnQyV1pSNGlZd2M1YStHNEZEc2NGUW9SRkc1SGFab2EvbzVLZklLMXZVa0xnbVVDTFhUd2E5UnhkCkp4T2QvRmJWTVA2cVJNa09vYlFLbmpNNklScGd6NHA5bWdWaTFFOHE3dFV0L1VGVkpwZTJVWkdJRmo4dWpkeE0KbnpxSDhRPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
-    server: https://10.70.123.30:6443
-  name: default-cluster
-contexts:
-- context:
-    cluster: default-cluster
-    namespace: default
-    user: default-auth
-  name: default-context
-current-context: default-context
-kind: Config
-preferences: {}
-users:
-- name: default-auth
-#  user:
-#    client-certificate: /var/lib/k0s/kubelet/pki/kubelet-client-current.pem
-#    client-key: /var/lib/k0s/kubelet/pki/kubelet-client-current.pem
-`
-
-func TestFoo(t *testing.T) {
-
-	f := filepath.Join(t.TempDir(), "kubeconfig")
-	require.NoError(t, os.WriteFile(f, []byte(foo), 0400))
-
-	var x *clientcmd.ConfigOverrides
-	// x := &clientcmd.ConfigOverrides{ClusterInfo: clientcmdapi.Cluster{Server: ""}}
-	cfg, err := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
-		&clientcmd.ClientConfigLoadingRules{ExplicitPath: f}, x).ClientConfig()
-	require.NoError(t, err)
-
-	t.Log(cfg.Host)
-	t.Log(cfg.APIPath)
-
-	t.Fail()
-}
-
 func TestPodReconciler_ConfigMgmt(t *testing.T) {
-	newTestInstance := func(dataDir string) *Reconciler {
+	newTestInstance := func(dataDir string) (*NllbReconciler, *staticPodMock) {
 		staticPod := new(staticPodMock)
 		staticPod.On("Drop").Return()
 
 		staticPods := new(staticPodsMock)
 		staticPods.On("ClaimStaticPod", mock.Anything, mock.Anything).Return(staticPod, nil)
-		return NewReconciler(&constant.CfgVars{DataDir: dataDir}, staticPods, v1beta1.ImageSpec{}, corev1.PullNever)
+		reconciler, err := NewReconciler(
+			&constant.CfgVars{DataDir: dataDir},
+			staticPods,
+			&v1beta1.NodeLocalLoadBalancer{
+				Type:       v1beta1.NllbTypeEnvoyProxy,
+				EnvoyProxy: v1beta1.DefaultEnvoyProxy(nil),
+			},
+			1337,
+			corev1.PullNever,
+		)
+		require.NoError(t, err)
+		return reconciler, staticPod
 	}
 
 	t.Run("configDir", func(t *testing.T) {
@@ -103,7 +75,7 @@ func TestPodReconciler_ConfigMgmt(t *testing.T) {
 				nllbDir := filepath.Join(dataDir, "nllb")
 				test.prepare(t, nllbDir)
 
-				underTest := newTestInstance(dataDir)
+				underTest, _ := newTestInstance(dataDir)
 				err := underTest.Init(context.TODO())
 				require.NoError(t, err)
 
@@ -119,7 +91,7 @@ func TestPodReconciler_ConfigMgmt(t *testing.T) {
 			nllbDir := filepath.Join(dataDir, "nllb")
 			require.NoError(t, os.WriteFile(nllbDir, []byte("obstructed"), 0777))
 
-			underTest := newTestInstance(dataDir)
+			underTest, _ := newTestInstance(dataDir)
 			err := underTest.Init(context.TODO())
 
 			require.Error(t, err)
@@ -131,26 +103,52 @@ func TestPodReconciler_ConfigMgmt(t *testing.T) {
 		// given
 		dataDir := t.TempDir()
 		envoyConfig := filepath.Join(dataDir, "nllb", "envoy", "envoy.yaml")
+		require.NoError(t, os.MkdirAll(filepath.Join(dataDir, "nllb"), 0700))
+		assert.NoError(t, os.WriteFile(
+			filepath.Join(dataDir, "nllb", "api-servers.yaml"),
+			[]byte(`[{"host":"127.10.10.1", "port": 6443}]`),
+			0400,
+		))
 
 		// when
-		underTest := newTestInstance(dataDir)
+		underTest, staticPod := newTestInstance(dataDir)
 		t.Cleanup(func() {
 			assert.NoError(t, underTest.Stop())
 			assert.NoFileExists(t, envoyConfig)
 		})
 		err := underTest.Init(context.TODO())
 		require.NoError(t, err)
+
+		staticPod.On("SetManifest", mock.AnythingOfType("v1.Pod")).Return(nil)
 		err = underTest.Start(context.TODO())
 		require.NoError(t, err)
 
 		// then
-		assert.FileExists(t, envoyConfig)
+		assert.NoError(t,
+			retry.Do(func() error {
+				stat, err := os.Stat(envoyConfig)
+				if os.IsNotExist(err) {
+					return err
+				}
+
+				if err == nil && stat.IsDir() {
+					err = errors.New("expected a file")
+				}
+
+				if err != nil {
+					return retry.Unrecoverable(err)
+				}
+
+				return nil
+			}, retry.LastErrorOnly(true)),
+			"Expected to see an Envoy configuration file",
+		)
+
 		configBytes, err := os.ReadFile(envoyConfig)
 		if assert.NoError(t, err) {
 			var yamlConfig any
-			assert.NoError(t, yaml.Unmarshal(configBytes, &yamlConfig), "invalid YAML in config file")
+			assert.NoError(t, yaml.Unmarshal(configBytes, &yamlConfig), "invalid YAML in config file: %s", string(configBytes))
 		}
-
 	})
 }
 
@@ -164,7 +162,20 @@ func TestPodReconciler_Lifecycle(t *testing.T) {
 	staticPods := new(staticPodsMock)
 	staticPods.On("ClaimStaticPod", mock.Anything, mock.Anything).Return(staticPod, nil)
 
-	underTest := NewReconciler(&constant.CfgVars{DataDir: t.TempDir()}, staticPods, v1beta1.ImageSpec{}, corev1.PullNever)
+	dataDir := t.TempDir()
+	underTest, err := NewReconciler(
+		&constant.CfgVars{DataDir: dataDir},
+		staticPods,
+		&v1beta1.NodeLocalLoadBalancer{
+			Type: v1beta1.NllbTypeEnvoyProxy,
+			EnvoyProxy: &v1beta1.EnvoyProxy{
+				Image: v1beta1.DefaultEnvoyProxyImage(nil),
+			},
+		},
+		1337,
+		corev1.PullNever,
+	)
+	require.NoError(t, err)
 	underTest.log = log
 
 	t.Run("fails_to_start_without_init", func(t *testing.T) {
@@ -184,13 +195,13 @@ func TestPodReconciler_Lifecycle(t *testing.T) {
 		}
 	})
 
-	t.Run("stop_before_start_fails", func(t *testing.T) {
-		err := underTest.Stop()
-		require.Error(t, err)
-		assert.Equal(t, "node_local_load_balancer component is not yet running (initialized)", err.Error())
-	})
-
 	t.Run("starts", func(runT *testing.T) {
+		assert.NoError(t, os.WriteFile(
+			filepath.Join(dataDir, "nllb", "api-servers.yaml"),
+			[]byte(`[{"host":"127.10.10.1", "port": 6443}]`),
+			0400,
+		))
+
 		if assert.NoError(runT, underTest.Start(context.TODO())) {
 			t.Cleanup(func() { assert.NoError(t, underTest.Stop()) })
 		}
@@ -264,12 +275,16 @@ func TestPodReconciler_EnvoyBootstrapConfig_Template(t *testing.T) {
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			var state podState
+			state.Shared.LBAddr = net.IPv6loopback
 			state.LoadBalancer.UpstreamServers = test.servers
 			assert.NoError(t, envoyBootstrapConfig.Execute(&buf, &state))
 			t.Logf("rendered: %s", buf.String())
 
 			var parsed jo
 			require.NoError(t, yaml.Unmarshal(buf.Bytes(), &parsed), "invalid YAML in envoy config")
+
+			ip := parsed.o("static_resources").a("listeners").o(0).o("address").o("socket_address")["address"]
+			assert.Equal(t, "::1", ip)
 
 			eps := parsed.o("static_resources").a("clusters").o(0).o("load_assignment").a("endpoints").o(0).a("lb_endpoints")
 			assert.Len(t, eps, test.expected)

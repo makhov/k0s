@@ -17,18 +17,19 @@ limitations under the License.
 package workerconfig
 
 import (
-	"fmt"
-
 	"github.com/k0sproject/k0s/pkg/apis/k0s.k0sproject.io/v1beta1"
-	"github.com/sirupsen/logrus"
 
 	corev1 "k8s.io/api/core/v1"
+
+	"github.com/imdario/mergo"
+	"github.com/sirupsen/logrus"
 )
 
 // snapshot holds a snapshot of a cluster's worker config.
 type snapshot struct {
 	apiServers
 	*configSnapshot
+	dnsAddress string
 }
 
 // configSnapshot holds a snapshot of the cluster configuration and the worker profiles.
@@ -39,9 +40,9 @@ type configSnapshot struct {
 
 // specSnapshot holds a snapshot of the cluster configuration.
 type specSnapshot struct {
-	dnsAddress             string
 	clusterDomain          string
 	nodeLocalLoadBalancer  *v1beta1.NodeLocalLoadBalancer
+	konnectivityAgentPort  uint16
 	defaultImagePullPolicy corev1.PullPolicy
 }
 
@@ -78,19 +79,37 @@ func (s *snapshot) isComplete() bool {
 	return len(s.apiServers) > 0 && s.configSnapshot != nil
 }
 
-func makeConfigSnapshot(log logrus.FieldLogger, spec *v1beta1.ClusterSpec) (*configSnapshot, error) {
-	dnsAddress, err := spec.Network.DNSAddress()
-	if err != nil {
-		return nil, fmt.Errorf("failed to get DNS address from ClusterConfig: %w", err)
-	}
-
+func makeConfigSnapshot(log logrus.FieldLogger, spec *v1beta1.ClusterSpec, konnectivityEnabled bool) (*configSnapshot, error) {
 	snap := &configSnapshot{
 		specSnapshot: specSnapshot{
-			dnsAddress:             dnsAddress,
 			clusterDomain:          spec.Network.ClusterDomain,
-			nodeLocalLoadBalancer:  spec.Network.NodeLocalLoadBalancer.DefaultedCopy(spec.Images),
 			defaultImagePullPolicy: corev1.PullIfNotPresent,
 		},
+	}
+
+	if spec.Network != nil &&
+		spec.Network.NodeLocalLoadBalancer.IsEnabled() &&
+		spec.ValidateNodeLocalLoadBalancer(nil) == nil {
+		src := spec.Network.NodeLocalLoadBalancer
+		dst := &v1beta1.NodeLocalLoadBalancer{Type: src.Type}
+
+		if dst.Type == v1beta1.NllbTypeEnvoyProxy {
+			dst.EnvoyProxy = src.EnvoyProxy.DeepCopy()
+			if err := mergo.Merge(dst.EnvoyProxy, v1beta1.DefaultEnvoyProxy(spec.Images)); err != nil {
+				return nil, err
+			}
+
+			if !konnectivityEnabled {
+				dst.EnvoyProxy.KonnectivityAgentBindPort = nil
+			}
+		}
+
+		snap.specSnapshot.nodeLocalLoadBalancer = dst
+		if spec.Konnectivity != nil {
+			snap.specSnapshot.konnectivityAgentPort = uint16(spec.Konnectivity.AgentPort)
+		} else {
+			snap.specSnapshot.konnectivityAgentPort = uint16(v1beta1.DefaultKonnectivitySpec().AgentPort)
+		}
 	}
 
 	switch spec.Images.DefaultPullPolicy {

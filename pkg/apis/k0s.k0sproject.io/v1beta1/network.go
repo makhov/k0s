@@ -21,11 +21,10 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/asaskevich/govalidator"
+	"k8s.io/apimachinery/pkg/util/validation"
+	"k8s.io/apimachinery/pkg/util/validation/field"
 	utilnet "k8s.io/utils/net"
 )
-
-var _ Validateable = (*Network)(nil)
 
 // Network defines the network related config options
 type Network struct {
@@ -42,8 +41,11 @@ type Network struct {
 
 	// Pod network CIDR to use in the cluster
 	PodCIDR string `json:"podCIDR"`
+
 	// Network provider (valid values: calico, kuberouter, or custom)
+	// +kubebuilder:validation:Enum=calico;kuberouter;custom
 	Provider string `json:"provider"`
+
 	// Network CIDR to use for cluster VIP services
 	ServiceCIDR string `json:"serviceCIDR,omitempty"`
 	// Cluster Domain
@@ -68,21 +70,23 @@ func DefaultNetwork(clusterImages *ClusterImages) *Network {
 func (n *Network) Validate() []error {
 	var errors []error
 	if n.Provider != "calico" && n.Provider != "custom" && n.Provider != "kuberouter" {
-		errors = append(errors, fmt.Errorf("unsupported network provider: %s", n.Provider))
+		errors = append(errors, fmt.Errorf("unsupported provider: %q", n.Provider))
 	}
 
 	_, _, err := net.ParseCIDR(n.PodCIDR)
 	if err != nil {
-		errors = append(errors, fmt.Errorf("invalid pod CIDR %s", n.PodCIDR))
+		errors = append(errors, fmt.Errorf("invalid pod CIDR %q", n.PodCIDR))
 	}
 
-	_, _, err = net.ParseCIDR(n.ServiceCIDR)
-	if err != nil {
-		errors = append(errors, fmt.Errorf("invalid service CIDR %s", n.ServiceCIDR))
+	if n.ServiceCIDR != "" {
+		_, _, err = net.ParseCIDR(n.ServiceCIDR)
+		if err != nil {
+			errors = append(errors, fmt.Errorf("invalid service CIDR %q", n.ServiceCIDR))
+		}
 	}
 
-	if !govalidator.IsDNSName(n.ClusterDomain) {
-		errors = append(errors, fmt.Errorf("invalid clusterDomain %s", n.ClusterDomain))
+	for _, detail := range validation.IsDNS1123Subdomain(n.ClusterDomain) {
+		errors = append(errors, field.Invalid(field.NewPath("clusterDomain"), n.ClusterDomain, detail))
 	}
 
 	if n.DualStack.Enabled {
@@ -91,14 +95,26 @@ func (n *Network) Validate() []error {
 		}
 		_, _, err := net.ParseCIDR(n.DualStack.IPv6PodCIDR)
 		if err != nil {
-			errors = append(errors, fmt.Errorf("invalid pod IPv6 CIDR %s", n.DualStack.IPv6PodCIDR))
+			errors = append(errors, fmt.Errorf("invalid pod IPv6 CIDR %q", n.DualStack.IPv6PodCIDR))
 		}
 		_, _, err = net.ParseCIDR(n.DualStack.IPv6ServiceCIDR)
 		if err != nil {
-			errors = append(errors, fmt.Errorf("invalid service IPv6 CIDR %s", n.DualStack.IPv6ServiceCIDR))
+			errors = append(errors, fmt.Errorf("invalid service IPv6 CIDR %q", n.DualStack.IPv6ServiceCIDR))
 		}
 	}
-	errors = append(errors, n.KubeProxy.Validate()...)
+
+	path := field.NewPath("spec").Child("network")
+	for name, v := range map[string]interface {
+		Validate(*field.Path) field.ErrorList
+	}{
+		"kubeProxy":             n.KubeProxy,
+		"nodeLocalLoadBalancer": n.NodeLocalLoadBalancer,
+	} {
+		for _, err := range v.Validate(path.Child(name)) {
+			errors = append(errors, err)
+		}
+	}
+
 	return errors
 }
 
@@ -106,7 +122,7 @@ func (n *Network) Validate() []error {
 func (n *Network) DNSAddress() (string, error) {
 	_, ipnet, err := net.ParseCIDR(n.ServiceCIDR)
 	if err != nil {
-		return "", fmt.Errorf("failed to parse service CIDR %s: %w", n.ServiceCIDR, err)
+		return "", fmt.Errorf("failed to parse service CIDR %q: %w", n.ServiceCIDR, err)
 	}
 
 	address := ipnet.IP.To4()
@@ -122,7 +138,7 @@ func (n *Network) DNSAddress() (string, error) {
 	}
 
 	if !ipnet.Contains(address) {
-		return "", fmt.Errorf("failed to calculate a valid DNS address: %s", address.String())
+		return "", fmt.Errorf("failed to calculate a valid DNS address: %q", address.String())
 	}
 
 	return address.String(), nil
@@ -138,7 +154,7 @@ func (n *Network) InternalAPIAddresses() ([]string, error) {
 
 	parsedCIDRs, err := utilnet.ParseCIDRs(cidrs)
 	if err != nil {
-		return nil, fmt.Errorf("can't parse service cidr to build internal API address: %w", err)
+		return nil, fmt.Errorf("can't parse service CIDR to build internal API address: %w", err)
 	}
 
 	stringifiedAddresses := make([]string, len(parsedCIDRs))

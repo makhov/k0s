@@ -73,12 +73,12 @@ func NewControllerCmd() *cobra.Command {
 	$ k0s controller --token-file [path_to_file]
 	Note: Token can be passed either as a CLI argument or as a flag`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			c := command(config.GetCmdOpts())
-
 			logrus.SetOutput(os.Stdout)
-			if !c.Debug {
+			if !config.Debug {
 				logrus.SetLevel(logrus.InfoLevel)
 			}
+
+			c := command(config.GetCmdOpts())
 
 			if len(args) > 0 {
 				c.TokenArg = args[0]
@@ -383,7 +383,7 @@ func (c *command) start(ctx context.Context) error {
 	}
 
 	if !slices.Contains(c.DisableComponents, constant.CoreDNSComponentname) {
-		coreDNS, err := controller.NewCoreDNS(c.K0sVars, adminClientFactory)
+		coreDNS, err := controller.NewCoreDNS(c.K0sVars, adminClientFactory, dnsAddress)
 		if err != nil {
 			return fmt.Errorf("failed to create CoreDNS reconciler: %w", err)
 		}
@@ -428,7 +428,7 @@ func (c *command) start(ctx context.Context) error {
 
 	if !slices.Contains(c.DisableComponents, constant.WorkerConfigComponentName) {
 		if !slices.Contains(c.DisableComponents, constant.KubeletConfigComponentName) {
-			c.ClusterComponents.Add(ctx, workerconfig.NewReconciler(c.K0sVars, adminClientFactory))
+			c.ClusterComponents.Add(ctx, workerconfig.NewReconciler(c.K0sVars, adminClientFactory, dnsAddress, enableKonnectivity))
 		} else {
 			logrus.Warnf("Usage of deprecated component name %q, please switch to %q",
 				constant.KubeletConfigComponentName, constant.WorkerConfigComponentName,
@@ -464,10 +464,11 @@ func (c *command) start(ctx context.Context) error {
 
 	if !slices.Contains(c.DisableComponents, constant.KubeControllerManagerComponentName) {
 		c.ClusterComponents.Add(ctx, &controller.Manager{
-			LogLevel:   c.Logging[constant.KubeControllerManagerComponentName],
-			K0sVars:    c.K0sVars,
-			SingleNode: c.SingleNode,
-			ExtraArgs:  c.KubeControllerManagerExtraArgs,
+			LogLevel:              c.Logging[constant.KubeControllerManagerComponentName],
+			K0sVars:               c.K0sVars,
+			SingleNode:            c.SingleNode,
+			ServiceClusterIPRange: c.NodeConfig.Spec.Network.BuildServiceCIDR(c.NodeConfig.Spec.API.Address),
+			ExtraArgs:             c.KubeControllerManagerExtraArgs,
 		})
 	}
 

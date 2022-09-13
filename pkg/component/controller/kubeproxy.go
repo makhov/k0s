@@ -102,14 +102,14 @@ func (k *KubeProxy) Stop() error {
 	return nil
 }
 
-func (k *KubeProxy) getConfig(clusterConfig *v1beta1.ClusterConfig) (proxyConfig, error) {
+func (k *KubeProxy) getConfig(config *v1beta1.ClusterConfig) (proxyConfig, error) {
 	cfg := proxyConfig{
-		ClusterCIDR:          clusterConfig.Spec.Network.BuildPodCIDR(),
-		ControlPlaneEndpoint: clusterConfig.Spec.API.APIAddressURL(),
-		Image:                clusterConfig.Spec.Images.KubeProxy.URI(),
-		PullPolicy:           clusterConfig.Spec.Images.DefaultPullPolicy,
-		DualStack:            clusterConfig.Spec.Network.DualStack.Enabled,
-		Mode:                 clusterConfig.Spec.Network.KubeProxy.Mode,
+		ClusterCIDR:          config.Spec.Network.BuildPodCIDR(),
+		ControlPlaneEndpoint: k.nodeConf.Spec.API.APIAddressURL(),
+		Image:                config.Spec.Images.KubeProxy.URI(),
+		PullPolicy:           config.Spec.Images.DefaultPullPolicy,
+		DualStack:            config.Spec.Network.DualStack.Enabled,
+		Mode:                 config.Spec.Network.KubeProxy.Mode,
 	}
 
 	return cfg, nil
