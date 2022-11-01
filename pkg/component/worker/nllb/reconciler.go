@@ -530,9 +530,21 @@ func (r *NllbReconciler) reconcile(c *reconcilerConfig, updates <-chan podStateU
 }
 
 func (r *NllbReconciler) updateLoadBalancerConfig(c *reconcilerConfig, state *podState) error {
-	return file.WriteAtomically(filepath.Join(c.envoyDir, "envoy.yaml"), 0444, func(file io.Writer) error {
+	err := file.WriteAtomically(filepath.Join(c.envoyDir, "envoy.yaml"), 0444, func(file io.Writer) error {
 		bufferedWriter := bufio.NewWriter(file)
 		if err := envoyBootstrapConfig.Execute(bufferedWriter, state); err != nil {
+			return fmt.Errorf("failed to generate configuration: %w", err)
+		}
+		return bufferedWriter.Flush()
+	})
+
+	if err != nil {
+		return err
+	}
+
+	return file.WriteAtomically(filepath.Join(c.envoyDir, "cds.yaml"), 0444, func(file io.Writer) error {
+		bufferedWriter := bufio.NewWriter(file)
+		if err := envoyClustersConfig.Execute(bufferedWriter, state); err != nil {
 			return fmt.Errorf("failed to generate configuration: %w", err)
 		}
 		return bufferedWriter.Flush()
@@ -544,6 +556,10 @@ func (r *NllbReconciler) updateLoadBalancerConfig(c *reconcilerConfig, state *po
 //     socket_address: { address: localhost, port_value: {{ .AdminPort }} }
 
 var envoyBootstrapConfig = template.Must(template.New("Bootstrap").Parse(`
+dynamic_resources:
+  cds_config:
+    path: /etc/envoy/cds.yaml
+
 {{- $localKonnectivityPort := .Shared.KonnectivityAgentBindPort -}}
 {{- $remoteKonnectivityPort := .LoadBalancer.KonnectivityServerPort -}}
 static_resources:
@@ -570,8 +586,11 @@ static_resources:
           stat_prefix: konnectivity
           cluster: konnectivity
   {{- end }}
-  clusters:
-  - name: apiserver
+`))
+
+var envoyClustersConfig = template.Must(template.New("cds.yaml").Parse(`
+resources:
+- name: apiserver
     connect_timeout: 0.25s
     type: STATIC
     lb_policy: RANDOM
@@ -617,8 +636,84 @@ static_resources:
       healthy_threshold: 3
       unhealthy_threshold: 5
   {{- end }}
-`,
-))
+`))
+
+//var envoyBootstrapConfig = template.Must(template.New("Bootstrap").Parse(`
+//{{- $localKonnectivityPort := .Shared.KonnectivityAgentBindPort -}}
+//{{- $remoteKonnectivityPort := .LoadBalancer.KonnectivityServerPort -}}
+//static_resources:
+//  listeners:
+//  - name: apiserver
+//    address:
+//      socket_address: { address: {{ printf "%q" .Shared.LBAddr }}, port_value: {{ .Shared.APIServerBindPort }} }
+//    filter_chains:
+//    - filters:
+//      - name: envoy.filters.network.tcp_proxy
+//        typed_config:
+//          "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy
+//          stat_prefix: apiserver
+//          cluster: apiserver
+//  {{- if ne $localKonnectivityPort 0 }}
+//  - name: konnectivity
+//    address:
+//      socket_address: { address: {{ printf "%q" .Shared.LBAddr }}, port_value: {{ $localKonnectivityPort }} }
+//    filter_chains:
+//    - filters:
+//      - name: envoy.filters.network.tcp_proxy
+//        typed_config:
+//          "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy
+//          stat_prefix: konnectivity
+//          cluster: konnectivity
+//  {{- end }}
+//  clusters:
+//  - name: apiserver
+//    connect_timeout: 0.25s
+//    type: STATIC
+//    lb_policy: RANDOM
+//    load_assignment:
+//      cluster_name: apiserver
+//      endpoints:
+//      - lb_endpoints:
+//        {{- range .LoadBalancer.UpstreamServers }}
+//        - endpoint:
+//            address:
+//              socket_address:
+//                address: {{ printf "%q" .Host }}
+//                port_value: {{ .Port }}
+//        {{- else }} []{{ end }}
+//    health_checks:
+//    # FIXME: Better use a proper HTTP based health check, but this needs certs and stuff...
+//    - tcp_health_check: {}
+//      timeout: 1s
+//      interval: 5s
+//      healthy_threshold: 3
+//      unhealthy_threshold: 5
+//  {{- if ne $localKonnectivityPort 0 }}
+//  - name: konnectivity
+//    connect_timeout: 0.25s
+//    type: STATIC
+//    lb_policy: ROUND_ROBIN
+//    load_assignment:
+//      cluster_name: konnectivity
+//      endpoints:
+//      - lb_endpoints:
+//        {{- range .LoadBalancer.UpstreamServers }}
+//        - endpoint:
+//            address:
+//              socket_address:
+//                address: {{ printf "%q" .Host }}
+//                port_value: {{ $remoteKonnectivityPort }}
+//        {{- else }} []{{ end }}
+//    health_checks:
+//    # FIXME: What would be a proper health check?
+//    - tcp_health_check: {}
+//      timeout: 1s
+//      interval: 5s
+//      healthy_threshold: 3
+//      unhealthy_threshold: 5
+//  {{- end }}
+//`,
+//))
 
 func (r *NllbReconciler) provision(c *reconcilerConfig, state *podState) error {
 	manifest := corev1.Pod{
