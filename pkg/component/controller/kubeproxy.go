@@ -18,6 +18,7 @@ package controller
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"path"
 	"path/filepath"
@@ -110,6 +111,23 @@ func (k *KubeProxy) getConfig(clusterConfig *v1beta1.ClusterConfig) (proxyConfig
 		PullPolicy:           clusterConfig.Spec.Images.DefaultPullPolicy,
 		DualStack:            clusterConfig.Spec.Network.DualStack.Enabled,
 		Mode:                 clusterConfig.Spec.Network.KubeProxy.Mode,
+	}
+
+	if clusterConfig.Spec.Network != nil &&
+		clusterConfig.Spec.Network.NodeLocalLoadBalancer.IsEnabled() &&
+		clusterConfig.Spec.ValidateNodeLocalLoadBalancer(nil) == nil {
+		switch clusterConfig.Spec.Network.NodeLocalLoadBalancer.Type {
+		case v1beta1.NllbTypeEnvoyProxy:
+			k.log.Info("FIXME: Enabling NLLB for kubeproxy")
+
+			if clusterConfig.Spec.Network.NodeLocalLoadBalancer.EnvoyProxy.KonnectivityAgentBindPort != nil {
+				cfg.ControlPlaneEndpoint = fmt.Sprintf("https://localhost:%d", clusterConfig.Spec.Network.NodeLocalLoadBalancer.EnvoyProxy.APIServerBindPort)
+			} else {
+				cfg.ControlPlaneEndpoint = fmt.Sprintf("https://localhost:%d", v1beta1.DefaultEnvoyProxy(clusterConfig.Spec.Images).APIServerBindPort)
+			}
+		default:
+			return cfg, fmt.Errorf("unsupported node-local load balancer type: %q", clusterConfig.Spec.Network.NodeLocalLoadBalancer.Type)
+		}
 	}
 
 	return cfg, nil
