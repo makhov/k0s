@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://docs.k0sproject.io/head/docker-shim/">
       
       <link rel="icon" href="../img/k0s_social.png">
-      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.7">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
     
     
       
@@ -26,7 +26,7 @@
       <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
         
       
       
@@ -69,7 +69,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
     
@@ -140,7 +140,8 @@
         
           
           
-          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
@@ -149,7 +150,8 @@
         
           
           
-          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
@@ -1452,10 +1454,10 @@ sudo systemctl daemon-reload
 CONTAINER ID   NAMES                                                                                                STATE     STATUS          IMAGE
 1b9b4624ddfd   k8s_konnectivity-agent_konnectivity-agent-5jpd7_kube-system_1b3101ea-baeb-4a22-99a2-088d7ca5be85_1   running   Up <span class="m">51</span> minutes   quay.io/k0sproject/apiserver-network-proxy-agent
 414758a8a951   k8s_kube-router_kube-router-qlkgg_kube-system_9a1b67bf-5347-4acd-98ac-f9a67f2db730_1                 running   Up <span class="m">51</span> minutes   3a67679337a5
-b81960bb304c   k8s_kube-proxy_kube-proxy-tv95n_kube-system_164dc9f8-f47c-4f6c-acb7-ede5dbcd63cd_1                   running   Up <span class="m">51</span> minutes   k8s.gcr.io/kube-proxy
-fb888cbc5ae0   k8s_POD_kube-router-qlkgg_kube-system_9a1b67bf-5347-4acd-98ac-f9a67f2db730_0                         running   Up <span class="m">51</span> minutes   k8s.gcr.io/pause:3.1
-382d0a938c9d   k8s_POD_konnectivity-agent-5jpd7_kube-system_1b3101ea-baeb-4a22-99a2-088d7ca5be85_0                  running   Up <span class="m">51</span> minutes   k8s.gcr.io/pause:3.1
-72d4a47b5609   k8s_POD_kube-proxy-tv95n_kube-system_164dc9f8-f47c-4f6c-acb7-ede5dbcd63cd_0                          running   Up <span class="m">51</span> minutes   k8s.gcr.io/pause:3.1
+b81960bb304c   k8s_kube-proxy_kube-proxy-tv95n_kube-system_164dc9f8-f47c-4f6c-acb7-ede5dbcd63cd_1                   running   Up <span class="m">51</span> minutes   registry.k8s.io/kube-proxy
+fb888cbc5ae0   k8s_POD_kube-router-qlkgg_kube-system_9a1b67bf-5347-4acd-98ac-f9a67f2db730_0                         running   Up <span class="m">51</span> minutes   registry.k8s.io/pause:3.1
+382d0a938c9d   k8s_POD_konnectivity-agent-5jpd7_kube-system_1b3101ea-baeb-4a22-99a2-088d7ca5be85_0                  running   Up <span class="m">51</span> minutes   registry.k8s.io/pause:3.1
+72d4a47b5609   k8s_POD_kube-proxy-tv95n_kube-system_164dc9f8-f47c-4f6c-acb7-ede5dbcd63cd_0                          running   Up <span class="m">51</span> minutes   registry.k8s.io/pause:3.1
 </code></pre></div>
 <p>On the controller, you'll be able to see the worker started with the new docker container runtime:</p>
 <div class="highlight"><pre><span></span><code>sudo k0s kubectl get nodes -o wide
@@ -1543,7 +1545,7 @@ ip-10-0-62-250.eu-west-1.compute.internal   Ready    &lt;none&gt;          66m  
     <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
       
     
   </body>
