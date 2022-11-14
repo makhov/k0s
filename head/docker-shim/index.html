@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://docs.k0sproject.io/head/docker-shim/">
       
       <link rel="icon" href="../img/k0s_social.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.472b142f.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
@@ -69,7 +69,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
   
     
     
@@ -141,7 +141,7 @@
           
           
           
-          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
@@ -151,7 +151,7 @@
           
           
           
-          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
@@ -1384,8 +1384,8 @@ k0s 1.24 and above don't support the docker-shim as well.</p>
 <div class="highlight"><pre><span></span><code>sudo k0s kubectl get nodes -o wide
 
 NAME                                        STATUS   ROLES           AGE   VERSION       INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
-ip-10-0-49-188.eu-west-1.compute.internal   Ready    control-plane   52m   v1.25.3+k0s   <span class="m">10</span>.0.49.188   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1022-aws   docker://20.10.16
-ip-10-0-62-250.eu-west-1.compute.internal   Ready    &lt;none&gt;          12s   v1.25.3+k0s   <span class="m">10</span>.0.62.250   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1017-aws   docker://20.10.16
+ip-10-0-49-188.eu-west-1.compute.internal   Ready    control-plane   52m   v1.25.4+k0s   <span class="m">10</span>.0.49.188   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1022-aws   docker://20.10.16
+ip-10-0-62-250.eu-west-1.compute.internal   Ready    &lt;none&gt;          12s   v1.25.4+k0s   <span class="m">10</span>.0.62.250   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1017-aws   docker://20.10.16
 </code></pre></div>
 <p>cordon and drain the nodes (migrate one by one):</p>
 <div class="highlight"><pre><span></span><code>sudo k0s kubectl cordon ip-10-0-62-250.eu-west-1.compute.internal 
@@ -1394,8 +1394,8 @@ sudo k0s kubectl drain ip-10-0-62-250.eu-west-1.compute.internal --ignore-daemon
 <div class="highlight"><pre><span></span><code>sudo k0s kubectl get nodes -o wide
 
 NAME                                        STATUS                     ROLES           AGE     VERSION       INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
-ip-10-0-49-188.eu-west-1.compute.internal   Ready                      control-plane   56m     v1.25.3+k0s   <span class="m">10</span>.0.49.188   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1022-aws   docker://20.10.16
-ip-10-0-62-250.eu-west-1.compute.internal   Ready,SchedulingDisabled   &lt;none&gt;          3m40s   v1.25.3+k0s   <span class="m">10</span>.0.62.250   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1017-aws   docker://20.10.16
+ip-10-0-49-188.eu-west-1.compute.internal   Ready                      control-plane   56m     v1.25.4+k0s   <span class="m">10</span>.0.49.188   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1022-aws   docker://20.10.16
+ip-10-0-62-250.eu-west-1.compute.internal   Ready,SchedulingDisabled   &lt;none&gt;          3m40s   v1.25.4+k0s   <span class="m">10</span>.0.62.250   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1017-aws   docker://20.10.16
 </code></pre></div>
 <p>Stop k0s on the node:</p>
 <div class="highlight"><pre><span></span><code>sudo k0s stop
@@ -1463,8 +1463,8 @@ fb888cbc5ae0   k8s_POD_kube-router-qlkgg_kube-system_9a1b67bf-5347-4acd-98ac-f9a
 <div class="highlight"><pre><span></span><code>sudo k0s kubectl get nodes -o wide
 
 NAME                                        STATUS                     ROLES           AGE    VERSION       INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
-ip-10-0-49-188.eu-west-1.compute.internal   Ready                      control-plane   117m   v1.25.3+k0s   <span class="m">10</span>.0.49.188   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1022-aws   docker://20.10.16
-ip-10-0-62-250.eu-west-1.compute.internal   Ready,SchedulingDisabled   &lt;none&gt;          64m    v1.25.3+k0s   <span class="m">10</span>.0.62.250   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1017-aws   docker://20.10.16
+ip-10-0-49-188.eu-west-1.compute.internal   Ready                      control-plane   117m   v1.25.4+k0s   <span class="m">10</span>.0.49.188   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1022-aws   docker://20.10.16
+ip-10-0-62-250.eu-west-1.compute.internal   Ready,SchedulingDisabled   &lt;none&gt;          64m    v1.25.4+k0s   <span class="m">10</span>.0.62.250   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1017-aws   docker://20.10.16
 </code></pre></div>
 <h3 id="uncordon-the-node">Uncordon the Node<a class="headerlink" href="#uncordon-the-node" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code>sudo k0s kubectl uncordon ip-10-0-62-250.eu-west-1.compute.internal
@@ -1475,8 +1475,8 @@ node/ip-10-0-62-250.eu-west-1.compute.internal uncordoned
 <div class="highlight"><pre><span></span><code>sudo k0s kubectl get nodes -o wide
 
 NAME                                        STATUS   ROLES           AGE    VERSION       INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
-ip-10-0-49-188.eu-west-1.compute.internal   Ready    control-plane   119m   v1.25.3+k0s   <span class="m">10</span>.0.49.188   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1022-aws   docker://20.10.16
-ip-10-0-62-250.eu-west-1.compute.internal   Ready    &lt;none&gt;          66m    v1.25.3+k0s   <span class="m">10</span>.0.62.250   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1017-aws   docker://20.10.16
+ip-10-0-49-188.eu-west-1.compute.internal   Ready    control-plane   119m   v1.25.4+k0s   <span class="m">10</span>.0.49.188   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1022-aws   docker://20.10.16
+ip-10-0-62-250.eu-west-1.compute.internal   Ready    &lt;none&gt;          66m    v1.25.4+k0s   <span class="m">10</span>.0.62.250   &lt;none&gt;        Ubuntu <span class="m">20</span>.04.4 LTS   <span class="m">5</span>.13.0-1017-aws   docker://20.10.16
 </code></pre></div>
 
 
