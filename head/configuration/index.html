@@ -1592,71 +1592,41 @@ sudo k0s start
 <span class="nt">spec</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">api</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.68.104</span><span class="w"></span>
-<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6443</span><span class="w"></span>
-<span class="w">    </span><span class="nt">k0sApiPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9443</span><span class="w"></span>
 <span class="w">    </span><span class="nt">externalAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-lb-address.example.com</span><span class="w"></span>
+<span class="w">    </span><span class="nt">k0sApiPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9443</span><span class="w"></span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6443</span><span class="w"></span>
 <span class="w">    </span><span class="nt">sans</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.68.104</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.68.104</span><span class="w"></span>
 <span class="w">    </span><span class="nt">tunneledNetworkingMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">    </span><span class="nt">extraArgs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
-<span class="w">  </span><span class="nt">storage</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etcd</span><span class="w"></span>
-<span class="w">    </span><span class="nt">etcd</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">peerAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.68.104</span><span class="w"></span>
-<span class="w">      </span><span class="nt">extraArgs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
-<span class="w">  </span><span class="nt">network</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">podCIDR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.244.0.0/16</span><span class="w"></span>
-<span class="w">    </span><span class="nt">serviceCIDR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.96.0.0/12</span><span class="w"></span>
-<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kuberouter</span><span class="w"></span>
-<span class="w">    </span><span class="nt">calico</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
-<span class="w">    </span><span class="nt">clusterDomain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster.local</span><span class="w"></span>
-<span class="w">    </span><span class="nt">dualStack</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
-<span class="w">    </span><span class="nt">kuberouter</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">mtu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
-<span class="w">      </span><span class="nt">peerRouterIPs</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="nt">peerRouterASNs</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="nt">autoMTU</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">      </span><span class="nt">hairpinMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">    </span><span class="nt">kubeProxy</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iptables</span><span class="w"></span>
-<span class="w">      </span><span class="nt">metricsBindAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0:10249</span><span class="w"></span>
-<span class="w">  </span><span class="nt">telemetry</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">  </span><span class="nt">controllerManager</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">extraArgs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
-<span class="w">  </span><span class="nt">scheduler</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">extraArgs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
-<span class="w">  </span><span class="nt">installConfig</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">users</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">etcdUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etcd</span><span class="w"></span>
-<span class="w">      </span><span class="nt">kineUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-apiserver</span><span class="w"></span>
-<span class="w">      </span><span class="nt">konnectivityUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">konnectivity-server</span><span class="w"></span>
-<span class="w">      </span><span class="nt">kubeAPIserverUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-apiserver</span><span class="w"></span>
-<span class="w">      </span><span class="nt">kubeSchedulerUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-scheduler</span><span class="w"></span>
+<span class="w">  </span><span class="nt">controllerManager</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="w">  </span><span class="nt">extensions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">helm</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">charts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+<span class="w">      </span><span class="nt">repositories</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+<span class="w">    </span><span class="nt">storage</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">create_default_storage_class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external_storage</span><span class="w"></span>
 <span class="w">  </span><span class="nt">images</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">konnectivity</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/k0sproject/apiserver-network-proxy-agent</span><span class="w"></span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.32-k0s1</span><span class="w"></span>
-<span class="w">    </span><span class="nt">metricsserver</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.k8s.io/metrics-server/metrics-server</span><span class="w"></span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.6.2</span><span class="w"></span>
-<span class="w">    </span><span class="nt">kubeproxy</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.k8s.io/kube-proxy</span><span class="w"></span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.25.4</span><span class="w"></span>
-<span class="w">    </span><span class="nt">coredns</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/coredns/coredns</span><span class="w"></span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.10.0</span><span class="w"></span>
+<span class="w">    </span><span class="nt">default_pull_policy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span><span class="w"></span>
 <span class="w">    </span><span class="nt">calico</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">cni</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/calico/cni</span><span class="w"></span>
 <span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v3.24.5</span><span class="w"></span>
-<span class="w">      </span><span class="nt">node</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/calico/node</span><span class="w"></span>
-<span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v3.24.5</span><span class="w"></span>
 <span class="w">      </span><span class="nt">kubecontrollers</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/calico/kube-controllers</span><span class="w"></span>
 <span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v3.24.5</span><span class="w"></span>
+<span class="w">      </span><span class="nt">node</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/calico/node</span><span class="w"></span>
+<span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v3.24.5</span><span class="w"></span>
+<span class="w">    </span><span class="nt">coredns</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/coredns/coredns</span><span class="w"></span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.10.0</span><span class="w"></span>
+<span class="w">    </span><span class="nt">konnectivity</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/k0sproject/apiserver-network-proxy-agent</span><span class="w"></span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.33-k0s</span><span class="w"></span>
+<span class="w">    </span><span class="nt">kubeproxy</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.k8s.io/kube-proxy</span><span class="w"></span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.26.0</span><span class="w"></span>
 <span class="w">    </span><span class="nt">kuberouter</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">cni</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/cloudnativelabs/kube-router</span><span class="w"></span>
@@ -1664,10 +1634,47 @@ sudo k0s start
 <span class="w">      </span><span class="nt">cniInstaller</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/k0sproject/cni-node</span><span class="w"></span>
 <span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.1.1-k0s.0</span><span class="w"></span>
-<span class="w">    </span><span class="nt">default_pull_policy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span><span class="w"></span>
+<span class="w">    </span><span class="nt">metricsserver</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.k8s.io/metrics-server/metrics-server</span><span class="w"></span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.6.2</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pushgateway</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/k0sproject/pushgateway-ttl</span><span class="w"></span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">edge@sha256:7031f6bf6c957e2fdb496161fe3bea0a5bde3de800deeba7b2155187196ecbd9</span><span class="w"></span>
+<span class="w">  </span><span class="nt">installConfig</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">users</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">etcdUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etcd</span><span class="w"></span>
+<span class="w">      </span><span class="nt">kineUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-apiserver</span><span class="w"></span>
+<span class="w">      </span><span class="nt">konnectivityUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">konnectivity-server</span><span class="w"></span>
+<span class="w">      </span><span class="nt">kubeAPIserverUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-apiserver</span><span class="w"></span>
+<span class="w">      </span><span class="nt">kubeSchedulerUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-scheduler</span><span class="w"></span>
 <span class="w">  </span><span class="nt">konnectivity</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">agentPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8132</span><span class="w"></span>
 <span class="w">    </span><span class="nt">adminPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8133</span><span class="w"></span>
+<span class="w">    </span><span class="nt">agentPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8132</span><span class="w"></span>
+<span class="w">  </span><span class="nt">network</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">calico</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+<span class="w">    </span><span class="nt">clusterDomain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster.local</span><span class="w"></span>
+<span class="w">    </span><span class="nt">dualStack</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">kubeProxy</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">metricsBindAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0:10249</span><span class="w"></span>
+<span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iptables</span><span class="w"></span>
+<span class="w">    </span><span class="nt">kuberouter</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">autoMTU</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">hairpin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Enabled</span><span class="w"></span>
+<span class="w">      </span><span class="nt">metricsPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w"></span>
+<span class="w">      </span><span class="nt">mtu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">      </span><span class="nt">peerRouterASNs</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">peerRouterIPs</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">podCIDR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.244.0.0/16</span><span class="w"></span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kuberouter</span><span class="w"></span>
+<span class="w">    </span><span class="nt">serviceCIDR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.96.0.0/12</span><span class="w"></span>
+<span class="w">  </span><span class="nt">scheduler</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="w">  </span><span class="nt">storage</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">etcd</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">externalCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+<span class="w">      </span><span class="nt">peerAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.68.104</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etcd</span><span class="w"></span>
+<span class="w">  </span><span class="nt">telemetry</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 </code></pre></div>
 <h2 id="spec-key-detail"><code>spec</code> Key Detail<a class="headerlink" href="#spec-key-detail" title="Permanent link">#</a></h2>
 <h3 id="specapi"><code>spec.api</code><a class="headerlink" href="#specapi" title="Permanent link">#</a></h3>
@@ -1869,8 +1876,12 @@ CALICO_IPV6POOL_CIDR: <span class="s2">&quot;{{ spec.network.dualStack.IPv6podCI
 <td>Comma-separated list of <a href="https://github.com/cloudnativelabs/kube-router/blob/master/docs/bgp.md#global-external-bgp-peers">global peer ASNs</a>.</td>
 </tr>
 <tr>
+<td><code>hairpin</code></td>
+<td>Hairpin mode, supported modes <code>Enabled</code>: enabled cluster wide, <code>Allowed</code>: must be allowed per service <a href="https://github.com/cloudnativelabs/kube-router/blob/master/docs/user-guide.md#hairpin-mode">using annotations</a>, <code>Disabled</code>: doesn't work at all (default: Enabled)</td>
+</tr>
+<tr>
 <td><code>hairpinMode</code></td>
-<td>Activate hairpinMode (default: <code>false</code>) (https://github.com/cloudnativelabs/kube-router/blob/master/docs/user-guide.md#hairpin-mode)</td>
+<td><strong>Deprecated</strong> Use <code>hairpin</code> instead. If both <code>hairpin</code> and <code>hairpinMode</code> are defined, this is ignored. If only hairpinMode is configured explicitly activates hairpinMode (https://github.com/cloudnativelabs/kube-router/blob/master/docs/user-guide.md#hairpin-mode).</td>
 </tr>
 </tbody>
 </table>
@@ -1925,9 +1936,12 @@ CALICO_IPV6POOL_CIDR: <span class="s2">&quot;{{ spec.network.dualStack.IPv6podCI
 </tbody>
 </table>
 <h3 id="specworkerprofiles"><code>spec.workerProfiles</code><a class="headerlink" href="#specworkerprofiles" title="Permanent link">#</a></h3>
-<p>Worker profiles are used to set kubelet parameters can for a worker. Each worker profile is then used to generate a config map containing a custom <code>kubelet.config.k8s.io</code> object.</p>
-<p>For a list of possible kubelet configuration keys: <a href="https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/">go here</a>.</p>
-<p>The worker profiles are defined as an array of <code>spec.workerProfiles.workerProfile</code>. Each element has following properties:</p>
+<p>Worker profiles are used to manage worker-specific configuration in a
+centralized manner. A ConfigMap is generated for each worker profile. Based on
+the <code>--profile</code> argument given to the <code>k0s worker</code>, the configuration in the
+corresponding ConfigMap is is picked up during startup.</p>
+<p>The worker profiles are defined as an array. Each element has following
+properties:</p>
 <table>
 <thead>
 <tr>
@@ -1942,11 +1956,13 @@ CALICO_IPV6POOL_CIDR: <span class="s2">&quot;{{ spec.network.dualStack.IPv6podCI
 </tr>
 <tr>
 <td><code>values</code></td>
-<td>Mapping object</td>
+<td>Object; <a href="https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/">Kubelet configuration</a> overrides, see below for details</td>
 </tr>
 </tbody>
 </table>
-<p>For each profile, the control plane creates a separate ConfigMap with <code>kubelet-config yaml</code>. Based on the <code>--profile</code> argument given to the <code>k0s worker</code>, the corresponding ConfigMap is used to extract the <code>kubelet-config.yaml</code> file. <code>values</code> are recursively merged with default <code>kubelet-config.yaml</code></p>
+<h4 id="specworkerprofilesvalues-kubelet-configuration-overrides"><code>spec.workerProfiles[].values</code> (Kubelet configuration overrides)<a class="headerlink" href="#specworkerprofilesvalues-kubelet-configuration-overrides" title="Permanent link">#</a></h4>
+<p>The Kubelet configuration overrides of a profile override the defaults defined
+by k0s.</p>
 <p>Note that there are several fields that cannot be overridden:</p>
 <ul>
 <li><code>clusterDNS</code></li>
@@ -2056,17 +2072,26 @@ The default value <code>external</code> makes no storage deployed.</p>
 <span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 </code></pre></div>
 <h2 id="disabling-controller-components">Disabling controller components<a class="headerlink" href="#disabling-controller-components" title="Permanent link">#</a></h2>
-<p>k0s allows completely disabling some of the system components. This allows the user to build a minimal Kubernetes control plane and use what ever components they need to fullfill their need for the controlplane. Disabling the system components happens through a commandline flag for the controller process:</p>
-<div class="highlight"><pre><span></span><code>--disable-components strings                     disable components <span class="o">(</span>valid items: api-config,autopilot,control-api,coredns,csr-approver,endpoint-reconciler,helm,konnectivity-server,kube-controller-manager,kube-proxy,kube-scheduler,kubelet-config,metrics-server,network-provider,node-role,system-rbac<span class="o">)</span>
+<p>k0s allows to completely disable some of the system components. This allows
+users to build a minimal Kubernetes control plane and use what ever components
+they need to fulfill their need for the control plane. Disabling the system
+components happens through a command line flag for the controller process:</p>
+<div class="highlight"><pre><span></span><code>--disable-components strings                     disable components <span class="o">(</span>valid items: api-config,autopilot,control-api,coredns,csr-approver,endpoint-reconciler,helm,konnectivity-server,kube-controller-manager,kube-proxy,kube-scheduler,metrics-server,network-provider,node-role,system-rbac,worker-config<span class="o">)</span>
 </code></pre></div>
-<p>If you use k0sctl just add the flag when installing the cluster for the first controller at <code>spec.hosts.installFlags</code> in the config file like e.g.:</p>
+<p><strong>Note:</strong> As of k0s 1.26, the kubelet-config component has been replaced by the
+worker-config component. k0s will issue a warning when the old component name is
+being used. It is scheduled for removal in k0s 1.27. Please update to the new
+component name.</p>
+<p>If you use k0sctl, just add the flag when installing the cluster for the first
+controller at <code>spec.hosts.installFlags</code> in the config file like e.g.:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">controller</span><span class="w"></span>
 <span class="w">    </span><span class="nt">installFlags</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--disable-components metrics-server</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--disable-components=metrics-server</span><span class="w"></span>
 </code></pre></div>
-<p>As seen from the component list, the only always-on component is the Kubernetes api-server, without that k0s serves no purpose.</p>
+<p>As seen from the component list, the only always-on component is the Kubernetes
+api-server, without that k0s serves no purpose.</p>
 
 
 
