@@ -62,13 +62,13 @@ require (
 
 // Kubernetes
 require (
-	k8s.io/api v0.27.1
-	k8s.io/apiextensions-apiserver v0.27.1
-	k8s.io/apimachinery v0.27.1
+	k8s.io/api v0.27.2
+	k8s.io/apiextensions-apiserver v0.27.2
+	k8s.io/apimachinery v0.27.2
 	k8s.io/cli-runtime v0.27.1
-	k8s.io/client-go v0.27.1
+	k8s.io/client-go v0.27.2
 	k8s.io/cloud-provider v0.27.1
-	k8s.io/component-base v0.27.1
+	k8s.io/component-base v0.27.2
 	k8s.io/component-helpers v0.27.1
 	k8s.io/cri-api v0.27.1
 	k8s.io/kube-aggregator v0.27.1
@@ -77,7 +77,7 @@ require (
 	k8s.io/kubernetes v1.27.1
 	k8s.io/mount-utils v0.27.1
 	k8s.io/utils v0.0.0-20230220204549-a5ecb0141aa5
-	sigs.k8s.io/controller-runtime v0.13.1-0.20230412185432-fbd6b944a634 // includes https://github.com/kubernetes-sigs/controller-runtime/pull/2223
+	sigs.k8s.io/controller-runtime v0.15.0-beta.0 // includes https://github.com/kubernetes-sigs/controller-runtime/pull/2223
 	sigs.k8s.io/yaml v1.3.0
 )
 
@@ -211,10 +211,10 @@ require (
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/prometheus/client_golang v1.14.0 // indirect
-	github.com/prometheus/client_model v0.3.0 // indirect
-	github.com/prometheus/common v0.37.0 // indirect
-	github.com/prometheus/procfs v0.8.0 // indirect
+	github.com/prometheus/client_golang v1.15.1 // indirect
+	github.com/prometheus/client_model v0.4.0 // indirect
+	github.com/prometheus/common v0.42.0 // indirect
+	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rubenv/sql-migrate v1.3.1 // indirect
@@ -271,7 +271,7 @@ require (
 	k8s.io/controller-manager v0.27.1 // indirect
 	k8s.io/klog/v2 v2.90.1 // indirect
 	k8s.io/kms v0.27.1 // indirect
-	k8s.io/kube-openapi v0.0.0-20230308215209-15aac26d736a // indirect
+	k8s.io/kube-openapi v0.0.0-20230501164219-8b0f38b5fd1f // indirect
 	k8s.io/metrics v0.27.1 // indirect
 	oras.land/oras-go v1.2.4-0.20230505142456-f92397840738 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.1.1 // indirect
