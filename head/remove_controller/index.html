@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../img/k0s_social.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.0">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.45e1311d.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -1630,27 +1630,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../dockershim/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Dockershim deprecation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../troubleshooting/" class="md-nav__link">
         
   
@@ -1995,6 +1974,9 @@ To do so, run the following commands from the controller:</p>
 k0s<span class="w"> </span>kubectl<span class="w"> </span>drain<span class="w"> </span>--ignore-daemonsets<span class="w"> </span>--delete-emptydir-data<span class="w"> </span>&lt;controller&gt;
 <span class="c1"># Delete the node from the cluster</span>
 k0s<span class="w"> </span>kubectl<span class="w"> </span>delete<span class="w"> </span>node<span class="w"> </span>&lt;controller&gt;
+</code></pre></div>
+<p>Delete Autopilot's <code>ControlNode</code> object for the controller node:</p>
+<div class="highlight"><pre><span></span><code><span class="go">k0s kubectl delete controlnode.autopilot.k0sproject.io &lt;controller&gt;</span>
 </code></pre></div>
 <p>Then you need to remove it from the Etcd cluster.
 For example, if you want to remove <code>controller01</code> from a cluster with 3 controllers:</p>
