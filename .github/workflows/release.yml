@@ -65,7 +65,7 @@ jobs:
           VERSION: ${{ needs.release.outputs.tag_name }}
 
       - name: Set up Go for smoke tests
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
 
@@ -234,7 +234,7 @@ jobs:
           ./cosign sign-blob --key env://COSIGN_KEY --tlog-upload=false k0s | tee k0s.sig
 
       - name: Set up Go for smoke tests
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
 
@@ -334,7 +334,7 @@ jobs:
           ./cosign sign-blob --key env://COSIGN_KEY --tlog-upload=false k0s | tee k0s.sig
 
       - name: Set up Go for smoke tests
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
 
@@ -549,7 +549,7 @@ jobs:
         run: .github/workflows/prepare-build-env.sh
 
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
 
