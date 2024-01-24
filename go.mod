@@ -21,7 +21,7 @@ require (
 	github.com/containerd/cgroups/v3 v3.0.3
 	github.com/containerd/containerd v1.7.12
 	github.com/denisbrodbeck/machineid v1.0.1
-	github.com/evanphx/json-patch v5.7.0+incompatible
+	github.com/evanphx/json-patch v5.8.1+incompatible
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-logr/logr v1.4.1
 	github.com/go-openapi/jsonpointer v0.20.2
