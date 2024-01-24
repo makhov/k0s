@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../img/k0s_social.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
     
     
       
@@ -1699,6 +1699,27 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/openebs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenEBS storage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2275,7 +2296,7 @@ sudo<span class="w"> </span>k0s<span class="w"> </span>start
 <h2 id="configuring-k0s-via-k0sctl">Configuring k0s via k0sctl<a class="headerlink" href="#configuring-k0s-via-k0sctl" title="Permanent link">#</a></h2>
 <p>k0sctl can deploy your configuration options at cluster creation time. Your
 options should be placed in the <code>spec.k0s.config</code> section of the k0sctl's
-configuration file. See the section on how to install <a href="../k0sctl-install">k0s via
+configuration file. See the section on how to install <a href="../k0sctl-install/">k0s via
 k0sctl</a> and the <a href="https://github.com/k0sproject/k0sctl/blob/main/README.md">k0sctl README</a> for more information.</p>
 <h2 id="configuration-file-reference">Configuration file reference<a class="headerlink" href="#configuration-file-reference" title="Permanent link">#</a></h2>
 <p><strong>CAUTION</strong>: As many of the available options affect items deep in the stack, you should fully understand the correlation between the configuration file components and your specific environment before making any changes.</p>
@@ -2326,6 +2347,7 @@ k0sctl</a> and the <a href="https://github.com/k0sproject/k0sctl/blob/main/READM
 <span class="w">      </span><span class="nt">mtu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 <span class="w">      </span><span class="nt">peerRouterASNs</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
 <span class="w">      </span><span class="nt">peerRouterIPs</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">extraArgs</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">nodeLocalLoadBalancing</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">      </span><span class="nt">envoyProxy</span><span class="p">:</span>
@@ -2414,6 +2436,42 @@ k0sctl</a> and the <a href="https://github.com/k0sproject/k0sctl/blob/main/READM
 <tr>
 <td><code>kine.dataSource</code></td>
 <td><a href="https://github.com/k3s-io/kine">kine</a> datasource URL.</td>
+</tr>
+<tr>
+<td><code>etcd.externalCluster</code></td>
+<td>Configuration when etcd is externally managed, i.e. running on dedicated nodes. See <a href="#specstorageetcdexternalcluster"><code>spec.storage.etcd.externalCluster</code></a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="specstorageetcdexternalcluster"><code>spec.storage.etcd.externalCluster</code><a class="headerlink" href="#specstorageetcdexternalcluster" title="Permanent link">#</a></h4>
+<p>k0s can also work with externally managed Etcd cluster. If this is configured, k0s will NOT set up etcd, it has to be managed manually.</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>endpoints</code></td>
+<td>Array of Etcd endpoints to use.</td>
+</tr>
+<tr>
+<td><code>etcdPrefix</code></td>
+<td>Prefix to use for this cluster. The same external Etcd cluster can be used for several k0s clusters, each prefixed with unique prefix to store data with.</td>
+</tr>
+<tr>
+<td><code>caFile</code></td>
+<td>CaFile is the host path to a file with Etcd cluster CA certificate.</td>
+</tr>
+<tr>
+<td><code>clientCertFile</code></td>
+<td>ClientCertFile is the host path to a file with TLS certificate for etcd client.</td>
+</tr>
+<tr>
+<td><code>clientKeyFile</code></td>
+<td>ClientKeyFile is the host path to a file with TLS key for etcd client.</td>
 </tr>
 </tbody>
 </table>
@@ -2544,11 +2602,11 @@ CALICO_IPV6POOL_CIDR:<span class="w"> </span><span class="s2">&quot;{{ spec.netw
 </tr>
 <tr>
 <td><code>peerRouterIPs</code></td>
-<td>Comma-separated list of <a href="https://github.com/cloudnativelabs/kube-router/blob/master/docs/bgp.md#global-external-bgp-peers">global peer addresses</a>.</td>
+<td>DEPRECATED: Use extraArgs with peerRouterIPs instead. Comma-separated list of <a href="https://github.com/cloudnativelabs/kube-router/blob/master/docs/bgp.md#global-external-bgp-peers">global peer addresses</a>.</td>
 </tr>
 <tr>
 <td><code>peerRouterASNs</code></td>
-<td>Comma-separated list of <a href="https://github.com/cloudnativelabs/kube-router/blob/master/docs/bgp.md#global-external-bgp-peers">global peer ASNs</a>.</td>
+<td>DEPRECATED: Use extraArgs with peerRouterASNs instead. Comma-separated list of <a href="https://github.com/cloudnativelabs/kube-router/blob/master/docs/bgp.md#global-external-bgp-peers">global peer ASNs</a>.</td>
 </tr>
 <tr>
 <td><code>hairpin</code></td>
@@ -2561,6 +2619,10 @@ CALICO_IPV6POOL_CIDR:<span class="w"> </span><span class="s2">&quot;{{ spec.netw
 <tr>
 <td><code>ipMasq</code></td>
 <td>IP masquerade for traffic originating from the pod network, and destined outside of it (default: false)</td>
+</tr>
+<tr>
+<td><code>extraArgs</code></td>
+<td>Extra arguments to pass to kube-router. Can be also used to override any k0s managed args. For reference, see kube-router <a href="https://github.com/cloudnativelabs/kube-router/blob/master/docs/user-guide.md#command-line-options">documentation</a>. (default: empty)</td>
 </tr>
 </tbody>
 </table>
@@ -2615,9 +2677,7 @@ CALICO_IPV6POOL_CIDR:<span class="w"> </span><span class="s2">&quot;{{ spec.netw
 <span class="w">  </span><span class="nt">udpTimeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0s</span>
 </code></pre></div>
 <h4 id="specnetworknodelocalloadbalancing"><code>spec.network.nodeLocalLoadBalancing</code><a class="headerlink" href="#specnetworknodelocalloadbalancing" title="Permanent link">#</a></h4>
-<p>Configuration options related to k0s's <a href="../nllb">node-local load balancing</a> feature.</p>
-<p><strong>Note:</strong> This feature is experimental! Expect instabilities and/or breaking
-changes.</p>
+<p>Configuration options related to k0s's <a href="../nllb/">node-local load balancing</a> feature.</p>
 <table>
 <thead>
 <tr>
@@ -2844,7 +2904,7 @@ by k0s.</p>
 <h3 id="specextensionsstorage"><code>spec.extensions.storage</code><a class="headerlink" href="#specextensionsstorage" title="Permanent link">#</a></h3>
 <p><code>spec.extensions.storage</code> controls bundled storage provider.
 The default value <code>external</code> makes no storage deployed.</p>
-<p>To enable <a href="../storage/#bundled-openebs-storage">embedded host-local storage provider</a> use the following configuration:</p>
+<p>To enable <a href="../examples/openebs/">embedded host-local storage provider</a> use the following configuration:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">extensions</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">storage</span><span class="p">:</span>
@@ -2868,7 +2928,7 @@ The default value <code>external</code> makes no storage deployed.</p>
 users to build a minimal Kubernetes control plane and use what ever components
 they need to fulfill their need for the control plane. Disabling the system
 components happens through a command line flag for the controller process:</p>
-<div class="highlight"><pre><span></span><code>--disable-components<span class="w"> </span>strings<span class="w">                     </span>disable<span class="w"> </span>components<span class="w"> </span><span class="o">(</span>valid<span class="w"> </span>items:<span class="w"> </span>api-config,autopilot,control-api,coredns,csr-approver,endpoint-reconciler,helm,konnectivity-server,kube-controller-manager,kube-proxy,kube-scheduler,metrics-server,network-provider,node-role,system-rbac,worker-config<span class="o">)</span>
+<div class="highlight"><pre><span></span><code>--disable-components strings                     disable components (valid items: applier-manager,autopilot,control-api,coredns,csr-approver,endpoint-reconciler,helm,konnectivity-server,kube-controller-manager,kube-proxy,kube-scheduler,metrics-server,network-provider,node-role,system-rbac,worker-config)
 </code></pre></div>
 <p><strong>Note:</strong> As of k0s 1.26, the kubelet-config component has been replaced by the
 worker-config component. k0s will issue a warning when the old component name is
@@ -2973,10 +3033,10 @@ api-server, without that k0s serves no purpose.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
       
     
   </body>
