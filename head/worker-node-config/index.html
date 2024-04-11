@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../img/k0s_social.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -305,10 +305,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
@@ -384,10 +382,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
@@ -646,10 +642,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
@@ -747,7 +741,7 @@
         
   
   <span class="md-ellipsis">
-    Uninstall
+    Reset (Uninstall)
   </span>
   
 
@@ -776,10 +770,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
@@ -1195,6 +1187,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../cplb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Control plane load balancing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../shell-completion/" class="md-nav__link">
         
   
@@ -1352,10 +1365,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
@@ -1438,10 +1449,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
@@ -1629,10 +1638,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
@@ -1715,10 +1722,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
@@ -1841,10 +1846,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
@@ -2059,13 +2062,13 @@
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>--show-labels
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>NAME<span class="w">      </span>STATUS<span class="w">     </span>ROLES<span class="w">    </span>AGE<span class="w">   </span>VERSION<span class="w">        </span>LABELS
-worker0<span class="w">   </span>NotReady<span class="w">   </span>&lt;none&gt;<span class="w">   </span>10s<span class="w">   </span>v1.29.1+k0s<span class="w">  </span>beta.kubernetes.io/arch<span class="o">=</span>amd64,beta.kubernetes.io/os<span class="o">=</span>linux,k0sproject.io/foo<span class="o">=</span>bar,k0sproject.io/other<span class="o">=</span>xyz,kubernetes.io/arch<span class="o">=</span>amd64,kubernetes.io/hostname<span class="o">=</span>worker0,kubernetes.io/os<span class="o">=</span>linux
+worker0<span class="w">   </span>NotReady<span class="w">   </span>&lt;none&gt;<span class="w">   </span>10s<span class="w">   </span>v1.29.3+k0s<span class="w">  </span>beta.kubernetes.io/arch<span class="o">=</span>amd64,beta.kubernetes.io/os<span class="o">=</span>linux,k0sproject.io/foo<span class="o">=</span>bar,k0sproject.io/other<span class="o">=</span>xyz,kubernetes.io/arch<span class="o">=</span>amd64,kubernetes.io/hostname<span class="o">=</span>worker0,kubernetes.io/os<span class="o">=</span>linux
 </code></pre></div>
 <p>Controller worker nodes are assigned <code>node.k0sproject.io/role=control-plane</code> and <code>node-role.kubernetes.io/control-plane=true</code> labels:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>--show-labels
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>NAME<span class="w">          </span>STATUS<span class="w">     </span>ROLES<span class="w">           </span>AGE<span class="w">   </span>VERSION<span class="w">        </span>LABELS
-controller0<span class="w">   </span>NotReady<span class="w">   </span>control-plane<span class="w">   </span>10s<span class="w">   </span>v1.29.1+k0s<span class="w">  </span>beta.kubernetes.io/arch<span class="o">=</span>amd64,beta.kubernetes.io/os<span class="o">=</span>linux,kubernetes.io/hostname<span class="o">=</span>worker0,kubernetes.io/os<span class="o">=</span>linux,node.k0sproject.io/role<span class="o">=</span>control-plane,node-role.kubernetes.io/control-plane<span class="o">=</span><span class="nb">true</span>
+controller0<span class="w">   </span>NotReady<span class="w">   </span>control-plane<span class="w">   </span>10s<span class="w">   </span>v1.29.3+k0s<span class="w">  </span>beta.kubernetes.io/arch<span class="o">=</span>amd64,beta.kubernetes.io/os<span class="o">=</span>linux,kubernetes.io/hostname<span class="o">=</span>worker0,kubernetes.io/os<span class="o">=</span>linux,node.k0sproject.io/role<span class="o">=</span>control-plane,node-role.kubernetes.io/control-plane<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
 <p><strong>Note:</strong> Setting the labels is only effective on the first registration of the node. Changing the labels thereafter has no effect.</p>
 <h2 id="taints">Taints<a class="headerlink" href="#taints" title="Permanent link">#</a></h2>
@@ -2186,10 +2189,10 @@ There is a <code>--iptables-mode</code> flag to specify the mode explicitly. Val
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
       
     
   </body>

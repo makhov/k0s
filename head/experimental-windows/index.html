@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../img/k0s_social.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -307,10 +307,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
@@ -388,10 +386,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
@@ -783,10 +779,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
@@ -884,7 +878,7 @@
         
   
   <span class="md-ellipsis">
-    Uninstall
+    Reset (Uninstall)
   </span>
   
 
@@ -911,10 +905,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
@@ -1239,6 +1231,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../cplb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Control plane load balancing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../shell-completion/" class="md-nav__link">
         
   
@@ -1396,10 +1409,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
@@ -1482,10 +1493,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
@@ -1673,10 +1682,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
@@ -1759,10 +1766,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
@@ -1885,10 +1890,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
@@ -2145,7 +2148,7 @@
 <p><strong>Note</strong>: The k0s.exe supervises kubelet.exe and kube-proxy.exe.</p>
 <p>During the first run, the calico install script is created as <code>C:\bootstrap.ps1</code>. This bootstrap script downloads the calico binaries, builds pause container and sets up vSwitch settings.</p>
 <p>Install Mirantis Container Runtime on the Windows node(s), as it is required for the initial Calico set up).</p>
-<div class="highlight"><pre><span></span><code>k0s<span class="w"> </span>worker<span class="w"> </span>--cri-socket<span class="o">=</span>docker:tcp://127.0.0.1:2375<span class="w"> </span>--cidr-range<span class="o">=</span>&lt;cidr_range&gt;<span class="w"> </span>--cluster-dns<span class="o">=</span>&lt;clusterdns&gt;<span class="w"> </span>--api-server<span class="o">=</span>&lt;k0s<span class="w"> </span>api&gt;<span class="w"> </span>&lt;token&gt;
+<div class="highlight"><pre><span></span><code>k0s<span class="w"> </span>worker<span class="w"> </span>--cri-socket<span class="o">=</span>remote:npipe:////./pipe/containerd-containerd<span class="w"> </span>--cidr-range<span class="o">=</span>&lt;cidr_range&gt;<span class="w"> </span>--cluster-dns<span class="o">=</span>&lt;clusterdns&gt;<span class="w"> </span>--api-server<span class="o">=</span>&lt;k0s<span class="w"> </span>api&gt;<span class="w"> </span>&lt;token&gt;
 </code></pre></div>
 <p>You must initiate the Cluster control with the correct config.</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">#</a></h2>
@@ -2276,10 +2279,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
       
     
   </body>
