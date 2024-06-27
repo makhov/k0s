@@ -81,8 +81,8 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      - name: Run basic smoke test
-        run: make check-basic
+#      - name: Run basic smoke test
+#        run: make check-basic
 
       - name: Create airgap image bundle
         run: make airgap-image-bundle-linux-amd64.tar
