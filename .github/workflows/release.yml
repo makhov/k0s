@@ -43,7 +43,8 @@ jobs:
           echo IMAGE_TAGS="${TAGS//+/-}" >> $GITHUB_OUTPUT
   x64:
     needs: release
-    runs-on: [linux, x64]
+#    runs-on: [linux, x64]
+    runs-on: ubuntu-22.04
     env:
       SEGMENT_TOKEN: ${{ secrets.SEGMENT_WRITE_KEY_PROD }}
       EULA_NOTICE: ${{ secrets.EULA_NOTICE }}
