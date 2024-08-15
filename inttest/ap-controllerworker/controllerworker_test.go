@@ -46,6 +46,8 @@ spec:
       peerAddress: %s
 `
 
+const customNodeNameFormat = "customnode%d"
+
 // SetupTest prepares the controller and filesystem, getting it into a consistent
 // state which we can run tests against.
 func (s *controllerworkerSuite) SetupTest() {
@@ -54,7 +56,7 @@ func (s *controllerworkerSuite) SetupTest() {
 	var joinToken string
 
 	for idx := 0; idx < s.BootlooseSuite.ControllerCount; idx++ {
-		nodeName, require := s.ControllerNode(idx), s.Require()
+		nodeName, kubeNodeName, require := s.ControllerNode(idx), fmt.Sprintf(customNodeNameFormat, idx), s.Require()
 		address := s.GetIPAddress(nodeName)
 
 		s.Require().NoError(s.WaitForSSH(nodeName, 2*time.Minute, 1*time.Second))
@@ -68,6 +70,7 @@ func (s *controllerworkerSuite) SetupTest() {
 			"--debug",
 			"--disable-components=metrics-server,helm,konnectivity-server",
 			"--enable-worker",
+			"--kubelet-extra-args=\"--hostname-override=" + kubeNodeName + "\"",
 			"--config=/tmp/k0s.yaml",
 		}
 		if joinToken != "" {
@@ -85,7 +88,7 @@ func (s *controllerworkerSuite) SetupTest() {
 		s.Require().NoError(s.WaitJoinAPI(nodeName))
 		kc, err := s.KubeClient(nodeName)
 		require.NoError(err)
-		require.NoError(s.WaitForNodeReady(nodeName, kc))
+		require.NoError(s.WaitForNodeReady(kubeNodeName, kc))
 
 		client, err := s.ExtensionsClient(s.ControllerNode(0))
 		s.Require().NoError(err)
@@ -169,7 +172,7 @@ spec:
 	s.NoError(err)
 
 	for idx := 0; idx < s.BootlooseSuite.ControllerCount; idx++ {
-		nodeName, require := s.ControllerNode(idx), s.Require()
+		nodeName, require := fmt.Sprintf(customNodeNameFormat, idx), s.Require()
 		require.NoError(s.WaitForNodeReady(nodeName, kc))
 		// Wait till we see kubelet reporting the expected version.
 		// This is only bullet proof if upgrading to _another_ Kubernetes version.
