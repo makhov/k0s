@@ -12,24 +12,28 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
-        <link rel="canonical" href="https://docs.k0sproject.io/head/cli/k0s_config/">
+        <link rel="canonical" href="https://docs.k0sproject.io/head/raspberry-pi5/">
       
       
+        <link rel="prev" href="../raspberry-pi4/">
       
       
-      <link rel="icon" href="../../img/k0s-favicon-192.png">
+        <link rel="next" href="../examples/ansible-playbook/">
+      
+      
+      <link rel="icon" href="../img/k0s-favicon-192.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
     
     
       
-        <title>K0s config - Documentation</title>
+        <title>Raspberry Pi 5 - Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.4af4bdda.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,9 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JMV1409T2T"></script>
@@ -83,7 +87,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#k0s-config" class="md-skip">
+        <a href="#create-a-raspberry-pi-5-cluster" class="md-skip">
           Skip to content
         </a>
       
@@ -98,12 +102,12 @@
             <div class="md-banner__inner md-grid md-typeset">
               
   You are not currently viewing the documentation for the current stable release of k0s.
-  <a href="../../..">
+  <a href="../..">
     <strong>Click here to go to the documentation of the current stable release.</strong>
   </a>
 
             </div>
-            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL(".."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
           </aside>
         
       </div>
@@ -115,9 +119,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Documentation" class="md-header__button md-logo" aria-label="Documentation" data-md-component="logo">
+    <a href=".." title="Documentation" class="md-header__button md-logo" aria-label="Documentation" data-md-component="logo">
       
-  <img src="../../img/k0s-favicon-192.png" alt="logo">
+  <img src="../img/k0s-favicon-192.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -134,7 +138,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              K0s config
+              Raspberry Pi 5
             
           </span>
         </div>
@@ -249,9 +253,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Documentation" class="md-nav__button md-logo" aria-label="Documentation" data-md-component="logo">
+    <a href=".." title="Documentation" class="md-nav__button md-logo" aria-label="Documentation" data-md-component="logo">
       
-  <img src="../../img/k0s-favicon-192.png" alt="logo">
+  <img src="../img/k0s-favicon-192.png" alt="logo">
 
     </a>
     Documentation
@@ -278,7 +282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -296,17 +300,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -321,7 +327,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Installation
@@ -335,7 +341,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/" class="md-nav__link">
+      <a href="../install/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -357,7 +363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k0sctl-install/" class="md-nav__link">
+      <a href="../k0sctl-install/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -376,17 +382,19 @@
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
         
           
           <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
@@ -401,7 +409,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             Alternative Methods
@@ -415,7 +423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k0s-multi-node/" class="md-nav__link">
+      <a href="../k0s-multi-node/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -437,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k0s-in-docker/" class="md-nav__link">
+      <a href="../k0s-in-docker/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -459,7 +467,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../experimental-windows/" class="md-nav__link">
+      <a href="../experimental-windows/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -481,7 +489,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../raspberry-pi4/" class="md-nav__link">
+      <a href="../raspberry-pi4/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -500,10 +508,31 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../raspberry-pi5/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Raspberry Pi 5
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -513,6 +542,161 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-the-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set up the system
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Set up the system">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssh-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enable-memory-cgroups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable Memory Cgroups
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-k0s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install k0s
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Install k0s">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-k0s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download k0s
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-a-node-using-k0s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy a Node using k0s
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-a-node-using-k0sctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy a Node using k0sctl
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy a Node using k0sctl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-k0sctl-on-your-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install k0sctl on Your Host
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-node-k0s-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Single node K0s cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH agent
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy cluster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tear-down-k0s-on-pi-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tear down k0s on Pi 5
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -525,7 +709,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/ansible-playbook/" class="md-nav__link">
+      <a href="../examples/ansible-playbook/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -547,7 +731,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../airgap-install/" class="md-nav__link">
+      <a href="../airgap-install/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -569,7 +753,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../custom-ca/" class="md-nav__link">
+      <a href="../custom-ca/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -599,7 +783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../system-requirements/" class="md-nav__link">
+      <a href="../system-requirements/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -621,7 +805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../external-runtime-deps/" class="md-nav__link">
+      <a href="../external-runtime-deps/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -643,7 +827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../verifying-signs/" class="md-nav__link">
+      <a href="../verifying-signs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -708,7 +892,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../upgrade/" class="md-nav__link">
+      <a href="../upgrade/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -730,7 +914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backup/" class="md-nav__link">
+      <a href="../backup/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -752,7 +936,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../remove_controller/" class="md-nav__link">
+      <a href="../remove_controller/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -774,7 +958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reset/" class="md-nav__link">
+      <a href="../reset/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -839,7 +1023,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configuration/" class="md-nav__link">
+      <a href="../configuration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -861,7 +1045,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dynamic-configuration/" class="md-nav__link">
+      <a href="../dynamic-configuration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -883,7 +1067,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configuration-validation/" class="md-nav__link">
+      <a href="../configuration-validation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -905,7 +1089,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../worker-node-config/" class="md-nav__link">
+      <a href="../worker-node-config/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -927,7 +1111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../networking/" class="md-nav__link">
+      <a href="../networking/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -949,7 +1133,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../runtime/" class="md-nav__link">
+      <a href="../runtime/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -971,7 +1155,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../storage/" class="md-nav__link">
+      <a href="../storage/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -993,7 +1177,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../system-monitoring/" class="md-nav__link">
+      <a href="../system-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1015,7 +1199,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../manifests/" class="md-nav__link">
+      <a href="../manifests/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1037,7 +1221,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../helm-charts/" class="md-nav__link">
+      <a href="../helm-charts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1059,7 +1243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cloud-providers/" class="md-nav__link">
+      <a href="../cloud-providers/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1081,7 +1265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dual-stack/" class="md-nav__link">
+      <a href="../dual-stack/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1103,7 +1287,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../high-availability/" class="md-nav__link">
+      <a href="../high-availability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1125,7 +1309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../nllb/" class="md-nav__link">
+      <a href="../nllb/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1147,7 +1331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cplb/" class="md-nav__link">
+      <a href="../cplb/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1169,7 +1353,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../shell-completion/" class="md-nav__link">
+      <a href="../shell-completion/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1191,7 +1375,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-management/" class="md-nav__link">
+      <a href="../user-management/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1213,7 +1397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../environment-variables/" class="md-nav__link">
+      <a href="../environment-variables/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1235,7 +1419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/oidc/oidc-cluster-configuration/" class="md-nav__link">
+      <a href="../examples/oidc/oidc-cluster-configuration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1257,7 +1441,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../selinux/" class="md-nav__link">
+      <a href="../selinux/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1279,7 +1463,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../podsecurity/" class="md-nav__link">
+      <a href="../podsecurity/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1301,7 +1485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reinstall-k0sctl/" class="md-nav__link">
+      <a href="../reinstall-k0sctl/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1366,7 +1550,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../autopilot/" class="md-nav__link">
+      <a href="../autopilot/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1388,7 +1572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../autopilot-multicommand/" class="md-nav__link">
+      <a href="../autopilot-multicommand/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1453,7 +1637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/metallb-loadbalancer/" class="md-nav__link">
+      <a href="../examples/metallb-loadbalancer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1475,7 +1659,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/nginx-ingress/" class="md-nav__link">
+      <a href="../examples/nginx-ingress/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1497,7 +1681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/traefik-ingress/" class="md-nav__link">
+      <a href="../examples/traefik-ingress/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1519,7 +1703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/ambassador-ingress/" class="md-nav__link">
+      <a href="../examples/ambassador-ingress/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1541,7 +1725,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/rook-ceph/" class="md-nav__link">
+      <a href="../examples/rook-ceph/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1563,7 +1747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/gitops-flux/" class="md-nav__link">
+      <a href="../examples/gitops-flux/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1585,7 +1769,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/openebs/" class="md-nav__link">
+      <a href="../examples/openebs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1650,7 +1834,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/FAQ/" class="md-nav__link">
+      <a href="../troubleshooting/FAQ/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1672,7 +1856,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/logs/" class="md-nav__link">
+      <a href="../troubleshooting/logs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1694,7 +1878,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/troubleshooting/" class="md-nav__link">
+      <a href="../troubleshooting/troubleshooting/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1716,7 +1900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/support-dump/" class="md-nav__link">
+      <a href="../troubleshooting/support-dump/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1738,7 +1922,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/certificate-authorities/" class="md-nav__link">
+      <a href="../troubleshooting/certificate-authorities/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1803,7 +1987,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../architecture/" class="md-nav__link">
+      <a href="../architecture/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1825,7 +2009,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../cli/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1847,7 +2031,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cis_benchmark/" class="md-nav__link">
+      <a href="../cis_benchmark/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1876,7 +2060,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../releases/" class="md-nav__link">
+      <a href="../releases/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1897,7 +2081,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../commercial-support/" class="md-nav__link">
+      <a href="../commercial-support/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1918,7 +2102,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopters/" class="md-nav__link">
+      <a href="../adopters/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1939,7 +2123,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../security/" class="md-nav__link">
+      <a href="../security/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1996,7 +2180,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors/" class="md-nav__link">
+      <a href="../contributors/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2018,7 +2202,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors/github_workflow/" class="md-nav__link">
+      <a href="../contributors/github_workflow/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2040,7 +2224,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors/testing/" class="md-nav__link">
+      <a href="../contributors/testing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2062,7 +2246,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors/docs/" class="md-nav__link">
+      <a href="../contributors/docs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2101,6 +2285,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2109,28 +2295,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#k0s-config" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
-      k0s config
+      Prerequisites
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="k0s config">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-the-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set up the system
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Set up the system">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
+  <a href="#ssh-access" class="md-nav__link">
     <span class="md-ellipsis">
-      Options
+      SSH Access
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
+  <a href="#enable-memory-cgroups" class="md-nav__link">
     <span class="md-ellipsis">
-      SEE ALSO
+      Enable Memory Cgroups
     </span>
   </a>
   
@@ -2138,6 +2333,99 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-k0s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install k0s
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Install k0s">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-k0s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download k0s
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-a-node-using-k0s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy a Node using k0s
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-a-node-using-k0sctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy a Node using k0sctl
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy a Node using k0sctl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-k0sctl-on-your-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install k0sctl on Your Host
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-node-k0s-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Single node K0s cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH agent
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy cluster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tear-down-k0s-on-pi-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tear down k0s on Pi 5
+    </span>
+  </a>
   
 </li>
       
@@ -2157,23 +2445,280 @@
 
 
 
-  <h1>K0s config</h1>
+<h1 id="create-a-raspberry-pi-5-cluster">Create a Raspberry Pi 5 cluster<a class="headerlink" href="#create-a-raspberry-pi-5-cluster" title="Permanent link">#</a></h1>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
+<p>This guide assumes that you have a <a href="https://www.raspberrypi.com/products/raspberry-pi-5/">Raspberry Pi 5</a> and a
+sufficiently large SD card of at least 32 GB. We will be using <a href="https://www.raspberrypi.com/software/">Raspberry Pi OS</a>
+for this guide, though k0s should run just fine on other 64-bit Linux
+distributions for the Raspberry Pi 5 as well. Please <a href="https://github.com/k0sproject/k0s/issues/new?assignees=&amp;labels=bug&amp;template=BUG_REPORT.yml">file a Bug</a> if you encounter
+any issues.</p>
+<h2 id="set-up-the-system">Set up the system<a class="headerlink" href="#set-up-the-system" title="Permanent link">#</a></h2>
+<p>Follow the official Raspberry Pi instructions on <a href="https://projects.raspberrypi.org/en/projects/install-raspberry-pi-desktop/3">booting Pi OS from the USB drive</a> or another method depending on your needs.</p>
+<h3 id="ssh-access">SSH Access<a class="headerlink" href="#ssh-access" title="Permanent link">#</a></h3>
+<ol>
+<li>
+<p>Typically, you can enable SSH while creating the bootable drive for Raspberry Pi OS. If not, you can enable it later</p>
+</li>
+<li>
+<p>Add your public key to the server.
+    From your host machine, run <a href="https://www.cyberciti.biz/faq/use-ssh-copy-id-with-an-openssh-server-listing-on-a-different-port/">ssh-copy-id</a> to copy your public SSH key to your Pi 5:</p>
+<div class="highlight"><pre><span></span><code>ssh-copy-id<span class="w"> </span>-i<span class="w"> </span>~/.ssh/id_rsa.pub<span class="w"> </span>&lt;YOUR_USER_NAME&gt;@&lt;IP_ADDRESS_OF_THE_SERVER&gt;
+</code></pre></div>
+<p>When prompted, enter the password for your user account for the Pi. Your public key should be copied at the appropriate folder on the remote Pi automatically.</p>
+<p>Note: <code>~/.ssh/id_rsa.pub</code> is the default location for the public ssh key. If your key is elsewhere, adjust accordingly.</p>
+</li>
+<li>
+<p>Verify SSH access</p>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>&lt;YOUR_USER_NAME&gt;@&lt;IP_ADDRESS_OF_THE_SERVER&gt;
+</code></pre></div>
+<p>If your key has a paraphrase, you’ll be prompted for it.</p>
+</li>
+</ol>
+<h3 id="enable-memory-cgroups">Enable Memory Cgroups<a class="headerlink" href="#enable-memory-cgroups" title="Permanent link">#</a></h3>
+<p>By default, Raspberry Pi OS does not enable memory cgroups. Since k0s requires them to pass its pre-flight checks, enable them:</p>
+<ol>
+<li>
+<p>Edit /boot/cmdline.txt:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nano<span class="w"> </span>/boot/cmdline.txt
+</code></pre></div>
+<p>Append (on the same single line):</p>
+<div class="highlight"><pre><span></span><code><span class="nv">cgroup_enable</span><span class="o">=</span>memory<span class="w"> </span><span class="nv">cgroup_memory</span><span class="o">=</span><span class="m">1</span>
+</code></pre></div>
+</li>
+<li>
+<p>Reboot</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>reboot
+</code></pre></div>
+</li>
+</ol>
+<h2 id="install-k0s">Install k0s<a class="headerlink" href="#install-k0s" title="Permanent link">#</a></h2>
+<h3 id="download-k0s">Download k0s<a class="headerlink" href="#download-k0s" title="Permanent link">#</a></h3>
+<p>Download a <a href="https://github.com/k0sproject/k0s/releases/latest">k0s release</a>. For
+example:</p>
+<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>-O<span class="w"> </span>/tmp/k0s<span class="w"> </span>https://github.com/k0sproject/k0s/releases/download/v1.32.2+k0s.0/k0s-v1.32.2+k0s.0-arm64<span class="w"> </span><span class="c1"># replace version number!</span>
+sudo<span class="w"> </span>install<span class="w"> </span>/tmp/k0s<span class="w"> </span>/usr/local/bin/k0s
+</code></pre></div>
+<p>― or ―</p>
+<p>Use the k0s download script (as one command) to download the latest stable k0s
+and make it executable in <code>/usr/bin/k0s</code>.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">&#39;=https&#39;</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://get.k0s.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>sh
+</code></pre></div>
+<p>At this point you can run <code>k0s</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>k0s<span class="w"> </span>version
+<span class="go">v1.32.2+k0s.0</span>
+</code></pre></div>
+<p>To check if k0s's <a href="../system-requirements/">system requirements</a> and <a href="../external-runtime-deps/">external
+runtime dependencies</a> are fulfilled by your current
+setup, you can invoke <code>k0s sysinfo</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">ramesses-pi5@pi:~ $ </span>sudo<span class="w"> </span>k0s<span class="w"> </span>sysinfo
+<span class="go">Total memory: 7.9 GiB (pass)</span>
+<span class="go">File system of /var/lib/k0s: ext4 (pass)</span>
+<span class="go">Disk space available for /var/lib/k0s: 44.3 GiB (pass)</span>
+<span class="go">Relative disk space available for /var/lib/k0s: 79% (pass)</span>
+<span class="go">Name resolution: localhost: [::1 127.0.0.1] (pass)</span>
+<span class="go">Operating system: Linux (pass)</span>
+<span class="go">  Linux kernel release: 6.6.51+rpt-rpi-2712 (pass)</span>
+<span class="go">  Max. file descriptors per process: current: 1048576 / max: 1048576 (pass)</span>
+<span class="go">  AppArmor: unavailable (pass)</span>
+<span class="go">  Executable in PATH: modprobe: /usr/sbin/modprobe (pass)</span>
+<span class="go">  Executable in PATH: mount: /usr/bin/mount (pass)</span>
+<span class="go">  Executable in PATH: umount: /usr/bin/umount (pass)</span>
+<span class="go">  /proc file system: mounted (0x9fa0) (pass)</span>
+<span class="go">  Control Groups: version 2 (pass)</span>
+<span class="go">    cgroup controller &quot;cpu&quot;: available (is a listed root controller) (pass)</span>
+<span class="go">    cgroup controller &quot;cpuacct&quot;: available (via cpu in version 2) (pass)</span>
+<span class="go">    cgroup controller &quot;cpuset&quot;: available (is a listed root controller) (pass)</span>
+<span class="go">    cgroup controller &quot;memory&quot;: available (is a listed root controller) (pass)</span>
+<span class="go">    cgroup controller &quot;devices&quot;: available (device filters attachable) (pass)</span>
+<span class="go">    cgroup controller &quot;freezer&quot;: available (cgroup.freeze exists) (pass)</span>
+<span class="go">    cgroup controller &quot;pids&quot;: available (is a listed root controller) (pass)</span>
+<span class="go">    cgroup controller &quot;hugetlb&quot;: unavailable (warning)</span>
+<span class="go">    cgroup controller &quot;blkio&quot;: available (via io in version 2) (pass)</span>
+<span class="go">  CONFIG_CGROUPS: Control Group support: built-in (pass)</span>
+<span class="go">    CONFIG_CGROUP_FREEZER: Freezer cgroup subsystem: built-in (pass)</span>
+<span class="go">    CONFIG_CGROUP_PIDS: PIDs cgroup subsystem: built-in (pass)</span>
+<span class="go">    CONFIG_CGROUP_DEVICE: Device controller for cgroups: built-in (pass)</span>
+<span class="go">    CONFIG_CPUSETS: Cpuset support: built-in (pass)</span>
+<span class="go">    CONFIG_CGROUP_CPUACCT: Simple CPU accounting cgroup subsystem: built-in (pass)</span>
+<span class="go">    CONFIG_MEMCG: Memory Resource Controller for Control Groups: built-in (pass)</span>
+<span class="go">    CONFIG_CGROUP_HUGETLB: HugeTLB Resource Controller for Control Groups: unknown (warning)</span>
+<span class="go">    CONFIG_CGROUP_SCHED: Group CPU scheduler: built-in (pass)</span>
+<span class="go">      CONFIG_FAIR_GROUP_SCHED: Group scheduling for SCHED_OTHER: built-in (pass)</span>
+<span class="go">        CONFIG_CFS_BANDWIDTH: CPU bandwidth provisioning for FAIR_GROUP_SCHED: built-in (pass)</span>
+<span class="go">    CONFIG_BLK_CGROUP: Block IO controller: built-in (pass)</span>
+<span class="go">  CONFIG_NAMESPACES: Namespaces support: built-in (pass)</span>
+<span class="go">    CONFIG_UTS_NS: UTS namespace: built-in (pass)</span>
+<span class="go">    CONFIG_IPC_NS: IPC namespace: built-in (pass)</span>
+<span class="go">    CONFIG_PID_NS: PID namespace: built-in (pass)</span>
+<span class="go">    CONFIG_NET_NS: Network namespace: built-in (pass)</span>
+<span class="go">  CONFIG_NET: Networking support: built-in (pass)</span>
+<span class="go">    CONFIG_INET: TCP/IP networking: built-in (pass)</span>
+<span class="go">      CONFIG_IPV6: The IPv6 protocol: module (pass)</span>
+<span class="go">    CONFIG_NETFILTER: Network packet filtering framework (Netfilter): built-in (pass)</span>
+<span class="go">      CONFIG_NETFILTER_ADVANCED: Advanced netfilter configuration: built-in (pass)</span>
+<span class="go">      CONFIG_NF_CONNTRACK: Netfilter connection tracking support: module (pass)</span>
+<span class="go">      CONFIG_NETFILTER_XTABLES: Netfilter Xtables support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_TARGET_REDIRECT: REDIRECT target support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_MATCH_COMMENT: &quot;comment&quot; match support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_MARK: nfmark target and match support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_SET: set target and match support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_TARGET_MASQUERADE: MASQUERADE target support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_NAT: &quot;SNAT and DNAT&quot; targets support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_MATCH_ADDRTYPE: &quot;addrtype&quot; address type match support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_MATCH_CONNTRACK: &quot;conntrack&quot; connection tracking match support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_MATCH_MULTIPORT: &quot;multiport&quot; Multiple port match support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_MATCH_RECENT: &quot;recent&quot; match support: module (pass)</span>
+<span class="go">        CONFIG_NETFILTER_XT_MATCH_STATISTIC: &quot;statistic&quot; match support: module (pass)</span>
+<span class="go">      CONFIG_NETFILTER_NETLINK: module (pass)</span>
+<span class="go">      CONFIG_NF_NAT: module (pass)</span>
+<span class="go">      CONFIG_IP_SET: IP set support: module (pass)</span>
+<span class="go">        CONFIG_IP_SET_HASH_IP: hash:ip set support: module (pass)</span>
+<span class="go">        CONFIG_IP_SET_HASH_NET: hash:net set support: module (pass)</span>
+<span class="go">      CONFIG_IP_VS: IP virtual server support: module (pass)</span>
+<span class="go">        CONFIG_IP_VS_NFCT: Netfilter connection tracking: built-in (pass)</span>
+<span class="go">        CONFIG_IP_VS_SH: Source hashing scheduling: module (pass)</span>
+<span class="go">        CONFIG_IP_VS_RR: Round-robin scheduling: module (pass)</span>
+<span class="go">        CONFIG_IP_VS_WRR: Weighted round-robin scheduling: module (pass)</span>
+<span class="go">      CONFIG_NF_CONNTRACK_IPV4: IPv4 connection tracking support (required for NAT): unknown (warning)</span>
+<span class="go">      CONFIG_NF_REJECT_IPV4: IPv4 packet rejection: module (pass)</span>
+<span class="go">      CONFIG_NF_NAT_IPV4: IPv4 NAT: unknown (warning)</span>
+<span class="go">      CONFIG_IP_NF_IPTABLES: IP tables support: module (pass)</span>
+<span class="go">        CONFIG_IP_NF_FILTER: Packet filtering: module (pass)</span>
+<span class="go">          CONFIG_IP_NF_TARGET_REJECT: REJECT target support: module (pass)</span>
+<span class="go">        CONFIG_IP_NF_NAT: iptables NAT support: module (pass)</span>
+<span class="go">        CONFIG_IP_NF_MANGLE: Packet mangling: module (pass)</span>
+<span class="go">      CONFIG_NF_DEFRAG_IPV4: module (pass)</span>
+<span class="go">      CONFIG_NF_CONNTRACK_IPV6: IPv6 connection tracking support (required for NAT): unknown (warning)</span>
+<span class="go">      CONFIG_NF_NAT_IPV6: IPv6 NAT: unknown (warning)</span>
+<span class="go">      CONFIG_IP6_NF_IPTABLES: IP6 tables support: module (pass)</span>
+<span class="go">        CONFIG_IP6_NF_FILTER: Packet filtering: module (pass)</span>
+<span class="go">        CONFIG_IP6_NF_MANGLE: Packet mangling: module (pass)</span>
+<span class="go">        CONFIG_IP6_NF_NAT: ip6tables NAT support: module (pass)</span>
+<span class="go">      CONFIG_NF_DEFRAG_IPV6: module (pass)</span>
+<span class="go">    CONFIG_BRIDGE: 802.1d Ethernet Bridging: module (pass)</span>
+<span class="go">      CONFIG_LLC: module (pass)</span>
+<span class="go">      CONFIG_STP: module (pass)</span>
+<span class="go">  CONFIG_EXT4_FS: The Extended 4 (ext4) filesystem: built-in (pass)</span>
+<span class="go">  CONFIG_PROC_FS: /proc file system support: built-in (pass)</span>
+</code></pre></div>
+<h3 id="deploy-a-node-using-k0s">Deploy a Node using k0s<a class="headerlink" href="#deploy-a-node-using-k0s" title="Permanent link">#</a></h3>
+<p>If you want a more hands-on process for setting up your Pi 5 devices as Kubernetes nodes with the k0s binary, refer to <a href="../raspberry-pi4/">the guide for Pi devices</a>.</p>
+<h2 id="deploy-a-node-using-k0sctl">Deploy a Node using k0sctl<a class="headerlink" href="#deploy-a-node-using-k0sctl" title="Permanent link">#</a></h2>
+<h3 id="install-k0sctl-on-your-host">Install k0sctl on Your Host<a class="headerlink" href="#install-k0sctl-on-your-host" title="Permanent link">#</a></h3>
+<p>Follow <a href="https://github.com/k0sproject/k0sctl#installation">the k0sctl installation guide</a> and install k0sctl on your host machine.</p>
+<h3 id="single-node-k0s-cluster">Single node K0s cluster<a class="headerlink" href="#single-node-k0s-cluster" title="Permanent link">#</a></h3>
+<p>For this example, we'll create a cluster.yaml that describes your known Pi 5 device and use it as a single node (controller &amp; worker) cluster, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0sctl.k0sproject.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cluster</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0s-cluster</span>
+<span class="w">  </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ssh</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;IP_ADDRESS_OF_THE_SERVER&gt;</span>
+<span class="w">      </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;YOUR_USER_NAME&gt;</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">22</span>
+<span class="w">      </span><span class="nt">keyPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.ssh/id_rsa</span>
+<span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">controller+worker</span>
+</code></pre></div>
+<h3 id="ssh-agent">SSH agent<a class="headerlink" href="#ssh-agent" title="Permanent link">#</a></h3>
+<p>By default, k0sctl doesn’t prompt you for passphrases, so the easiest solution is to load your key into an SSH agent before running k0sctl. Here’s how you can do it:</p>
+<p>1. Start the SSH agent (if not already running)</p>
+<div class="highlight"><pre><span></span><code>  ```bash
+  eval &quot;$(ssh-agent -s)&quot;
+  ```
+</code></pre></div>
+<p>2. ​​Add your private key (you’ll be prompted for the passphrase)</p>
+<div class="highlight"><pre><span></span><code>  ```bash
+  ssh-add ~/.ssh/id_rsa
+  ```
+</code></pre></div>
+<p>3. Verify the key is loaded</p>
+<div class="highlight"><pre><span></span><code>  ```bash
+  ssh-add -l
+  ```
+</code></pre></div>
+<h3 id="deploy-cluster">Deploy cluster<a class="headerlink" href="#deploy-cluster" title="Permanent link">#</a></h3>
+<p>1. Apply the cluster.yaml using k0sctl on your local machine.</p>
+<div class="highlight"><pre><span></span><code>  ```console
+  $ k0sctl apply --config cluster.yaml
 
-<h2 id="k0s-config">k0s config<a class="headerlink" href="#k0s-config" title="Permanent link">#</a></h2>
-<p>Configuration related sub-commands</p>
-<div class="highlight"><pre><span></span><code>k0s config [flags]
+  ⠀⣿⣿⡇⠀⠀⢀⣴⣾⣿⠟⠁⢸⣿⣿⣿⣿⣿⣿⣿⡿⠛⠁⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀█████████ █████████ ███
+  ⠀⣿⣿⡇⣠⣶⣿⡿⠋⠀⠀⠀⢸⣿⡇⠀⠀⠀⣠⠀⠀⢀⣠⡆⢸⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀███          ███    ███
+  ⠀⣿⣿⣿⣿⣟⠋⠀⠀⠀⠀⠀⢸⣿⡇⠀⢰⣾⣿⠀⠀⣿⣿⡇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀███          ███    ███
+  ⠀⣿⣿⡏⠻⣿⣷⣤⡀⠀⠀⠀⠸⠛⠁⠀⠸⠋⠁⠀⠀⣿⣿⡇⠈⠉⠉⠉⠉⠉⠉⠉⠉⢹⣿⣿⠀███          ███    ███
+  ⠀⣿⣿⡇⠀⠀⠙⢿⣿⣦⣀⠀⠀⠀⣠⣶⣶⣶⣶⣶⣶⣿⣿⡇⢰⣶⣶⣶⣶⣶⣶⣶⣶⣾⣿⣿⠀█████████    ███    ██████████
+  k0sctl v0.21.0 Copyright 2023, k0sctl authors.
+  By continuing to use k0sctl you agree to these terms:
+  https://k0sproject.io/licenses/eula
+  INFO ==&gt; Running phase: Set k0s version
+  INFO Looking up latest stable k0s version
+  INFO Using k0s version v1.32.2+k0s.0
+  INFO ==&gt; Running phase: Connect to hosts
+  INFO [ssh] 192.168.31.93:22: connected
+  INFO ==&gt; Running phase: Detect host operating systems
+  INFO [ssh] 192.168.31.93:22: is running Debian GNU/Linux 12 (bookworm)
+  INFO ==&gt; Running phase: Acquire exclusive host lock
+  INFO ==&gt; Running phase: Prepare hosts
+  INFO ==&gt; Running phase: Gather host facts
+  INFO [ssh] 192.168.31.93:22: using pi as hostname
+  INFO [ssh] 192.168.31.93:22: discovered wlan0 as private interface
+  INFO ==&gt; Running phase: Validate hosts
+  INFO ==&gt; Running phase: Validate facts
+  INFO ==&gt; Running phase: Download k0s on hosts
+  INFO [ssh] 192.168.31.93:22: downloading k0s v1.32.2+k0s.0
+  INFO ==&gt; Running phase: Install k0s binaries on hosts
+  INFO [ssh] 192.168.31.93:22: validating configuration
+  INFO ==&gt; Running phase: Configure k0s
+  INFO [ssh] 192.168.31.93:22: installing new configuration
+  INFO ==&gt; Running phase: Initialize the k0s cluster
+  INFO [ssh] 192.168.31.93:22: installing k0s controller
+  INFO [ssh] 192.168.31.93:22: waiting for the k0s service to start
+  INFO [ssh] 192.168.31.93:22: wait for kubernetes to reach ready state
+  INFO ==&gt; Running phase: Release exclusive host lock
+  INFO ==&gt; Running phase: Disconnect from hosts
+  INFO ==&gt; Finished in 4m14s
+  INFO k0s cluster version v1.32.2+k0s.0 is now installed
+  INFO Tip: To access the cluster you can now fetch the admin kubeconfig using:
+  INFO      k0sctl kubeconfig --config cluster.yaml
+  ```
 </code></pre></div>
-<h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>  -h, --help   help for config
+<p>2. Fetch the kubeconfig use k0sctl.</p>
+<div class="highlight"><pre><span></span><code>  ```bash
+    k0sctl kubeconfig --config cluster.yaml &gt; pi_cluster.kubeconfig
+  ```
 </code></pre></div>
-<h3 id="see-also">SEE ALSO<a class="headerlink" href="#see-also" title="Permanent link">#</a></h3>
-<ul>
-<li><a href="../k0s/">k0s</a>  - k0s - Zero Friction Kubernetes</li>
-<li><a href="../k0s_config_create/">k0s config create</a>  - Output the default k0s configuration yaml to stdout</li>
-<li><a href="../k0s_config_edit/">k0s config edit</a>  - Launch the editor configured in your shell to edit k0s configuration</li>
-<li><a href="../k0s_config_status/">k0s config status</a>  - Display dynamic configuration reconciliation status</li>
-<li><a href="../k0s_config_validate/">k0s config validate</a>  - Validate k0s configuration</li>
-</ul>
+<p>3. Export KUBECONFIG and verify</p>
+<div class="highlight"><pre><span></span><code>  ```console
+  $ export KUBECONFIG=pi_cluster.kubeconfig
+  $ kubectl get nodes
+  NAME   STATUS   ROLES           AGE     VERSION
+  pi     Ready    control-plane   2m54s   v1.32.2+k0s
+  ```
+</code></pre></div>
+<h2 id="tear-down-k0s-on-pi-5">Tear down k0s on Pi 5<a class="headerlink" href="#tear-down-k0s-on-pi-5" title="Permanent link">#</a></h2>
+<p>If you need to remove k0s entirely (for example, if you run into conflicts or just want a clean slate):</p>
+<p>1. Stop existing processes</p>
+<div class="highlight"><pre><span></span><code>  ```bash
+  sudo k0s stop
+  ```
+</code></pre></div>
+<p>2. Reset k0s</p>
+<div class="highlight"><pre><span></span><code>  ```bash
+  sudo k0s reset
+  ```
+</code></pre></div>
+<p>3. Remove k0s binaries</p>
+<div class="highlight"><pre><span></span><code>  ```bash
+  sudo rm -rf /usr/local/bin/k0s
+  ```
+</code></pre></div>
+<p>4. Reboot Pi 5.</p>
+<div class="highlight"><pre><span></span><code>  ```bash
+  sudo reboot
+  ```
+</code></pre></div>
 
 
 
@@ -2263,10 +2808,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
       
     
   </body>
