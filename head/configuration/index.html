@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../img/k0s-favicon-192.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -2623,6 +2623,9 @@ k0sctl</a> and the <a href="https://github.com/k0sproject/k0sctl/blob/main/READM
 <span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6443</span>
 <span class="w">    </span><span class="nt">sans</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.68.104</span>
+<span class="w">    </span><span class="nt">ca</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">expiresAfter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">87600h</span>
+<span class="w">      </span><span class="nt">certificatesExpireAfter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8760h</span>
 <span class="w">  </span><span class="nt">controllerManager</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">  </span><span class="nt">extensions</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">helm</span><span class="p">:</span>
@@ -2670,6 +2673,9 @@ k0sctl</a> and the <a href="https://github.com/k0sproject/k0sctl/blob/main/READM
 <span class="w">  </span><span class="nt">storage</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">etcd</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">peerAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.68.104</span>
+<span class="w">      </span><span class="nt">ca</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">expiresAfter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">87600h</span>
+<span class="w">        </span><span class="nt">certificatesExpireAfter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8760h</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etcd</span>
 <span class="w">  </span><span class="nt">telemetry</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
@@ -2699,6 +2705,14 @@ k0sctl</a> and the <a href="https://github.com/k0sproject/k0sctl/blob/main/READM
 <tr>
 <td><code>sans</code></td>
 <td>List of additional addresses to push to API servers serving the certificate.</td>
+</tr>
+<tr>
+<td><code>ca.expiresAfter</code></td>
+<td>The expiration duration of the CA certificate (default: 87600h)</td>
+</tr>
+<tr>
+<td><code>ca.certificatesExpireAfter</code></td>
+<td>The expiration duration of the server certificate (default: 8760h)</td>
 </tr>
 <tr>
 <td><code>extraArgs</code></td>
@@ -2735,6 +2749,14 @@ k0sctl</a> and the <a href="https://github.com/k0sproject/k0sctl/blob/main/READM
 <tr>
 <td><code>etcd.extraArgs</code></td>
 <td>Map of key-values (strings) for any extra arguments to pass down to etcd process. Any behavior triggered by these parameters is outside k0s support.</td>
+</tr>
+<tr>
+<td><code>etcd.ca.expiresAfter</code></td>
+<td>The expiration duration of the CA certificate (default: 87600h)</td>
+</tr>
+<tr>
+<td><code>etcd.ca.certificatesExpireAfter</code></td>
+<td>The expiration duration of the server certificate (default: 8760h)</td>
 </tr>
 <tr>
 <td><code>kine.dataSource</code></td>
@@ -3337,7 +3359,7 @@ by k0s.</p>
 <span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/k0sproject/calico-kube-controllers</span>
 <span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v3.27.3-0</span>
 <span class="w">  </span><span class="nt">metricsserver</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.k8s.io/metrics-server/metrics-server</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/k0sproject/metrics-server</span>
 <span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.7.2</span>
 </code></pre></div>
 <p>In the runtime the image names are calculated as
@@ -3485,10 +3507,10 @@ DaemonSets.</p>
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
     
   </body>

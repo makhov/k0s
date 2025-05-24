@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../img/k0s-favicon-192.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -2370,22 +2370,22 @@
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>--show-labels
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>NAME<span class="w">      </span>STATUS<span class="w">     </span>ROLES<span class="w">    </span>AGE<span class="w">   </span>VERSION<span class="w">        </span>LABELS
-worker0<span class="w">   </span>NotReady<span class="w">   </span>&lt;none&gt;<span class="w">   </span>10s<span class="w">   </span>v1.32.4+k0s<span class="w">  </span>beta.kubernetes.io/arch<span class="o">=</span>amd64,beta.kubernetes.io/os<span class="o">=</span>linux,k0sproject.io/foo<span class="o">=</span>bar,k0sproject.io/other<span class="o">=</span>xyz,kubernetes.io/arch<span class="o">=</span>amd64,kubernetes.io/hostname<span class="o">=</span>worker0,kubernetes.io/os<span class="o">=</span>linux
+worker0<span class="w">   </span>NotReady<span class="w">   </span>&lt;none&gt;<span class="w">   </span>10s<span class="w">   </span>v1.33.1+k0s<span class="w">  </span>beta.kubernetes.io/arch<span class="o">=</span>amd64,beta.kubernetes.io/os<span class="o">=</span>linux,k0sproject.io/foo<span class="o">=</span>bar,k0sproject.io/other<span class="o">=</span>xyz,kubernetes.io/arch<span class="o">=</span>amd64,kubernetes.io/hostname<span class="o">=</span>worker0,kubernetes.io/os<span class="o">=</span>linux
 </code></pre></div>
 <p>Controller worker nodes are assigned <code>node.k0sproject.io/role=control-plane</code> and <code>node-role.kubernetes.io/control-plane=true</code> labels:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>--show-labels
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>NAME<span class="w">          </span>STATUS<span class="w">     </span>ROLES<span class="w">           </span>AGE<span class="w">   </span>VERSION<span class="w">        </span>LABELS
-controller0<span class="w">   </span>NotReady<span class="w">   </span>control-plane<span class="w">   </span>10s<span class="w">   </span>v1.32.4+k0s<span class="w">  </span>beta.kubernetes.io/arch<span class="o">=</span>amd64,beta.kubernetes.io/os<span class="o">=</span>linux,kubernetes.io/hostname<span class="o">=</span>worker0,kubernetes.io/os<span class="o">=</span>linux,node.k0sproject.io/role<span class="o">=</span>control-plane,node-role.kubernetes.io/control-plane<span class="o">=</span><span class="nb">true</span>
+controller0<span class="w">   </span>NotReady<span class="w">   </span>control-plane<span class="w">   </span>10s<span class="w">   </span>v1.33.1+k0s<span class="w">  </span>beta.kubernetes.io/arch<span class="o">=</span>amd64,beta.kubernetes.io/os<span class="o">=</span>linux,kubernetes.io/hostname<span class="o">=</span>worker0,kubernetes.io/os<span class="o">=</span>linux,node.k0sproject.io/role<span class="o">=</span>control-plane,node-role.kubernetes.io/control-plane<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
 <p><strong>Note:</strong> Setting the labels is only effective on the first registration of the node. Changing the labels thereafter has no effect.</p>
 <h2 id="taints">Taints<a class="headerlink" href="#taints" title="Permanent link">#</a></h2>
 <p>The <code>k0s worker</code> command accepts the <code>--taints</code> flag, with which you can make the newly joined worker node the register itself with the given set of taints.</p>
-<p><strong>Note:</strong> Controller nodes running with <code>--enable-worker</code> are assigned <code>node-role.kubernetes.io/master:NoExecute</code> taint automatically. You can disable default taints using <code>--no-taints</code>  parameter.</p>
+<p><strong>Note:</strong> Controller nodes running with <code>--enable-worker</code> are assigned <code>node-role.kubernetes.io/control-plane:NoExecute</code> taint automatically. You can disable default taints using <code>--no-taints</code> parameter.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>custom-columns<span class="o">=</span>NAME:.metadata.name,TAINTS:.spec.taints
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>NAME<span class="w">          </span>TAINTS
-controller0<span class="w">   </span><span class="o">[</span>map<span class="o">[</span>effect:NoSchedule<span class="w"> </span>key:node-role.kubernetes.io/master<span class="o">]]</span>
+controller0<span class="w">   </span><span class="o">[</span>map<span class="o">[</span>effect:NoSchedule<span class="w"> </span>key:node-role.kubernetes.io/control-plane<span class="o">]]</span>
 worker0<span class="w">       </span>&lt;none&gt;
 </code></pre></div>
 <h2 id="kubelet-configuration">Kubelet configuration<a class="headerlink" href="#kubelet-configuration" title="Permanent link">#</a></h2>
@@ -2499,10 +2499,10 @@ There is a <code>--iptables-mode</code> flag to specify the mode explicitly. Val
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
     
   </body>
