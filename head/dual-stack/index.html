@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../img/k0s-favicon-192.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
     
     
       
@@ -1179,7 +1179,7 @@
         <li class="md-nav__item">
   <a href="#enabling-dual-stack-using-the-default-cni-kube-router" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabling dual-stack using the default CNI (kube-router)
+      Enabling dual-stack using the default CNI (Kube-router)
     </span>
   </a>
   
@@ -1189,6 +1189,15 @@
   <a href="#using-calico-as-the-cni-provider" class="md-nav__link">
     <span class="md-ellipsis">
       Using Calico as the CNI provider
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-the-default-ip-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specifying the default IP family
     </span>
   </a>
   
@@ -1663,29 +1672,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/ambassador-ingress/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Ambassador API Gateway
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../examples/rook-ceph/" class="md-nav__link">
         
   
@@ -2035,18 +2021,179 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Governance
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Governance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Security policy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../releases/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Releases & Support
+    Releases & support model
     
   </span>
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_9_3" id="__nav_9_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CNCF
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9_3">
+            <span class="md-nav__icon md-icon"></span>
+            CNCF
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../governance/cncf/gtr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    General Technical Review
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../governance/cncf/security-self-assessment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TAG-Security self-assessment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -2101,28 +2248,6 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../security/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Security Policy
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
     
     
     
@@ -2132,10 +2257,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
         
           
-          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
             
   
   
@@ -2148,8 +2273,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_13">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
             <span class="md-nav__icon md-icon"></span>
             Contributing
           </label>
@@ -2283,7 +2408,7 @@
         <li class="md-nav__item">
   <a href="#enabling-dual-stack-using-the-default-cni-kube-router" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabling dual-stack using the default CNI (kube-router)
+      Enabling dual-stack using the default CNI (Kube-router)
     </span>
   </a>
   
@@ -2293,6 +2418,15 @@
   <a href="#using-calico-as-the-cni-provider" class="md-nav__link">
     <span class="md-ellipsis">
       Using Calico as the CNI provider
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-the-default-ip-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specifying the default IP family
     </span>
   </a>
   
@@ -2332,15 +2466,20 @@
 
 
 
+<!--
+SPDX-FileCopyrightText: 2021 k0s authors
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 <h1 id="ipv4ipv6-dual-stack-networking">IPv4/IPv6 dual-stack networking<a class="headerlink" href="#ipv4ipv6-dual-stack-networking" title="Permanent link">#</a></h1>
 <p>Enabling dual-stack networking in k0s allows your cluster to handle both IPv4 and
 IPv6 addresses. Follow the configuration examples below to set up dual-stack mode.</p>
-<h2 id="enabling-dual-stack-using-the-default-cni-kube-router">Enabling dual-stack using the default CNI (kube-router)<a class="headerlink" href="#enabling-dual-stack-using-the-default-cni-kube-router" title="Permanent link">#</a></h2>
+<h2 id="enabling-dual-stack-using-the-default-cni-kube-router">Enabling dual-stack using the default CNI (Kube-router)<a class="headerlink" href="#enabling-dual-stack-using-the-default-cni-kube-router" title="Permanent link">#</a></h2>
 <p>In order to enable dual-stack networking using the default CNI provider, use the
 following example configuration:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">network</span><span class="p">:</span>
-<span class="w">    </span><span class="c1"># kube-router is the default CNI provider</span>
+<span class="w">    </span><span class="c1"># Kube-router is the default CNI provider</span>
 <span class="w">    </span><span class="c1"># provider: kube-router</span>
 <span class="w">    </span><span class="nt">podCIDR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.244.0.0/16</span>
 <span class="w">    </span><span class="nt">serviceCIDR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.96.0.0/12</span>
@@ -2349,7 +2488,7 @@ following example configuration:</p>
 <span class="w">      </span><span class="nt">IPv6podCIDR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fd00::/108</span>
 <span class="w">      </span><span class="nt">IPv6serviceCIDR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fd01::/108</span>
 </code></pre></div>
-<p>This configuration will set up all Kubernetes components and kube-router
+<p>This configuration will set up all Kubernetes components and Kube-router
 accordingly for dual-stack networking.</p>
 <h2 id="using-calico-as-the-cni-provider">Using Calico as the CNI provider<a class="headerlink" href="#using-calico-as-the-cni-provider" title="Permanent link">#</a></h2>
 <p>Calico does not support IPv6 tunneling in the default <code>vxlan</code> mode, so if you
@@ -2367,6 +2506,22 @@ the following example configuration:</p>
 <span class="w">      </span><span class="nt">IPv6podCIDR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fd00::/108</span>
 <span class="w">      </span><span class="nt">IPv6serviceCIDR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fd01::/108</span>
 </code></pre></div>
+<h2 id="specifying-the-default-ip-family">Specifying the default IP family<a class="headerlink" href="#specifying-the-default-ip-family" title="Permanent link">#</a></h2>
+<p>In Kubernetes dual stack clusters, by default all the services are single stack,
+including <code>kubernetes.default.svc</code>, which is used to communicate with the
+Kubernetes API servers.</p>
+<p>This is specially important when specifying explicitly
+<code>spec.api.externalAddress</code> or <code>spec.api.address</code>.</p>
+<p>To explicitly define the family which will be used by default use the following
+configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">network</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># primaryAddressFamily is optional</span>
+<span class="w">    </span><span class="nt">priamryAddressFamily</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;IPv4|IPv6&gt;</span>
+</code></pre></div>
+<p>If not defined explicitly, k0s will determine it based on <code>spec.api.externalAddress</code>,
+if this field is not defined, k0s will use <code>spec.api.address</code>. If the field used is
+a host name or both are empty, k0s will use IPv4.</p>
 <h2 id="custom-cni-providers">Custom CNI providers<a class="headerlink" href="#custom-cni-providers" title="Permanent link">#</a></h2>
 <p>While the dual-stack configuration section configures all components managed by
 k0s for dual-stack operation, the custom CNI provider must also be configured
@@ -2409,7 +2564,7 @@ a proper dual-stack setup that matches that of k0s.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2021 <a href="https://mirantis.com/">Mirantis Inc.</a> - All rights reserved.
+      Copyright &copy; 2021 k0sproject a Series of LF Projects, LLC. For website terms of use, trademark policy and other project policies please see <a href="https://lfprojects.org/policies/" target="_blank">Linux Foundation policies</a>. - All rights reserved.
     </div>
   
   
@@ -2474,7 +2629,7 @@ a proper dual-stack setup that matches that of k0s.</p>
       <script id="__config" type="application/json">{"base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
       
     
   </body>
