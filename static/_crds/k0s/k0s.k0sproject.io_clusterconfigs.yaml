@@ -436,6 +436,10 @@ spec:
                     maximum: 65535
                     minimum: 1
                     type: integer
+                  agentHost:
+                    description: agentHost is the host address that konnectivity agent
+                      should connect to.
+                    type: string
                   agentPort:
                     default: 8132
                     description: agent port to listen on (default 8132)

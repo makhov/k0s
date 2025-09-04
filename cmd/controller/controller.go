@@ -517,9 +517,14 @@ func (c *command) start(ctx context.Context, flags *config.ControllerOptions, de
 	}
 
 	if enableKonnectivity {
+		address := nodeConfig.Spec.Konnectivity.AgentHost
+		if address == "" {
+			address = nodeConfig.Spec.API.APIAddress()
+		}
+
 		clusterComponents.Add(ctx, &controller.KonnectivityAgent{
 			K0sVars:       c.K0sVars,
-			APIServerHost: nodeConfig.Spec.API.APIAddress(),
+			APIServerHost: address,
 			EventEmitter:  prober.NewEventEmitter(),
 			ServerCount:   numActiveControllers.Peek,
 		})

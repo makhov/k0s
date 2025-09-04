@@ -23,6 +23,9 @@ type KonnectivitySpec struct {
 	// +kubebuilder:validation:Maximum=65535
 	// +kubebuilder:default=8132
 	AgentPort int32 `json:"agentPort,omitempty"`
+	// agentHost is the host address that konnectivity agent should connect to.
+	// +kubebuilder:optional
+	AgentHost string `json:"agentHost,omitempty"`
 }
 
 // DefaultKonnectivitySpec builds default KonnectivitySpec
