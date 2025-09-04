@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../img/k0s-favicon-192.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
     
     
       
@@ -2540,7 +2540,7 @@ configuration:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">network</span><span class="p">:</span>
 <span class="w">    </span><span class="c1"># primaryAddressFamily is optional</span>
-<span class="w">    </span><span class="nt">priamryAddressFamily</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;IPv4|IPv6&gt;</span>
+<span class="w">    </span><span class="nt">primaryAddressFamily</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;IPv4|IPv6&gt;</span>
 </code></pre></div>
 <p>If not defined explicitly, k0s will determine it based on <code>spec.api.externalAddress</code>,
 if this field is not defined, k0s will use <code>spec.api.address</code>. If the field used is
@@ -2593,7 +2593,8 @@ a proper dual-stack setup that matches that of k0s.</p>
   
 </div>
       
-        <div class="md-social">
+        
+<div class="md-social">
   
     
     
