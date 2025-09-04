@@ -8,7 +8,7 @@ require (
 	github.com/Masterminds/semver/v3 v3.4.0
 	github.com/Masterminds/sprig v2.22.0+incompatible
 	github.com/Microsoft/go-winio v0.6.2
-	github.com/Microsoft/hcsshim v0.11.7
+	github.com/Microsoft/hcsshim v0.13.0
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2
 	github.com/avast/retry-go v3.0.0+incompatible
 	github.com/bombsimon/logrusr/v4 v4.1.0
@@ -105,7 +105,6 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/chai2010/gettext-go v1.0.2 // indirect
-	github.com/containerd/cgroups v1.1.0 // indirect
 	github.com/containerd/console v1.0.4 // indirect
 	github.com/containerd/containerd/api v1.8.0 // indirect
 	github.com/containerd/continuity v0.4.4 // indirect
