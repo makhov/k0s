@@ -26,10 +26,12 @@ ARG TARGET_OS \
   KUBERNETES_BINS
 
 COPY riscv64.patch .
+COPY topology.patch .
 
 RUN \
   set -ex; \
   git apply < riscv64.patch; \
+  git apply < topology.patch; \
   export GOPATH=/go; \
   if [ "${TARGET_OS}" = windows ]; then \
     commands="${KUBERNETES_BINS}"; \

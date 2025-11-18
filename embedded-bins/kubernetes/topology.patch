@@ -1,0 +1,34 @@
+diff --git a/vendor/github.com/google/cadvisor/utils/sysinfo/sysinfo.go b/vendor/github.com/google/cadvisor/utils/sysinfo/sysinfo.go
+index 4084da1a5b4..20bf4e2a391 100644
+--- a/vendor/github.com/google/cadvisor/utils/sysinfo/sysinfo.go
++++ b/vendor/github.com/google/cadvisor/utils/sysinfo/sysinfo.go
+@@ -236,6 +236,17 @@ func GetNodesInfo(sysFs sysfs.SysFs) ([]info.Node, int, error) {
+ 			}
+ 		}
+ 
++
++		node.Memory, err = getNodeMemInfo(sysFs, nodeDir)
++		if err != nil {
++			return nil, 0, err
++		}
++
++		if len(node.Cores) == 0 && node.Memory == 0 {
++			klog.Warningf("Skipping node with no cores and no memory info, nodeDir: %s", nodeDir)
++			continue
++		}
++		
+ 		// On some Linux platforms(such as Arm64 guest kernel), cache info may not exist.
+ 		// So, we should ignore error here.
+ 		err = addCacheInfo(sysFs, &node)
+@@ -243,11 +254,6 @@ func GetNodesInfo(sysFs sysfs.SysFs) ([]info.Node, int, error) {
+ 			klog.V(1).Infof("Found node without cache information, nodeDir: %s", nodeDir)
+ 		}
+ 
+-		node.Memory, err = getNodeMemInfo(sysFs, nodeDir)
+-		if err != nil {
+-			return nil, 0, err
+-		}
+-
+ 		hugepagesDirectory := fmt.Sprintf("%s/%s", nodeDir, hugepagesDir)
+ 		node.HugePages, err = GetHugePagesInfo(sysFs, hugepagesDirectory)
+ 		if err != nil {
