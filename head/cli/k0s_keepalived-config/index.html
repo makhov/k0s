@@ -12,31 +12,27 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
-        <link rel="canonical" href="https://docs.k0sproject.io/head/custom-ca/">
+        <link rel="canonical" href="https://docs.k0sproject.io/head/cli/k0s_keepalived-config/">
       
       
-        <link rel="prev" href="../airgap-install/">
-      
-      
-        <link rel="next" href="../system-requirements/">
       
       
         
       
       
-      <link rel="icon" href="../img/k0s-favicon-192.png">
+      <link rel="icon" href="../../img/k0s-favicon-192.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
     
     
       
-        <title>Using custom CA certificate (advanced) - Documentation</title>
+        <title>K0s keepalived config - Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -55,9 +51,9 @@
       
     
     
-      <link rel="stylesheet" href="../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JMV1409T2T"></script>
@@ -89,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#install-using-custom-ca-certificates-and-sa-key-pair" class="md-skip">
+        <a href="#k0s-keepalived-config" class="md-skip">
           Skip to content
         </a>
       
@@ -104,12 +100,12 @@
             <div class="md-banner__inner md-grid md-typeset">
               
   You are not currently viewing the documentation for the current stable release of k0s.
-  <a href="../..">
+  <a href="../../..">
     <strong>Click here to go to the documentation of the current stable release.</strong>
   </a>
 
             </div>
-            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL(".."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
           </aside>
         
       </div>
@@ -121,9 +117,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Documentation" class="md-header__button md-logo" aria-label="Documentation" data-md-component="logo">
+    <a href="../.." title="Documentation" class="md-header__button md-logo" aria-label="Documentation" data-md-component="logo">
       
-  <img src="../img/k0s-favicon-192.png" alt="logo">
+  <img src="../../img/k0s-favicon-192.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -140,7 +136,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Using custom CA certificate (advanced)
+              K0s keepalived config
             
           </span>
         </div>
@@ -258,9 +254,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Documentation" class="md-nav__button md-logo" aria-label="Documentation" data-md-component="logo">
+    <a href="../.." title="Documentation" class="md-nav__button md-logo" aria-label="Documentation" data-md-component="logo">
       
-  <img src="../img/k0s-favicon-192.png" alt="logo">
+  <img src="../../img/k0s-favicon-192.png" alt="logo">
 
     </a>
     Documentation
@@ -287,7 +283,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -311,20 +307,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -345,7 +339,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -363,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/" class="md-nav__link">
+      <a href="../../install/" class="md-nav__link">
         
   
   
@@ -391,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../k0sctl-install/" class="md-nav__link">
+      <a href="../../k0sctl-install/" class="md-nav__link">
         
   
   
@@ -416,20 +410,18 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
         
           
           <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
@@ -450,7 +442,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -468,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../k0s-multi-node/" class="md-nav__link">
+      <a href="../../k0s-multi-node/" class="md-nav__link">
         
   
   
@@ -496,7 +488,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../k0s-in-docker/" class="md-nav__link">
+      <a href="../../k0s-in-docker/" class="md-nav__link">
         
   
   
@@ -524,7 +516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../experimental-windows/" class="md-nav__link">
+      <a href="../../experimental-windows/" class="md-nav__link">
         
   
   
@@ -552,7 +544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../raspberry-pi4/" class="md-nav__link">
+      <a href="../../raspberry-pi4/" class="md-nav__link">
         
   
   
@@ -580,7 +572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../raspberry-pi5/" class="md-nav__link">
+      <a href="../../raspberry-pi5/" class="md-nav__link">
         
   
   
@@ -608,7 +600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/ansible-playbook/" class="md-nav__link">
+      <a href="../../examples/ansible-playbook/" class="md-nav__link">
         
   
   
@@ -636,7 +628,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../airgap-install/" class="md-nav__link">
+      <a href="../../airgap-install/" class="md-nav__link">
         
   
   
@@ -661,37 +653,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Using custom CA certificate (advanced)
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../custom-ca/" class="md-nav__link">
         
   
   
@@ -707,48 +672,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#pre-generated-tokens" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pre-generated tokens
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        See also
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -769,7 +692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../system-requirements/" class="md-nav__link">
+      <a href="../../system-requirements/" class="md-nav__link">
         
   
   
@@ -797,7 +720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../external-runtime-deps/" class="md-nav__link">
+      <a href="../../external-runtime-deps/" class="md-nav__link">
         
   
   
@@ -825,7 +748,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../verifying-signs/" class="md-nav__link">
+      <a href="../../verifying-signs/" class="md-nav__link">
         
   
   
@@ -907,7 +830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../upgrade/" class="md-nav__link">
+      <a href="../../upgrade/" class="md-nav__link">
         
   
   
@@ -935,7 +858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../backup/" class="md-nav__link">
+      <a href="../../backup/" class="md-nav__link">
         
   
   
@@ -963,7 +886,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../remove_controller/" class="md-nav__link">
+      <a href="../../remove_controller/" class="md-nav__link">
         
   
   
@@ -991,7 +914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reset/" class="md-nav__link">
+      <a href="../../reset/" class="md-nav__link">
         
   
   
@@ -1073,7 +996,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../configuration/" class="md-nav__link">
+      <a href="../../configuration/" class="md-nav__link">
         
   
   
@@ -1101,7 +1024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dynamic-configuration/" class="md-nav__link">
+      <a href="../../dynamic-configuration/" class="md-nav__link">
         
   
   
@@ -1129,7 +1052,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../configuration-validation/" class="md-nav__link">
+      <a href="../../configuration-validation/" class="md-nav__link">
         
   
   
@@ -1157,7 +1080,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../worker-node-config/" class="md-nav__link">
+      <a href="../../worker-node-config/" class="md-nav__link">
         
   
   
@@ -1185,7 +1108,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../networking/" class="md-nav__link">
+      <a href="../../networking/" class="md-nav__link">
         
   
   
@@ -1213,7 +1136,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../runtime/" class="md-nav__link">
+      <a href="../../runtime/" class="md-nav__link">
         
   
   
@@ -1241,7 +1164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../storage/" class="md-nav__link">
+      <a href="../../storage/" class="md-nav__link">
         
   
   
@@ -1269,7 +1192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../system-monitoring/" class="md-nav__link">
+      <a href="../../system-monitoring/" class="md-nav__link">
         
   
   
@@ -1297,7 +1220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../manifests/" class="md-nav__link">
+      <a href="../../manifests/" class="md-nav__link">
         
   
   
@@ -1325,7 +1248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../helm-charts/" class="md-nav__link">
+      <a href="../../helm-charts/" class="md-nav__link">
         
   
   
@@ -1353,7 +1276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../feature-gates/" class="md-nav__link">
+      <a href="../../feature-gates/" class="md-nav__link">
         
   
   
@@ -1381,7 +1304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cloud-providers/" class="md-nav__link">
+      <a href="../../cloud-providers/" class="md-nav__link">
         
   
   
@@ -1409,7 +1332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dual-stack/" class="md-nav__link">
+      <a href="../../dual-stack/" class="md-nav__link">
         
   
   
@@ -1437,7 +1360,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../single-stack-ipv6/" class="md-nav__link">
+      <a href="../../single-stack-ipv6/" class="md-nav__link">
         
   
   
@@ -1465,7 +1388,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../high-availability/" class="md-nav__link">
+      <a href="../../high-availability/" class="md-nav__link">
         
   
   
@@ -1493,7 +1416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../nllb/" class="md-nav__link">
+      <a href="../../nllb/" class="md-nav__link">
         
   
   
@@ -1521,7 +1444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cplb/" class="md-nav__link">
+      <a href="../../cplb/" class="md-nav__link">
         
   
   
@@ -1549,7 +1472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../shell-completion/" class="md-nav__link">
+      <a href="../../shell-completion/" class="md-nav__link">
         
   
   
@@ -1577,7 +1500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../user-management/" class="md-nav__link">
+      <a href="../../user-management/" class="md-nav__link">
         
   
   
@@ -1605,7 +1528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../environment-variables/" class="md-nav__link">
+      <a href="../../environment-variables/" class="md-nav__link">
         
   
   
@@ -1633,7 +1556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/oidc/oidc-cluster-configuration/" class="md-nav__link">
+      <a href="../../examples/oidc/oidc-cluster-configuration/" class="md-nav__link">
         
   
   
@@ -1661,7 +1584,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../selinux/" class="md-nav__link">
+      <a href="../../selinux/" class="md-nav__link">
         
   
   
@@ -1689,7 +1612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../podsecurity/" class="md-nav__link">
+      <a href="../../podsecurity/" class="md-nav__link">
         
   
   
@@ -1717,7 +1640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reinstall-k0sctl/" class="md-nav__link">
+      <a href="../../reinstall-k0sctl/" class="md-nav__link">
         
   
   
@@ -1799,7 +1722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../autopilot/" class="md-nav__link">
+      <a href="../../autopilot/" class="md-nav__link">
         
   
   
@@ -1827,7 +1750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../autopilot-multicommand/" class="md-nav__link">
+      <a href="../../autopilot-multicommand/" class="md-nav__link">
         
   
   
@@ -1909,7 +1832,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/metallb-loadbalancer/" class="md-nav__link">
+      <a href="../../examples/metallb-loadbalancer/" class="md-nav__link">
         
   
   
@@ -1937,7 +1860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/nginx-ingress/" class="md-nav__link">
+      <a href="../../examples/nginx-ingress/" class="md-nav__link">
         
   
   
@@ -1965,7 +1888,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/traefik-ingress/" class="md-nav__link">
+      <a href="../../examples/traefik-ingress/" class="md-nav__link">
         
   
   
@@ -1993,7 +1916,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/rook-ceph/" class="md-nav__link">
+      <a href="../../examples/rook-ceph/" class="md-nav__link">
         
   
   
@@ -2021,7 +1944,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/gitops-flux/" class="md-nav__link">
+      <a href="../../examples/gitops-flux/" class="md-nav__link">
         
   
   
@@ -2049,7 +1972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/openebs/" class="md-nav__link">
+      <a href="../../examples/openebs/" class="md-nav__link">
         
   
   
@@ -2077,7 +2000,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/longhorn/" class="md-nav__link">
+      <a href="../../examples/longhorn/" class="md-nav__link">
         
   
   
@@ -2159,7 +2082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/FAQ/" class="md-nav__link">
+      <a href="../../troubleshooting/FAQ/" class="md-nav__link">
         
   
   
@@ -2187,7 +2110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/logs/" class="md-nav__link">
+      <a href="../../troubleshooting/logs/" class="md-nav__link">
         
   
   
@@ -2215,7 +2138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/troubleshooting/" class="md-nav__link">
+      <a href="../../troubleshooting/troubleshooting/" class="md-nav__link">
         
   
   
@@ -2243,7 +2166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/support-dump/" class="md-nav__link">
+      <a href="../../troubleshooting/support-dump/" class="md-nav__link">
         
   
   
@@ -2271,7 +2194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/certificate-authorities/" class="md-nav__link">
+      <a href="../../troubleshooting/certificate-authorities/" class="md-nav__link">
         
   
   
@@ -2353,7 +2276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+      <a href="../../architecture/" class="md-nav__link">
         
   
   
@@ -2381,7 +2304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -2409,7 +2332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cis_benchmark/" class="md-nav__link">
+      <a href="../../cis_benchmark/" class="md-nav__link">
         
   
   
@@ -2491,7 +2414,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../security/" class="md-nav__link">
+      <a href="../../security/" class="md-nav__link">
         
   
   
@@ -2519,7 +2442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../releases/" class="md-nav__link">
+      <a href="../../releases/" class="md-nav__link">
         
   
   
@@ -2594,7 +2517,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../governance/cncf/gtr/" class="md-nav__link">
+      <a href="../../governance/cncf/gtr/" class="md-nav__link">
         
   
   
@@ -2622,7 +2545,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../governance/cncf/security-self-assessment/" class="md-nav__link">
+      <a href="../../governance/cncf/security-self-assessment/" class="md-nav__link">
         
   
   
@@ -2665,7 +2588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../commercial-support/" class="md-nav__link">
+      <a href="../../commercial-support/" class="md-nav__link">
         
   
   
@@ -2692,7 +2615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adopters/" class="md-nav__link">
+      <a href="../../adopters/" class="md-nav__link">
         
   
   
@@ -2766,7 +2689,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contributors/" class="md-nav__link">
+      <a href="../../contributors/" class="md-nav__link">
         
   
   
@@ -2794,7 +2717,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contributors/github_workflow/" class="md-nav__link">
+      <a href="../../contributors/github_workflow/" class="md-nav__link">
         
   
   
@@ -2822,7 +2745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contributors/testing/" class="md-nav__link">
+      <a href="../../contributors/testing/" class="md-nav__link">
         
   
   
@@ -2850,7 +2773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contributors/docs/" class="md-nav__link">
+      <a href="../../contributors/docs/" class="md-nav__link">
         
   
   
@@ -2895,8 +2818,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2905,24 +2826,41 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pre-generated-tokens" class="md-nav__link">
+  <a href="#k0s-keepalived-config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pre-generated tokens
+        k0s keepalived-config
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="k0s keepalived-config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Options
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
-        See also
+        SEE ALSO
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2943,41 +2881,20 @@
 
 
 
-<!--
-SPDX-FileCopyrightText: 2022 k0s authors
-SPDX-License-Identifier: CC-BY-SA-4.0
--->
+  <h1>K0s keepalived config</h1>
 
-<h1 id="install-using-custom-ca-certificates-and-sa-key-pair">Install using custom CA certificates and SA key pair<a class="headerlink" href="#install-using-custom-ca-certificates-and-sa-key-pair" title="Permanent link">#</a></h1>
-<p>k0s generates all needed certificates automatically in the <code>&lt;data-dir&gt;/pki</code> directory (<code>/var/lib/k0s/pki</code>, by default).</p>
-<p>But sometimes there is a need to have the CA certificates and SA key pair in advance.
-To make it work, just put files to the <code>&lt;data-dir&gt;/pki</code> and <code>&lt;data-dir&gt;/pki/etcd</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">LIFETIME</span><span class="o">=</span><span class="m">365</span>
-mkdir<span class="w"> </span>-p<span class="w"> </span>/var/lib/k0s/pki/etcd
-<span class="nb">cd</span><span class="w"> </span>/var/lib/k0s/pki
-openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>ca.key<span class="w"> </span><span class="m">2048</span>
-openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-new<span class="w"> </span>-nodes<span class="w"> </span>-key<span class="w"> </span>ca.key<span class="w"> </span>-sha256<span class="w"> </span>-days<span class="w"> </span><span class="nv">$LIFETIME</span><span class="w"> </span>-out<span class="w"> </span>ca.crt<span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=Custom CA&quot;</span>
-openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>sa.key<span class="w"> </span><span class="m">2048</span>
-openssl<span class="w"> </span>rsa<span class="w"> </span>-in<span class="w"> </span>sa.key<span class="w"> </span>-outform<span class="w"> </span>PEM<span class="w"> </span>-pubout<span class="w"> </span>-out<span class="w"> </span>sa.pub
-<span class="nb">cd</span><span class="w"> </span>./etcd
-openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>ca.key<span class="w"> </span><span class="m">2048</span>
-openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-new<span class="w"> </span>-nodes<span class="w"> </span>-key<span class="w"> </span>ca.key<span class="w"> </span>-sha256<span class="w"> </span>-days<span class="w"> </span><span class="nv">$LIFETIME</span><span class="w"> </span>-out<span class="w"> </span>ca.crt<span class="w"> </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=Custom CA&quot;</span>
+<h2 id="k0s-keepalived-config">k0s keepalived-config<a class="headerlink" href="#k0s-keepalived-config" title="Permanent link">#</a></h2>
+<p>Keepalived configuration related sub-commands</p>
+<div class="highlight"><pre><span></span><code>k0s keepalived-config [flags]
 </code></pre></div>
-<p>Then you can <a href="../install/">install k0s as usual</a>.</p>
-<h2 id="pre-generated-tokens">Pre-generated tokens<a class="headerlink" href="#pre-generated-tokens" title="Permanent link">#</a></h2>
-<p>It's possible to get join in advance without having a running cluster.</p>
-<div class="highlight"><pre><span></span><code>k0s<span class="w"> </span>token<span class="w"> </span>pre-shared<span class="w"> </span>--role<span class="w"> </span>worker<span class="w"> </span>--cert<span class="w"> </span>/var/lib/k0s/pki/ca.crt<span class="w"> </span>--url<span class="w"> </span>https://&lt;controller-ip&gt;:6443/
+<h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">#</a></h3>
+<div class="highlight"><pre><span></span><code>  -h, --help   help for keepalived-config
 </code></pre></div>
-<p>The command above generates a join token and a Secret. A Secret should be deployed to the cluster to authorize the token.
-For example, you can put the Secret under the <a href="../manifests/">manifest</a> directory and it will be deployed automatically.</p>
-<p>Please note that if you are generating a join token for a controller, the port number needs to be 9443 instead of 6443.
-Controller bootstrapping requires talking to the k0s API server instead of the Kubernetes API server.
-Here's an example of a command for pre-generating a token for a controller.</p>
-<div class="highlight"><pre><span></span><code>k0s<span class="w"> </span>token<span class="w"> </span>pre-shared<span class="w"> </span>--role<span class="w"> </span>controller<span class="w"> </span>--cert<span class="w"> </span>/var/lib/k0s/pki/ca.crt<span class="w"> </span>--url<span class="w"> </span>https://&lt;controller-ip&gt;:9443/
-</code></pre></div>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">#</a></h2>
+<h3 id="see-also">SEE ALSO<a class="headerlink" href="#see-also" title="Permanent link">#</a></h3>
 <ul>
-<li><a href="../troubleshooting/certificate-authorities/">Certificate Authorities</a></li>
+<li><a href="../k0s/">k0s</a>  - k0s - Zero Friction Kubernetes</li>
+<li><a href="../k0s_keepalived-config_virtualservers/">k0s keepalived-config virtualservers</a>    - Output the default Keepalived Virtual Servers configuration template to stdout</li>
+<li><a href="../k0s_keepalived-config_vrrp/">k0s keepalived-config vrrp</a>    - Output the default Keepalived VRRP configuration template to stdout</li>
 </ul>
 
 
@@ -3080,10 +2997,10 @@ Here's an example of a command for pre-generating a token for a controller.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["toc.autohide", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
