@@ -12,7 +12,7 @@ RUN if [ ! -z "$(which apt)" ]; then \
 
 ARG VERSION
 RUN #cd / && git -c advice.detachedHead=false clone -b v$VERSION --depth=1 https://github.com/rancher/kine.git
-RUN cd / && git -c advice.detachedHead=false clone -b v0.14.16-t4.2 --depth=1 https://github.com/t4db/kine.git
+RUN cd / && git -c advice.detachedHead=false clone -b v0.14.16-t4.3 --depth=1 https://github.com/t4db/kine.git
 WORKDIR /kine
 RUN go version
 
