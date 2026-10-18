@@ -2891,7 +2891,7 @@
   <span class="md-ellipsis">
     
   
-    Contributing
+    Contributing guidelines
   
 
     
@@ -2907,7 +2907,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Contributing
+    Contributing guidelines
   
 
           </label>
@@ -2927,7 +2927,7 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Overview
   
 
     
@@ -2956,6 +2956,34 @@
     
   
     GitHub Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributors/code_guidelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code guidelines
   
 
     
@@ -3317,12 +3345,16 @@ deprecation policy.</p>
   cgroup v1 and v2.</li>
 </ul>
 <h3 id="no-integration-with-name-service-switch-nss-apis">No integration with Name Service Switch (NSS) APIs<a class="headerlink" href="#no-integration-with-name-service-switch-nss-apis" title="Permanent link">#</a></h3>
-<p>The k0s Linux binaries are by default statically linked against <a href="https://musl.libc.org/">musl libc</a>.
-This includes the binaries distributed on the GitHub releases pages. Static
-linking ensures that k0s can run seamlessly across a wide range of Linux
-environments by not requiring a specific standard C library to be installed on
-the host system. However, this design choice means that k0s cannot use <a href="https://www.gnu.org/software/libc/manual/html_node/Name-Service-Switch.html">glibc's
-NSS APIs</a>, which require dynamic linking.</p>
+<p>The k0s Linux binaries, including the ones distributed on the GitHub releases
+pages, are by default statically linked and do not depend on the host's
+C&nbsp;library. This ensures that k0s can run seamlessly across a wide range of
+Linux environments. The <code>k0s</code> executable and most of the embedded binaries are
+built without <a href="https://pkg.go.dev/cmd/cgo">cgo</a> and use the <a href="https://pkg.go.dev/net#hdr-Name_Resolution">pure Go resolver</a>, which only
+consults the <code>files</code> and <code>dns</code> sources of <code>/etc/nsswitch.conf</code>. The Go
+executables that do require cgo, such as <code>containerd</code> and <code>runc</code>, as well as all
+non-Go executables, are statically linked against <a href="https://musl.libc.org/">musl libc</a>, which doesn't
+implement NSS at all. In all cases, k0s cannot use <a href="https://www.gnu.org/software/libc/manual/html_node/Name-Service-Switch.html">glibc's NSS APIs</a>, which
+require dynamic linking.</p>
 <p>This limitation is particularly relevant when a system uses NSS plugins, such as
 <a href="https://www.freedesktop.org/software/systemd/man/latest/nss-myhostname.html">nss-myhostname</a>, for resolving network names like <code>localhost</code>. Systems lacking
 a dedicated stub resolver capable of handling <code>localhost</code> DNS queries
@@ -3332,6 +3364,24 @@ to manually add <code>localhost</code> entries to the <code>/etc/hosts</code> fi
 <div class="highlight"><pre><span></span><code>127.0.0.1 localhost
 ::1 localhost
 </code></pre></div>
+<p>The same limitation applies to systems that resolve all names via NSS, such as
+through <a href="https://www.freedesktop.org/software/systemd/man/latest/nss-resolve.html">nss-resolve</a> on hosts running <code>systemd-resolved</code>. Programs linked
+against glibc can resolve names just fine on such systems, even if
+<code>/etc/resolv.conf</code> doesn't list any nameservers. In contrast, k0s and its
+embedded components only ever consult <code>/etc/resolv.conf</code>. If that file has no
+nameserver entries, they fall back to querying a nameserver on localhost, which
+usually doesn't exist. This leaves k0s without working name resolution, although
+the host itself appears fine. Make sure that <code>/etc/resolv.conf</code> lists reachable
+nameservers. When using <code>systemd-resolved</code>, this typically means making
+<code>/etc/resolv.conf</code> a symbolic link to <code>/run/systemd/resolve/stub-resolv.conf</code>,
+as described in the <a href="https://www.freedesktop.org/software/systemd/man/latest/systemd-resolved.service.html#/etc/resolv.conf">systemd-resolved documentation</a>. Pods can't reach that stub
+resolver on the host's loopback interface, which is why k0s configures the
+kubelet to use systemd-resolved's uplink file <code>/run/systemd/resolve/resolv.conf</code>
+for pods instead. The k0s pre-flight checks detect this situation by resolving a
+name under the reserved <code>invalid</code> top-level domain, which any working resolver
+answers with NXDOMAIN. If that lookup fails, k0s issues a warning. If
+<code>/etc/resolv.conf</code> doesn't list any nameservers on top of that, worker nodes
+refuse to start. Controllers only warn in that case.</p>
 <h3 id="kernel-parameters">Kernel Parameters<a class="headerlink" href="#kernel-parameters" title="Permanent link">#</a></h3>
 <h4 id="inotify-instance-limit">Inotify Instance Limit<a class="headerlink" href="#inotify-instance-limit" title="Permanent link">#</a></h4>
 <p><a href="https://www.man7.org/linux/man-pages/man7/inotify.7.html">Inotify API</a> allows
@@ -3445,14 +3495,6 @@ Windows Server 2016. k0s states that it requires Windows Server 2019, though.
     
     
     
-    <a href="https://x.com/k0sproject" target="_blank" rel="noopener" title="k0s on X" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M357.2 48h70.6L273.6 224.2 455 464H313L201.7 318.6 74.5 464H3.8l164.9-188.5L-5.2 48h145.6l100.5 132.9zm-24.8 373.8h39.1L119.1 88h-42z"/></svg>
-    </a>
-  
-    
-    
-    
-    
     <a href="https://blog.k0sproject.io/" target="_blank" rel="noopener" title="The k0sproject community blog" class="md-social__link">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M224 24c0-13.3 10.7-24 24-24 145.8 0 264 118.2 264 264 0 13.3-10.7 24-24 24s-24-10.7-24-24c0-119.3-96.7-216-216-216-13.3 0-24-10.7-24-24M80 96c26.5 0 48 21.5 48 48v224c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48c-8.8 0-16-7.2-16-16v-64c0-8.8 7.2-16 16-16 79.5 0 144 64.5 144 144s-64.5 144-144 144S32 447.5 32 368V144c0-26.5 21.5-48 48-48m168 0c92.8 0 168 75.2 168 168 0 13.3-10.7 24-24 24s-24-10.7-24-24c0-66.3-53.7-120-120-120-13.3 0-24-10.7-24-24s10.7-24 24-24"/></svg>
     </a>
@@ -3469,7 +3511,7 @@ Windows Server 2016. k0s states that it requires Windows Server 2019, though.
     
     
     
-    <a href="https://kubernetes.slack.com/archives/C07VAPJUECS" target="_blank" rel="noopener" title="k0s on the k8s slack" class="md-social__link">
+    <a href="https://kubernetes.slack.com/archives/C0809EA06QZ" target="_blank" rel="noopener" title="#k0s-users on Kubernetes Slack" class="md-social__link">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M94.1 315.1c0 25.9-21.2 47.1-47.1 47.1S0 341 0 315.1 21.2 268 47.1 268h47.1v47.1zm23.7 0c0-25.9 21.2-47.1 47.1-47.1s47.1 21.2 47.1 47.1v117.8c0 25.9-21.2 47.1-47.1 47.1s-47.1-21.2-47.1-47.1zm47.1-189c-25.9 0-47.1-21.2-47.1-47.1s21.2-47 47.1-47S212 53.2 212 79.1v47.1h-47.1zm0 23.7c25.9 0 47.1 21.2 47.1 47.1S190.8 244 164.9 244H47.1C21.2 244 0 222.8 0 196.9s21.2-47.1 47.1-47.1zm189 47.1c0-25.9 21.2-47.1 47.1-47.1s47 21.2 47 47.1-21.2 47.1-47.1 47.1h-47.1v-47.1zm-23.7 0c0 25.9-21.2 47.1-47.1 47.1S236 222.8 236 196.9V79.1c0-25.9 21.2-47.1 47.1-47.1s47.1 21.2 47.1 47.1zm-47.1 189c25.9 0 47.1 21.2 47.1 47.1s-21.2 47-47.1 47-47.1-21.2-47.1-47.1v-47.1h47.1zm0-23.7c-25.9 0-47.1-21.2-47.1-47.1s21.2-47.1 47.1-47.1h117.8c25.9 0 47.1 21.2 47.1 47.1s-21.2 47.1-47.1 47.1z"/></svg>
     </a>
   
